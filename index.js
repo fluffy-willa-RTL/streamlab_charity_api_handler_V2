@@ -49,6 +49,11 @@ app.get('/u/:slug', (req, res) => {//TODO chage to slug
 	res.sendFile(publicPathFile('html', 'u.html'))
 })
 
+// Donation goal for user
+app.get('/a/streamergoal/:slug', (req, res) => {//TODO chage to slug
+	res.sendFile(publicPathFile('html', 'aStreamerGoal.html'))
+})
+
 // Redirect to auth link streamlab
 app.get('/', (req, res) => {
 	res.redirect(connect.get_auth_url());
