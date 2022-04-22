@@ -1,11 +1,15 @@
 import cors from 'cors';
 import express from "express";
 
-import socket from './1_socket_streamlab/socket.js'
+import socket 		from './1_socket_streamlab/socket.js'
+import db			from './0_utils/database.js'
+
 
 import dotenv from 'dotenv'
 // Init .env
 dotenv.config()
+
+db.getAllStreamerV2()
 
 export const app = express()
 
