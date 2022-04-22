@@ -12,12 +12,24 @@ import { query } from 'express';
 // Init .env
 dotenv.config()
 
+// Set the __diname 
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+// dir path constructor
+function publicPathFile(path, file) {
+	return join(__dirname, 'www', 'public', path, file);
+}
+
 db.getAllStreamerV2()
 
 export const app = express()
 
 // Allow CORS
 app.use(cors())
+
+// Set the public folder
+app.use(express.static('./www/public'));
 
 /**
  * FRONT END
@@ -26,13 +38,13 @@ app.use(cors())
 // 	res.send("~UwU~");
 // })
 
-app.get('/u', (req, res) => {
-	res.send('Error no slug')
+app.get('/u/', (req, res) => {
+	res.sendFile(publicPathFile('html', 'linkAccount.html'))
 })
 
 // Dashboard for user
 app.get('/u/:display_name', (req, res) => {//TODO chage to slug
-	res.send(req.params.display_name)
+	res.sendFile(publicPathFile('html', 'u.html'))
 })
 
 // Redirect to auth link streamlab
@@ -56,5 +68,6 @@ app.get('/redirect', async (req, res) => {//TODO TODO TODO TODO 							TODO slug
 const server = app.listen(process.env.PORT, () => {
 	console.log(`[*.*]:${process.env.PORT}`);
 })
+
 
 // socket.startSocket(server)

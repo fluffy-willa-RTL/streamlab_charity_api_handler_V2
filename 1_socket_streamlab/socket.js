@@ -1,5 +1,5 @@
 import io 			from 'socket.io-client'
-import {Server} 	from 'socket.io'
+import { Server } 		from 'socket.io'
 
 import dotenv		from 'dotenv'
 dotenv.config()
