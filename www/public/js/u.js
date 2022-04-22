@@ -35,7 +35,7 @@ async function start() {
 				// If the back dont find the user
 				if (res && 'error' in res)
 					document.getElementById('welcomeMessage').textContent = `On ne t'a pas trouvé dans la team, vérifie que tu as bien lié ton compte Streamlabs avec la campagne.\nRends-toi sur http://dev.fluffy.dreemcloud.net/u/ pour plus d'info.`;
-				// window.location = '/u/';
+				window.location = '/u/';
 			})
 		})
 
