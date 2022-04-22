@@ -1,24 +1,36 @@
 import cors from 'cors';
 import express from "express";
-import dotenv from 'dotenv'
 
+import socket from './1_socket_streamlab/socket.js'
+
+import dotenv from 'dotenv'
+// Init .env
 dotenv.config()
 
-const app = express()
+export const app = express()
 
+// Allow CORS
 app.use(cors())
 
+/**
+ * FRONT END
+ */
 app.get('/', (req, res) => {
 	console.log('UwU');
 	res.send("~UwU~");
 })
 
+//WIP fluffy
+app.get('/u/:slug', (req, res) => {
+
+})
+
+/**
+ * BACK END
+ */
+
 const server = app.listen(process.env.PORT, () => {
 	console.log(`[*.*]:${process.env.PORT}`);
 })
 
-/**
- * Init socket.io
- */
-
-// io = new Server(server, {cors: { origin: "*"}})
+socket.startSocket(server)

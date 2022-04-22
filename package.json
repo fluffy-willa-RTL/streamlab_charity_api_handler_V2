@@ -19,8 +19,16 @@
   },
   "homepage": "https://github.com/S19-RTL-24hGaming/test-new-back-end#readme",
   "dependencies": {
+    "axios": "^0.26.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "mongodb": "4.5",
+    "mysql": "^2.18.1",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/socket.io-client": "^3.0.0"
   }
 }
