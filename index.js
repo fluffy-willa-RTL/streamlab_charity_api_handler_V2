@@ -21,7 +21,9 @@ function publicPathFile(path, file) {
 	return join(__dirname, 'www', 'public', path, file);
 }
 
-db.getAllStreamerV2()
+// Fetch all streamer in the team
+/// NOTE: `await` to avoid that a clien ask `whoami` when the user db is not set
+await db.getAllStreamerV2()
 
 export const app = express()
 
@@ -43,7 +45,7 @@ app.get('/u/', (req, res) => {
 })
 
 // Dashboard for user
-app.get('/u/:display_name', (req, res) => {//TODO chage to slug
+app.get('/u/:slug', (req, res) => {//TODO chage to slug
 	res.sendFile(publicPathFile('html', 'u.html'))
 })
 
@@ -58,7 +60,15 @@ app.get('/redirect', async (req, res) => {//TODO TODO TODO TODO 							TODO slug
 	if ('code' in req.query){
 		data = await connect.getUserData(req.query.code);
 	}
-	data ? res.redirect('/u/'+ data.display_name) : res.send("Error!")
+	data ? res.redirect('/u/'+ data.slug) : res.send("Error!")
+})
+
+/**
+ * DEV ENDPOINT
+ */
+app.get('/forceRefresh', (req, res) => {
+	socket.forceRefreshClient();
+	res.send("Send forceRefresh all client")
 })
 
 /**
@@ -70,4 +80,4 @@ const server = app.listen(process.env.PORT, () => {
 })
 
 
-// socket.startSocket(server)
+socket.startSocket(server)
