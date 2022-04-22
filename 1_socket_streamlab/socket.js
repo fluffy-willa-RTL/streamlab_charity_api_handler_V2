@@ -14,16 +14,16 @@ let front
  * Start the socket for both streamlab and front-end connection
  */
 function startSocket(server){
-	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_DEV
+	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_WILLA
 
 	streamlabs = io(streamlabUrl, {transports: ['websocket']})
 	front = new Server(server, {cors: { origin: "*"}})
 	
-	streamlabs.on('connect', 	() => {console.log('connection to streamlabs successful')})
-	streamlabs.on('disconnect', () => {console.log('goodbye')})
-	
-	streamlabs.on('event', (data) => {
-		console.log(data)
+	streamlabs.on('connect', 		() 		=> {console.log('connection to streamlabs successful')})
+	streamlabs.on('connect_error', 	(err) 	=> {console.log('error:', err)})
+	streamlabs.on('disconnect', 	() 		=> {console.log('goodbye')})
+
+	streamlabs.on('event', 	 (data) => {
 		if (data.type === 'streamlabscharitydonation'){
 			let _id	= data?.message?.[0]?.charityDonationId								?? parseInt(Math.random() * (10 ** 16)) //TODO REMOVE TESTING
 			let res = {
@@ -36,6 +36,8 @@ function startSocket(server){
 			if (db.don[_id] === undefined){
 				db.don[_id] = res
 			}
+			
+			updateFront()
 		}
 	})
 	
@@ -55,29 +57,67 @@ function startSocket(server){
 			}
 			data.emit('youare', null);
 		})
+
+		data.on('refresh-streamer',(res) => {
+			db.getAllStreamer()
+		})
 	})
+}
+
+function updateFront(){
+	let res = {
+		total: 0,
+		total_streamer: {},
+		donation_last: {},
+		donation_biggest: {},
 	}
-
-// function updateFront(id, donation){
-// 	//add total global
-// 	db.front.total += donation.amount
-
-// 	//add total for streamer
-// 	if (!db.front.total_streamer[donation.streamer_id])
-// 		db.front.total_streamer[donation.streamer_id] = 0
-// 	db.front.total_streamer[donation.streamer_id] += donation.amount
-
-// 	// //add donation_special slot if doesn't exist
-// 	// if (!db.front.donation_special[donation.streamer_id])
-// 	// 	db.front.donation_special[donation.streamer_id] = {}
-// 	// //add donation_special slot if doesn't exist
-// 	// if (!db.front.donation_special[donation.streamer_id][id])
-// 	// 	db.front.donation_special[donation.streamer_id][id] = donation
 	
-// 	// db.front.donation_special[donation.streamer_id]
+	for (const [id, don] of Object.entries(db.don)) {
+		// console.log(don)
+		//add total amount
+		res.total += don.amount;
 
-// 	console.log(db.front)
-// }
+		//add total for single streamer
+		if (!res.total_streamer[don.streamer_id]){
+			res.total_streamer[don.streamer_id] = 0;
+		}
+		res.total_streamer[don.streamer_id] += don.amount;
+
+		//add last donations
+		if (!res.donation_last[don.streamer_id]){
+			res.donation_last[don.streamer_id] = [];
+		}
+		res.donation_last[don.streamer_id].push(don)
+		if (res.donation_last[don.streamer_id].length > 10){
+			res.donation_last[don.streamer_id].shift()
+		}
+
+		//add biggest donations	
+		if (!res.donation_biggest[don.streamer_id]){
+			res.donation_biggest[don.streamer_id] = [];
+		}
+
+		if (res.donation_biggest[don.streamer_id].length === 0){
+			res.donation_biggest[don.streamer_id].push(don)
+		}
+		else{
+			for (let i in res.donation_biggest[don.streamer_id] + 1){
+				if ((res.donation_biggest[don.streamer_id]?.[i-1]?.amount ?? Infinity) >= don.amount
+					&& (don.amount >= (res.donation_biggest[don.streamer_id]?.[i]?.amount ?? -Infinity))	){
+					res.donation_biggest[don.streamer_id].splice(i, 0, don);
+					break
+				}
+			}
+			res.donation_biggest[don.streamer_id].splice(10)
+		}
+		
+	}
+	console.table(res.donation_biggest[72567])
+}
+
+function temp(input, output){
+	return (input !== undefined ? input : output)
+}
 
 export default {
 	startSocket,

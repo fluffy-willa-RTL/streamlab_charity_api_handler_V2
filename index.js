@@ -21,7 +21,7 @@ function publicPathFile(path, file) {
 	return join(__dirname, 'www', 'public', path, file);
 }
 
-db.getAllStreamerV2()
+db.getAllStreamer()
 
 export const app = express()
 
@@ -70,4 +70,4 @@ const server = app.listen(process.env.PORT, () => {
 })
 
 
-// socket.startSocket(server)
+socket.startSocket(server)
