@@ -19,8 +19,9 @@ function startSocket(server){
 	streamlabs = io(streamlabUrl, {transports: ['websocket']})
 	front = new Server(server, {cors: { origin: "*"}})
 	
-	streamlabs.on('connect', 	() => {console.log('connection to streamlabs successful')})
-	streamlabs.on('disconnect', () => {console.log('goodbye')})
+	streamlabs.on('connect', () => {console.log('connection to streamlabs successful')})
+	streamlabs.on('connect_error', (err) => {console.log("streamlabs error", err);})
+	streamlabs.on('disconnect', () => {console.log('streamlabs disconnect')})
 	
 	streamlabs.on('event', (data) => {
 		console.log(data)
@@ -46,16 +47,23 @@ function startSocket(server){
 		data.on('whoami',(res) => {
 			if (res['slug'] !== undefined){
 				for (var streamer of Object.values(db.streamer)){
-					console.log(streamer.slug, res.slug)
 					if (streamer.slug === res.slug){
 						data.emit('youare', streamer);
 						return;
 					}
 				}
 			}
-			data.emit('youare', null);
+			// If the user is not found return to the front `-404`
+			data.emit('youare', {"error": 404});
 		})
 	})
+	}
+
+	/**
+	 * /!\ Will force refresh of all client /!\
+	 */
+	function forceRefreshClient() {
+		front.emit('forceRefresh', null);
 	}
 
 // function updateFront(id, donation){
@@ -80,5 +88,5 @@ function startSocket(server){
 // }
 
 export default {
-	startSocket,
+	startSocket, forceRefreshClient
 }
