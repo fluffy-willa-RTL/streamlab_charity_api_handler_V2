@@ -21,10 +21,7 @@ function startSocket(server){
 	
 	streamlabs.on('connect', 	() => {console.log('connection to streamlabs successful')})
 	streamlabs.on('disconnect', () => {console.log('goodbye')})
-
-	front.on('connect', 	() => {console.log('connection to the front successful')})
-	front.on('disconnect',	() => {console.log('goodbye')})
-
+	
 	streamlabs.on('event', (data) => {
 		console.log(data)
 		if (data.type === 'streamlabscharitydonation'){
@@ -39,40 +36,48 @@ function startSocket(server){
 			if (db.don[_id] === undefined){
 				db.don[_id] = res
 			}
-			updateFront(_id, res)
 		}
 	})
-
-	console.table(db.streamer)
-
-	console.log(db.streamer)
-	// front.on('whoami', (data) => {
-		
-	// })
-}
-
-function updateFront(id, donation){
-	//add total global
-	db.front.total += donation.amount
-
-	//add total for streamer
-	if (!db.front.total_streamer[donation.streamer_id])
-		db.front.total_streamer[donation.streamer_id] = 0
-	db.front.total_streamer[donation.streamer_id] += donation.amount
-
-	// //add donation_special slot if doesn't exist
-	// if (!db.front.donation_special[donation.streamer_id])
-	// 	db.front.donation_special[donation.streamer_id] = {}
-	// //add donation_special slot if doesn't exist
-	// if (!db.front.donation_special[donation.streamer_id][id])
-	// 	db.front.donation_special[donation.streamer_id][id] = donation
 	
-	// db.front.donation_special[donation.streamer_id]
+	
+	front.on('connect', (data) => {
+		console.log('connection to the front successful', data.id)
 
-	console.log(db.front)
-}
+		data.on('whoami',(res) => {
+			if (res['slug'] !== undefined){
+				for (var streamer of Object.values(db.streamer)){
+					console.log(streamer.slug, res.slug)
+					if (streamer.slug === res.slug){
+						data.emit('youare', streamer);
+						return;
+					}
+				}
+			}
+			data.emit('youare', null);
+		})
+	})
+	}
 
+// function updateFront(id, donation){
+// 	//add total global
+// 	db.front.total += donation.amount
 
+// 	//add total for streamer
+// 	if (!db.front.total_streamer[donation.streamer_id])
+// 		db.front.total_streamer[donation.streamer_id] = 0
+// 	db.front.total_streamer[donation.streamer_id] += donation.amount
+
+// 	// //add donation_special slot if doesn't exist
+// 	// if (!db.front.donation_special[donation.streamer_id])
+// 	// 	db.front.donation_special[donation.streamer_id] = {}
+// 	// //add donation_special slot if doesn't exist
+// 	// if (!db.front.donation_special[donation.streamer_id][id])
+// 	// 	db.front.donation_special[donation.streamer_id][id] = donation
+	
+// 	// db.front.donation_special[donation.streamer_id]
+
+// 	console.log(db.front)
+// }
 
 export default {
 	startSocket,

@@ -3,7 +3,9 @@ import cors from 'cors';
 import express from "express";
 import axios from 'axios'
 
-import socket from './1_socket_streamlab/socket.js'
+import socket 		from './1_socket_streamlab/socket.js'
+import db			from './0_utils/database.js'
+
 
 import dotenv from 'dotenv'
 import { query } from 'express';
@@ -19,6 +21,7 @@ function publicPathFile(path, file) {
 	return join(__dirname, 'www', 'public', path, file);
 }
 
+db.getAllStreamerV2()
 
 export const app = express()
 
