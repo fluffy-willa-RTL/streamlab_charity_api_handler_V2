@@ -1,7 +1,7 @@
 import { MongoClient }	from "mongodb";
 import dotenv 			from "dotenv";
 
-import { alertHook }	from './alertHook.js';
+// import { alertHook }	from './alertHook.js';
 
 /**
  * Init .env file 
