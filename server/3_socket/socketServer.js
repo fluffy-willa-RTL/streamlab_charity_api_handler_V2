@@ -3,7 +3,7 @@ import { Server } 		from 'socket.io'
 import dotenv			from 'dotenv'
 dotenv.config()
 
-import db				from '../1_dbManagement/database.js'
+import db				from '../2_dbManagement/database.js'
 
 let front
 

@@ -3,7 +3,7 @@ import io 				from 'socket.io-client'
 import dotenv			from 'dotenv'
 dotenv.config()
 
-import db				from '../1_dbManagement/database.js'
+import db				from '../2_dbManagement/database.js'
 import { updateFront }	from './updateFront.js'
 
 let streamlabs
@@ -12,7 +12,7 @@ let streamlabs
  * Start the socket for both streamlab and front-end connection
  */
 export function startSocketClient(){
-	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_DEV
+	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_WILLA
 	// WS client /!\ streamlab use V2 server /!\
 	streamlabs = io(streamlabUrl, {transports: ['websocket']})
 
