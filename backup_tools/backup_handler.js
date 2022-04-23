@@ -104,11 +104,21 @@ export async function getAllDonations(){
 console.log("start", Date.now())
 
 
-// getAllDonations()
 let db_buff = [];
 
 db_buff = await db.don.find({})
 .toArray()
-.then((res) => {return res});
+.then((res) => 
+{
+	console.log('Backup fetch from mongoDB');
+	return res;
+});
 
+// WARN /!\ JSON.stringify will copy all array to the heap,
+//          so if the db_buff is 80M, the heap will go to 180M the time of the stringify !!
 myLogger.log(JSON.stringify(db_buff));
+console.log("db_backup.json writed");
+
+//TODO Continue to populate the db from the last id
+//TODO TODO Find a way to get the last id with mongodb
+// getAllDonations()
