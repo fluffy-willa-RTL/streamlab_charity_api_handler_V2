@@ -1,11 +1,11 @@
-import io 			from 'socket.io-client'
+import io 				from 'socket.io-client'
 import { Server } 		from 'socket.io'
 
-import dotenv		from 'dotenv'
+import dotenv			from 'dotenv'
 dotenv.config()
 
-import db			from '../0_utils/database.js'
-
+import db				from '../0_utils/database.js'
+import { updateFront }	from './updateFront.js'
 
 let streamlabs
 let front
@@ -37,7 +37,7 @@ function startSocket(server){
 				db.don[_id] = res
 			}
 			
-			updateFront()
+			updateFront(streamlabs)
 		}
 	})
 	
@@ -62,61 +62,6 @@ function startSocket(server){
 			db.getAllStreamer()
 		})
 	})
-}
-
-function updateFront(){
-	let res = {
-		total: 0,
-		total_streamer: {},
-		donation_last: {},
-		donation_biggest: {},
-	}
-	
-	for (const [id, don] of Object.entries(db.don)) {
-		// console.log(don)
-		//add total amount
-		res.total += don.amount;
-
-		//add total for single streamer
-		if (!res.total_streamer[don.streamer_id]){
-			res.total_streamer[don.streamer_id] = 0;
-		}
-		res.total_streamer[don.streamer_id] += don.amount;
-
-		//add last donations
-		if (!res.donation_last[don.streamer_id]){
-			res.donation_last[don.streamer_id] = [];
-		}
-		res.donation_last[don.streamer_id].push(don)
-		if (res.donation_last[don.streamer_id].length > 10){
-			res.donation_last[don.streamer_id].shift()
-		}
-
-		//add biggest donations	
-		if (!res.donation_biggest[don.streamer_id]){
-			res.donation_biggest[don.streamer_id] = [];
-		}
-
-		if (res.donation_biggest[don.streamer_id].length === 0){
-			res.donation_biggest[don.streamer_id].push(don)
-		}
-		else{
-			for (let i in res.donation_biggest[don.streamer_id] + 1){
-				if ((res.donation_biggest[don.streamer_id]?.[i-1]?.amount ?? Infinity) >= don.amount
-					&& (don.amount >= (res.donation_biggest[don.streamer_id]?.[i]?.amount ?? -Infinity))	){
-					res.donation_biggest[don.streamer_id].splice(i, 0, don);
-					break
-				}
-			}
-			res.donation_biggest[don.streamer_id].splice(10)
-		}
-		
-	}
-	db.front = res
-}
-
-function temp(input, output){
-	return (input !== undefined ? input : output)
 }
 
 export default {
