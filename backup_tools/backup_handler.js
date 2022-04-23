@@ -66,7 +66,7 @@ function donationArrayConstructor(array) {
 			message		: array[i]?.donation?.comment?.text							?? null,
 			amount		: array[i]?.donation?.converted_amount						?? 0,
 			date		: Date.parse(array[i]?.donation?.created_at) / 1000			?? 0,
-			streamer_id	: array[i]?.member?.id										?? 72567 //parseInt(Math.random() * (10 ** 16)), //TODO REMOVE TESTING
+			streamer_id	: array[i]?.member?.id										?? null
 		})
 	}
 	myLogger.table(res);
