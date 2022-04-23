@@ -20,7 +20,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // dir path constructor
 function publicPathFile(path, file) {
-	return join(__dirname, 'server', '4_web', 'public', path, file);
+	return join(__dirname, '4_web', 'public', path, file);
 }
 
 
@@ -38,10 +38,8 @@ function publicPathFile(path, file) {
 /**/ startSocketClient()
 /**/ await startRecovery();
 /**/ console.log("Recovery done !");
-/**/ console.log(db.don)
+/**/
 //////////// RECOVERY MODE ////////////
-
-
 
 // Fetch all streamer in the team
 /// NOTE: `await` to avoid that a clien ask `whoami` when the user db is not set
@@ -53,7 +51,7 @@ export const app = express()
 app.use(cors())
 
 // Set the public folder
-app.use(express.static(join(__dirname, 'server', '4_web')));
+app.use(express.static(join(__dirname, '4_web', 'public')));
 
 /**
  * FRONT END
