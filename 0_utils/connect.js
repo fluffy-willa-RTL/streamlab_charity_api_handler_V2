@@ -8,7 +8,7 @@ export function get_auth_url() {
 		'client_id'     : process.env.CLIENT_ID,
 		'redirect_uri'  : 'http://' + process.env.BASE_URL + '/redirect',
 		'response_type' : 'code',
-		'scope'         : 'donations.read donations.create socket.token',
+		'scope'         : '',
 	};
 	return (process.env.STREAMLAB_URL + 'authorize?' + new URLSearchParams(paramsAutorization));
 }

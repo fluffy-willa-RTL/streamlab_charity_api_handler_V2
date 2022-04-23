@@ -8,7 +8,6 @@ import db			from './0_utils/database.js'
 
 
 import dotenv from 'dotenv'
-import { query } from 'express';
 // Init .env
 dotenv.config()
 
@@ -23,7 +22,7 @@ function publicPathFile(path, file) {
 
 // Fetch all streamer in the team
 /// NOTE: `await` to avoid that a clien ask `whoami` when the user db is not set
-await db.getAllStreamerV2()
+await db.getAllStreamer()
 
 export const app = express()
 
@@ -47,6 +46,11 @@ app.get('/u/', (req, res) => {
 // Dashboard for user
 app.get('/u/:slug', (req, res) => {//TODO chage to slug
 	res.sendFile(publicPathFile('html', 'u.html'))
+})
+
+// Donation goal for user
+app.get('/a/streamergoal/:slug', (req, res) => {//TODO chage to slug
+	res.sendFile(publicPathFile('html', 'aStreamerGoal.html'))
 })
 
 // Redirect to auth link streamlab

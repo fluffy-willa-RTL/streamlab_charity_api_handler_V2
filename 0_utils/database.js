@@ -10,17 +10,24 @@ let don = {}
 let front = {
 	total: 0,
 	total_streamer: {},
-	donation_special: {},
+	donation_last: {},
+	donation_biggest: {},
 }
 
 let streamer = {}
 
-async function getAllStreamerV2(){
+
+/**
+ * @description Update the db.streamer with all new streamer subscribed in the streamlab charity team
+ */
+async function getAllStreamer(){
 	const url = `https://streamlabscharity.com/api/v1/teams/${process.env.STREAMLAB_CHARITY_TEAM}/members`
 	const nbPage = await axios.get(url).then((res) => {return res.data.last_page;})
 
 	for (let i = 1; i < nbPage + 1; i++){
-		const data =  await axios.get(url + `?page=${i}`).then((res) => {return res.data;})
+		const data =  await axios.get(url + `?page=${i}`)
+									.then((res) => {return res.data;})
+									.catch((err) => {console.log('Error:', err)})
 		for (let newStreamer of data.data){
 			if (streamer[newStreamer.user._id] === undefined){
 				streamer[newStreamer.user.id] = {
@@ -33,7 +40,7 @@ async function getAllStreamerV2(){
 		}
 	}
 	
-	console.table(streamer, ['display_name', 'slug', 'goal'])
+	// console.table(streamer, ['display_name', 'slug', 'goal'])
 }
 
 
@@ -42,5 +49,5 @@ export default {
 	don,
 	front,
 	streamer,
-	getAllStreamerV2
+	getAllStreamer
 }
