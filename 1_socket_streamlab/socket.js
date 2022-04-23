@@ -1,11 +1,11 @@
-import io 			from 'socket.io-client'
+import io 				from 'socket.io-client'
 import { Server } 		from 'socket.io'
 
-import dotenv		from 'dotenv'
+import dotenv			from 'dotenv'
 dotenv.config()
 
-import db			from '../0_utils/database.js'
-
+import db				from '../0_utils/database.js'
+import { updateFront }	from './updateFront.js'
 
 let streamlabs
 let front
@@ -14,17 +14,16 @@ let front
  * Start the socket for both streamlab and front-end connection
  */
 function startSocket(server){
-	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_DEV
+	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_WILLA
 
 	streamlabs = io(streamlabUrl, {transports: ['websocket']})
 	front = new Server(server, {cors: { origin: "*"}})
 	
-	streamlabs.on('connect', () => {console.log('connection to streamlabs successful')})
-	streamlabs.on('connect_error', (err) => {console.log("streamlabs error", err);})
-	streamlabs.on('disconnect', () => {console.log('streamlabs disconnect')})
-	
-	streamlabs.on('event', (data) => {
-		console.log(data)
+	streamlabs.on('connect', 		() 		=> {console.log('connection to streamlabs successful')})
+	streamlabs.on('connect_error', 	(err) 	=> {console.log('error:', err)})
+	streamlabs.on('disconnect', 	() 		=> {console.log('goodbye')})
+
+	streamlabs.on('event', 	 (data) => {
 		if (data.type === 'streamlabscharitydonation'){
 			let _id	= data?.message?.[0]?.charityDonationId								?? parseInt(Math.random() * (10 ** 16)) //TODO REMOVE TESTING
 			let res = {
@@ -37,6 +36,8 @@ function startSocket(server){
 			if (db.don[_id] === undefined){
 				db.don[_id] = res
 			}
+			
+			updateFront(streamlabs)
 		}
 	})
 	
@@ -56,36 +57,12 @@ function startSocket(server){
 			// If the user is not found return to the front `-404`
 			data.emit('youare', {"error": 404});
 		})
+
+		data.on('refresh-streamer',(res) => {
+			db.getAllStreamer()
+		})
 	})
-	}
-
-	/**
-	 * /!\ Will force refresh of all client /!\
-	 */
-	function forceRefreshClient() {
-		front.emit('forceRefresh', null);
-	}
-
-// function updateFront(id, donation){
-// 	//add total global
-// 	db.front.total += donation.amount
-
-// 	//add total for streamer
-// 	if (!db.front.total_streamer[donation.streamer_id])
-// 		db.front.total_streamer[donation.streamer_id] = 0
-// 	db.front.total_streamer[donation.streamer_id] += donation.amount
-
-// 	// //add donation_special slot if doesn't exist
-// 	// if (!db.front.donation_special[donation.streamer_id])
-// 	// 	db.front.donation_special[donation.streamer_id] = {}
-// 	// //add donation_special slot if doesn't exist
-// 	// if (!db.front.donation_special[donation.streamer_id][id])
-// 	// 	db.front.donation_special[donation.streamer_id][id] = donation
-	
-// 	// db.front.donation_special[donation.streamer_id]
-
-// 	console.log(db.front)
-// }
+}
 
 export default {
 	startSocket, forceRefreshClient
