@@ -112,7 +112,7 @@ function updateFront(){
 		}
 		
 	}
-	console.table(res.donation_biggest[72567])
+	db.front = res
 }
 
 function temp(input, output){
