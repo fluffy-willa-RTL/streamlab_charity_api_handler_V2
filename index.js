@@ -8,7 +8,6 @@ import db			from './0_utils/database.js'
 
 
 import dotenv from 'dotenv'
-import { query } from 'express';
 // Init .env
 dotenv.config()
 
