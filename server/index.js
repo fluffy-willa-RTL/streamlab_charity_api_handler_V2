@@ -30,7 +30,7 @@ export const app = express()
 app.use(cors())
 
 // Set the public folder
-app.use(express.static('./www/public'));
+app.use(express.static('./server/www/public'));
 
 /**
  * FRONT END
