@@ -2,3 +2,6 @@ node_modules
 db_backup.err
 log
 db_backup.json
+log.err
+log.out
+.gitignore
