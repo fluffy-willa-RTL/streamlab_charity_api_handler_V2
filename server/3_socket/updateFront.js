@@ -1,4 +1,4 @@
-import db			from '../0_utils/database.js'
+import db			from '../1_dbManagement/database.js'
 
 export function updateFront(socket){
 	let res = {

@@ -3,6 +3,9 @@ import expressStatusMonitor from 'express-status-monitor';
 import express from 'express';
 import db from './mongo.js'
 import dotenv from 'dotenv'
+
+import { alertHook } from './alertHook.js'
+
 // Init .env
 dotenv.config()
 
@@ -93,8 +96,10 @@ export async function get3000Donations(donationId = null){
 	return null
 }
 
-export async function getAllDonations(){
-	let id = await get3000Donations()
+export async function getAllDonations(id){
+	if (id === undefined){
+		id = await get3000Donations()
+	}
 	while (id) {
 		await sleep(2000);
 		id = await get3000Donations(id)
@@ -119,6 +124,8 @@ db_buff = await db.don.find({})
 myLogger.log(JSON.stringify(db_buff));
 console.log("db_backup.json writed");
 
+// console.log(db_buff?.at(-1)?._id ?? 0)
+// getAllDonations(db_buff?.at(-1)?._id ?? undefined)
 //TODO Continue to populate the db from the last id
 //TODO TODO Find a way to get the last id with mongodb
 // getAllDonations()
