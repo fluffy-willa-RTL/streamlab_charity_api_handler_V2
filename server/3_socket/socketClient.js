@@ -23,19 +23,18 @@ export function startSocketClient(){
 
 	// Listen all 'event' from streamlab WS
 	streamlabs.on('event', 	 (data) => {
+		// Write donation in `db.don`
 		if (data.type === 'streamlabscharitydonation'){
-			let _id	= data?.message?.[0]?.charityDonationId								?? parseInt(Math.random() * (10 ** 16)) //TODO REMOVE TESTING
-			let res = {
-				name		: data?.message?.[0]?.from									?? null,
-				message		: data?.message?.[0]?.message								?? null,
-				amount		: parseInt(parseFloat(data?.message?.[0]?.amount) * 100)	?? 0,
-				date		: Date.parse(data?.message?.[0]?.createdAt)	/ 1000			?? 0,
-				streamer_id	: data?.message?.[0]?.memberId								?? 72567 //parseInt(Math.random() * (10 ** 16)), //TODO REMOVE TESTING
-			}
-
+			let _id	= data?.message?.[0]?.charityDonationId									?? parseInt(Math.random() * (10 ** 16)) //TODO REMOVE TESTING
 			// Check if the id exist in the db
 			if (db.don[_id] === undefined){
-				db.don[_id] = res
+				db.don[_id] = {
+					name		: data?.message?.[0]?.from									?? null,
+					message		: data?.message?.[0]?.message								?? null,
+					amount		: parseInt(parseFloat(data?.message?.[0]?.amount) * 100)	?? 0,
+					date		: Date.parse(data?.message?.[0]?.createdAt)	/ 1000			?? 0,
+					streamer_id	: data?.message?.[0]?.memberId								?? 72567 //parseInt(Math.random() * (10 ** 16)), //TODO REMOVE TESTING
+				}
 			}
 			//TODO why ? @willa
 			// updateFront(streamlabs)

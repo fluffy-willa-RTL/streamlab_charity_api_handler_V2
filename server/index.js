@@ -3,10 +3,10 @@ import cors 			from 'cors';
 import express 			from "express";
 import axios 			from 'axios'
 
-import { startSocketClient } from './2_socket/socketClient.js'
-import { startSocketServer, forceRefreshClient } from './2_socket/socketServer.js'
-import db				from './1_dbManagement/database.js'
-import getAllStreamer	from './1_dbManagement/getAllStreamer.js'
+import db											from './1_dbManagement/database.js'
+import getAllStreamer								from './1_dbManagement/getAllStreamer.js'
+import { startSocketClient } 						from './3_socket/socketClient.js'
+import { startSocketServer, forceRefreshClient }	from './3_socket/socketServer.js'
 
 
 import dotenv from 'dotenv'
@@ -35,7 +35,7 @@ function publicPathFile(path, file) {
  */
 //////////// RECOVERY MODE ////////////
 /**/
-/**/ startSocketServer()
+/**/ startSocketClient()
 /**/ await startRecovery();
 /**/
 /**/
