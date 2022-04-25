@@ -3,7 +3,9 @@ import { Server } 		from 'socket.io'
 import dotenv			from 'dotenv'
 dotenv.config()
 
+import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js'
+
 
 let front
 
@@ -16,11 +18,11 @@ export function startSocketServer(server){
 
 	// Listen all incoming connection of the 
 	front.on('connect', (data) => {
-		console.log('WS.server.[connect]', data.id)
+		console.log(color.FgMagenta, 'WS.server.[connect]', data.id, color.Reset)
 		// Client will ask `whoami` to recive all streamer info (slug, name, id, PP)
 		data.on('whoami',(res) => {
 			if (res['slug'] !== undefined){
-				console.log(`WS.server.[whoami] from ${res.slug}`);//DEBUG show when client ask whoami
+				console.log(color.FgMagenta, `WS.server.[whoami] from ${res.slug}`, color.Reset);//DEBUG show when client ask whoami
 				// Try to find the streamer in the team
 				for (var streamer of Object.values(db.streamer)){
 					if (streamer.slug === res.slug){
