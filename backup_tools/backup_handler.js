@@ -66,10 +66,10 @@ function donationArrayConstructor(array) {
 			message		: array[i]?.donation?.comment?.text							?? null,
 			amount		: array[i]?.donation?.converted_amount						?? 0,
 			date		: Date.parse(array[i]?.donation?.created_at) / 1000			?? 0,
-			streamer_id	: array[i]?.member?.id										?? null
+			streamer_id	: array[i]?.member?.user?.id								?? null
 		})
 	}
-	myLogger.table(res);
+	// myLogger.table(res);
 	return res
 }
 
@@ -109,23 +109,34 @@ export async function getAllDonations(id){
 console.log("start", Date.now())
 
 
-let db_buff = [];
+// let db_buff = [];
 
-db_buff = await db.don.find({})
-.toArray()
-.then((res) => 
-{
-	console.log('Backup fetch from mongoDB');
-	return res;
-});
+// db_buff = await db.don.find({})
+// .toArray()
+// .then((res) => 
+// {
+// 	console.log('Backup fetch from mongoDB');
+// 	return res;
+// });
+
+const lastDonation = await db.don.aggregate([
+	{
+	  '$sort': {
+		'date': -1
+	  }
+	}, {
+	  '$limit': 1
+	}
+  ])
+  .toArray()
+  .then(res => {return res[0]})
+//   console.log(lastDonation);
 
 // WARN /!\ JSON.stringify will copy all array to the heap,
 //          so if the db_buff is 80M, the heap will go to 180M the time of the stringify !!
-myLogger.log(JSON.stringify(db_buff));
-console.log("db_backup.json writed");
+// myLogger.log(JSON.stringify(db_buff));
+// console.log("db_backup.json writed");
 
 // console.log(db_buff?.at(-1)?._id ?? 0)
-// getAllDonations(db_buff?.at(-1)?._id ?? undefined)
-//TODO Continue to populate the db from the last id
-//TODO TODO Find a way to get the last id with mongodb
-// getAllDonations()
+// // Continue to populate the db from the last id
+getAllDonations(lastDonation)
