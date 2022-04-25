@@ -16,7 +16,7 @@ async function start() {
 		})
 
 		// Listen if a connection have made with the backend
-		socket.on('connect', (sock) => {
+		socket.on('connect', () => {
 			console.log('Connected!')
 			
 			// Ask the streamer data

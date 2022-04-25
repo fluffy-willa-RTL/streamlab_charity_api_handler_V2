@@ -5,38 +5,19 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Donation Goal</title>
+	<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
 	<!-- GLOBAL VARIABLE -->
 	<script>
+		// GLOBAL VARIABLE
 		let oldAmount = 0;
 		let interval = false;
 		let nextVal = 0;
 		let centAmount = 0;
-	</script>
+		</script>
 </head>
 <body>
 	<h1 id="animateCount">_counter</h1>
+	<p id="streamerId">_id</p>
 </body>
+<script src="../../js/aStreamerGoal.js"></script>
 </html>
-
-<script>
-function updateDOM() {
-			if (nextVal == centAmount) {
-			return;
-		}
-		interval = window.setInterval(function() {
-			if (centAmount != nextVal) {
-				var change = (nextVal - centAmount) / 10;
-				change = change >= -1 ? Math.ceil(change) : Math.floor(change);
-				// Increment cent amount
-				centAmount = centAmount + change;
-				// Conv to euro
-				euroAmount = centAmount / 100;
-				document.getElementById('animateCount').textContent = euroAmount.toLocaleString("fr-FR", {
-					style: "currency",
-					currency: "EUR"
-				})
-				console.log("updated");
-			}
-		}.bind(this), 20);
-	}
-</script>

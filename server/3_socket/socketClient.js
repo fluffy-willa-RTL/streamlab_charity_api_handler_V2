@@ -17,7 +17,7 @@ export let socketClientIsConnected = null;
  */
 export function startSocketClient(){
 	console.log(color.FgCyan, 'Try to connect WS streamlabs', color.Reset);
-	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_WILLA;
+	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_DEV;
 	// WS client /!\ streamlab use V2 server /!\
 	streamlabs = io(streamlabUrl, {transports: ['websocket']});
 
@@ -51,8 +51,9 @@ export function startSocketClient(){
 					streamer_id	: data?.message?.[0]?.memberId								?? 72567 //parseInt(Math.random() * (10 ** 16)), //TODO REMOVE TESTING
 				}
 			}
+			console.log(_id);
 			//TODO why ? @willa
-			// updateFront(streamlabs)
+			updateFront(streamlabs)//TODO CHECK
 		}
 	})
 }
