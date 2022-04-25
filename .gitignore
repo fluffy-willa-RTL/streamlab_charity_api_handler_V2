@@ -5,3 +5,7 @@ db_backup.json
 log.err
 log.out
 .gitignore
+dblog.err
+dblog.json
+streamer_log.err
+streamer_log.json
