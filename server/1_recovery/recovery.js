@@ -11,12 +11,15 @@ export async function startRecovery () {
 		await sleep(50);
 	}
 	let last_id;
+
 	console.log('Fetch all donation from backup db');
+
 	// Ask all raw donation in the db
 	await	mongo.don.find({})
 	.toArray()
 	// Format donation to the map
 	.then((res) => {
+		// Get the last ID donnation form de DB
 		last_id = res?.at(-1)?._id ?? 0;
 		for (let donation of res){
 			if (db.don[donation._id] === undefined) {
@@ -31,12 +34,15 @@ export async function startRecovery () {
 		}
 	})
 	console.log('All backup data processed');
-	// console.table(db.don, ['amount', 'date', 'streamer_id', 'display_name']);
-	// console.log("DB fetch, last_id: ", last_id);
+
 	console.log('Waiting for WS donation');
+
 	// Wait for the first WS donation.
 	while (!first_id)
 		await sleep(50);
-	// console.log('First WS id: ', first_id);
+
+		while (/*apiCheck*/)
+		//TODO loop with the api
+	console.log('First WS id: ', first_id);
 	console.log('============== RECOVERY MODE END ==============');
 }
