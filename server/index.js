@@ -36,8 +36,7 @@ function publicPathFile(path, file) {
 //////////// RECOVERY MODE ////////////
 /**/
 /**/ startSocketClient()
-/**/ //await startRecovery();
-/**/ console.log("Recovery done !");
+/**/ await startRecovery();
 /**/
 //////////// RECOVERY MODE ////////////
 
