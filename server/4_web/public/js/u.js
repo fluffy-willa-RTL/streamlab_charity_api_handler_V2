@@ -2,7 +2,7 @@ async function start() {
 	// window.location = 'https://google.com'
 	if (slug) {
 		// Try to connect to the backen socket
-		const socket = await io('ws://dev.fluffy.dreemcloud.net', {
+		const socket = await io('ws://dev.willa.dreemcloud.net', {
 			reconnectionDelayMax: 5000,
 		});
 		
