@@ -28,14 +28,14 @@ function publicPathFile(path) {
 //TODO REMOVE DEBUG
 import {Console} from 'node:console';
 import fs from 'node:fs'
-const dblog = new Console({
-	stdout: fs.createWriteStream("dblog.json"),
-	stderr: fs.createWriteStream("dblog.err"),
-});
-const streamlog = new Console({
-	stdout: fs.createWriteStream("streamer_log.json"),
-	stderr: fs.createWriteStream("streamer_log.err"),
-});
+// const dblog = new Console({
+// 	stdout: fs.createWriteStream("dblog.json"),
+// 	stderr: fs.createWriteStream("dblog.err"),
+// });
+// const streamlog = new Console({
+// 	stdout: fs.createWriteStream("streamer_log.json"),
+// 	stderr: fs.createWriteStream("streamer_log.err"),
+// });
 
 
 /**
@@ -57,8 +57,8 @@ const streamlog = new Console({
 /// NOTE: `await` to avoid that a clien ask `whoami` when the user db is not set
 await getAllStreamer()
 
-dblog.log(JSON.stringify(db.don));
-streamlog.log(JSON.stringify(db.streamer));
+// dblog.log(JSON.stringify(db.don));
+// streamlog.log(JSON.stringify(db.streamer));
 
 export const app = express()
 
