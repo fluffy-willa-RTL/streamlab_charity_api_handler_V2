@@ -37,7 +37,7 @@ export function startSocketClient(){
 		if (data.type === 'streamlabscharitydonation'){
 			let _id;
 			if (is_first){
-				_id = '404645296174403584'//TODO REMOVE debug
+				_id = '341678057746206720'//TODO REMOVE debug
 				first_id = _id
 				is_first = false;
 			}

@@ -47,10 +47,10 @@ export async function startSocketServer(server){
 		})
 	})
 
-	// while (true){
-	// 	update.updateFrontHeavy()
-	// 	await sleep(5000)
-	// }
+	while (true){
+		update.updateFrontHeavy()
+		await sleep(5000)
+	}
 }
 
 /**
