@@ -53,7 +53,7 @@ async function	make_requests(postData)
 		.catch(() => {return null});
 	if (userdata === null)
 		return (null);
-	console.log(userdata);
+	// console.log(userdata);
 
 	//We add our custom `slug` for the frontend
 	return ({

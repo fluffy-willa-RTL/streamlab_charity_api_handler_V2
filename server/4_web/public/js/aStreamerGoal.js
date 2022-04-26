@@ -1,6 +1,5 @@
 async function start() {
-	const	id = await window.location.pathname.substring('/a/streamergoal/'.length)
-	// window.location = 'https://google.com'
+	const	id =  window.location.pathname.slice('/a/'.length, -('/streamergoal'.length))
 	if (id) {
 		document.getElementById('streamerId').textContent = id;
 		// Try to connect to the backen socket
@@ -19,15 +18,15 @@ async function start() {
 		// Listen if a connection have made with the backend
 		socket.on('connect', () => {
 			console.log(`Connected! Listening for (total.${id})`)
+
+			// Listen update for the total amount
+			socket.on(`total.${id}`, (res) => {
+				console.log('res socket', res);
+				updateDOM(res)
+			});
 		})
 
-		// socket.on('total.72567', (res) => {
-		socket.on(`total.${id}`, (res) => {
-				console.log('res socket', res);
-		});
 
-		socket.on('debug', () => console.log('update dom'));//TODO DEBUG
-		
 		// Forece refresh the tab
 		socket.on('forceRefresh', () => {
 			document.location.reload(true)
@@ -35,24 +34,26 @@ async function start() {
 	}
 }
 
-function updateDOM() {
-	if (nextVal == centAmount) {
-	return;
-}
-interval = window.setInterval(function() {
-	if (centAmount != nextVal) {
-		var change = (nextVal - centAmount) / 10;
-		change = change >= -1 ? Math.ceil(change) : Math.floor(change);
-		// Increment cent amount
-		centAmount = centAmount + change;
-		// Conv to euro
-		euroAmount = centAmount / 100;
-		document.getElementById('animateCount').textContent = euroAmount.toLocaleString("fr-FR", {
-			style: "currency",
-			currency: "EUR"
-		})
-		console.log("updated");
+function updateDOM(nextVal) {//TODO fix self implémentation
+	if (nextVal == currentAmount) {
+		return;
 	}
-}.bind(this), 20);
+	interval = window.setInterval(function() {
+		if (currentAmount != nextVal) {
+			let change = (nextVal - currentAmount) / 10;
+			change = change >= -1 ? Math.ceil(change) : Math.floor(change);
+			// Increment cent amount
+			currentAmount =+ change;
+			// Conv to euro
+			let euroAmount = currentAmount / 100;
+			document.getElementById('animateCount').textContent = euroAmount.toLocaleString("fr-FR", {
+				style: "currency",
+				currency: "EUR"
+			})
+			console.log("updated");
+		}
+	}.bind(this), 20);
 }
+currentAmount = 0;
+updateDOM(0);
 start();

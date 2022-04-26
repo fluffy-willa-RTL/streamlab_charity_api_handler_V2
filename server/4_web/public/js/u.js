@@ -24,17 +24,18 @@ async function start() {
 			// Listen for the streamer data
 			socket.on('youare', (res) => {
 				// If the slug is in the `res` init data and return the function
-				if (res && 'slug' in res) {
+				if (res && 'streamer' in res) {
 					data = res;
-					document.getElementById('welcomeMessage').textContent =  `Salut ${data.display_name}`;
-					console.log(`Salut ${data.display_name}, tu n'es pas censé être là, ouste !`);
+					document.getElementById('welcomeMessage').textContent =  `Salut ${data.streamer.display_name}`;
+					console.log(`Salut ${data.streamer.display_name}, tu n'es pas censé être là, ouste !`);
 					console.log(data);
 					return ;
 				}
 				
 				// If the back dont find the user
-				if (res && 'error' in res)
+				if (res && 'error' in res) {
 					document.getElementById('welcomeMessage').textContent = `On ne t'a pas trouvé dans la team, vérifie que tu as bien lié ton compte Streamlabs avec la campagne.\nRends-toi sur http://dev.fluffy.dreemcloud.net/u/ pour plus d'info.`;
+				}
 				window.location = '/u/';
 			})
 		})

@@ -3,16 +3,17 @@ import { Server } 		from 'socket.io'
 import dotenv			from 'dotenv'
 dotenv.config()
 
+import { sleep }		from '../0_utils/sleep.js'
 import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js'
-
+import { updateFront }	from './updateFront.js';
 
 export let front = null
 
 /**
  * Start the socket for both streamlab and front-end connection
  */
-export function startSocketServer(server){
+export async function startSocketServer(server){
 	// WS server
 	front = new Server(server, {cors: { origin: "*"}})
 
@@ -24,9 +25,12 @@ export function startSocketServer(server){
 			if (res['slug'] !== undefined){
 				console.log(color.FgMagenta, `WS.server.[whoami] from ${res.slug}`, color.Reset);//DEBUG show when client ask whoami
 				// Try to find the streamer in the team
-				for (var streamer of Object.values(db.streamer)){
+				for (var [id, streamer] of Object.entries(db.streamer)){
 					if (streamer.slug === res.slug){
-						data.emit('youare', streamer);
+						data.emit('youare', {
+							id: id,
+							streamer: streamer
+						});
 						return;
 					}
 				}
@@ -40,6 +44,11 @@ export function startSocketServer(server){
 			db.getAllStreamer()
 		})
 	})
+
+	while (true){
+		updateFront()
+		await sleep(500)
+	}
 }
 
 /**

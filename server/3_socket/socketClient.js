@@ -6,7 +6,7 @@ dotenv.config();
 import { recoveryMode } from '../index.js';
 import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js';
-import { updateFront }	from './updateFront.js';
+
 
 let is_first = true;
 export let first_id = null;
@@ -19,7 +19,7 @@ export let streamlabs;
  */
 export function startSocketClient(){
 	console.log(color.FgCyan, 'Try to connect WS streamlabs', color.Reset);
-	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_WILLA;
+	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_DEV;
 	// WS client /!\ streamlab use V2 server /!\
 	streamlabs = io(streamlabUrl, {transports: ['websocket']});
 
@@ -45,8 +45,7 @@ export function startSocketClient(){
 				_id	= data?.message?.[0]?.charityDonationId				?? parseInt(Math.random() * (10 ** 16)) //TODO REMOVE TESTING
 			}
 
-			console.log(_id)
-
+			
 			// Check if the id exist in the db
 			if (db.don[_id] === undefined){
 				db.don[_id] = {
@@ -54,14 +53,15 @@ export function startSocketClient(){
 					message		: data?.message?.[0]?.message								?? null,
 					amount		: parseInt(parseFloat(data?.message?.[0]?.amount) * 100)	?? 0,
 					date		: Date.parse(data?.message?.[0]?.createdAt)	/ 1000			?? 0,
-					streamer_id	: data?.message?.[0]?.memberId								?? 72567 //parseInt(Math.random() * (10 ** 16)), //TODO REMOVE TESTING
+					streamer_id	: data?.message?.[0]?.memberId								?? 1000 //parseInt(Math.random() * (10 ** 16)), //TODO REMOVE TESTING
 				}
+				console.log(color.FgCyan, 'New donation from', db.don[_id].name, color.Reset)
 			}
 
-			console.log(_id);
+			// console.log(_id);
 			//TODO why ? @willa
-			if (!recoveryMode)
-				updateFront()//TODO CHECK
+			// if (!recoveryMode)
+				
 		}
 	})
 }

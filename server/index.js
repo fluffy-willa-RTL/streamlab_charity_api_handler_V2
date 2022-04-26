@@ -86,7 +86,7 @@ app.get('/u/:slug', (req, res) => {//TODO chage to slug
 })
 
 // Donation goal for user
-app.get('/a/streamergoal/:slug', (req, res) => {//TODO chage to slug
+app.get('/a/:id/streamergoal', (req, res) => {//TODO chage to slug
 	res.sendFile(publicPathFile('html', 'aStreamerGoal.html'))
 })
 
