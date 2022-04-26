@@ -1,16 +1,20 @@
 let displayAmount = 0;
 let amount = 0;
+
+function animateCount () {
+	const interval = setInterval(function() {
+		if (displayAmount === amount)
+			clearInterval(interval);
+		let change = (amount-displayAmount) / 10;
+		change = change >= 0 ? Math.ceil(change) : Math.floor(change);
+		displayAmount += change;
+		document.getElementById('animateCount').textContent = displayAmount;
+	}, 20);
+};
+
 function updateDOM() {
-const interval = setInterval(function() {
-	if (displayAmount === amount)
-		clearInterval(interval);
-	let change = (amount-displayAmount) / 10;
-	change = change >= 0 ? Math.ceil(change) : Math.floor(change);
-	displayAmount += change;
-	// console.log(displayAmount)
-	document.getElementById('animateCount').textContent = displayAmount;
-}, 20);
-}
+	animateCount();
+};
 
 async function start() {
 	const	id =  window.location.pathname.slice('/a/'.length, -('/streamertotal'.length))
