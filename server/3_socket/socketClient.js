@@ -6,7 +6,7 @@ dotenv.config();
 import { recoveryMode } from '../index.js';
 import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js';
-
+import update			from './updateFront.js';
 
 let is_first = true;
 export let first_id = null;
@@ -37,7 +37,7 @@ export function startSocketClient(){
 		if (data.type === 'streamlabscharitydonation'){
 			let _id;
 			if (is_first){
-				_id = '341678066055122944'//TODO REMOVE debug
+				_id = '404645296174403584'//TODO REMOVE debug
 				first_id = _id
 				is_first = false;
 			}
@@ -45,7 +45,6 @@ export function startSocketClient(){
 				_id	= data?.message?.[0]?.charityDonationId				?? parseInt(Math.random() * (10 ** 16)) //TODO REMOVE TESTING
 			}
 
-			
 			// Check if the id exist in the db
 			if (db.don[_id] === undefined){
 				db.don[_id] = {
@@ -58,10 +57,8 @@ export function startSocketClient(){
 				console.log(color.FgCyan, 'New donation from', db.don[_id].name, color.Reset)
 			}
 
-			// console.log(_id);
-			//TODO why ? @willa
-			// if (!recoveryMode)
-				
+			if (!recoveryMode)
+				update.updateFrontLight()
 		}
 	})
 }

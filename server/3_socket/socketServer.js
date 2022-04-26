@@ -6,7 +6,7 @@ dotenv.config()
 import { sleep }		from '../0_utils/sleep.js'
 import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js'
-import { updateFront }	from './updateFront.js';
+import update			from './updateFront.js';
 
 export let front = null
 
@@ -19,11 +19,11 @@ export async function startSocketServer(server){
 
 	// Listen all incoming connection of the 
 	front.on('connect', (data) => {
-		console.log(color.FgMagenta, 'WS.server.[connect]', data.id, color.Reset)
+		console.log(color.FgMagenta, '[connect]', data.id, color.Reset)
 		// Client will ask `whoami` to recive all streamer info (slug, name, id, PP)
 		data.on('whoami',(res) => {
 			if (res['slug'] !== undefined){
-				console.log(color.FgMagenta, `WS.server.[whoami] from ${res.slug}`, color.Reset);//DEBUG show when client ask whoami
+				console.log(color.FgMagenta, `[whoami] from ${res.slug}`, color.Reset);//DEBUG show when client ask whoami
 				// Try to find the streamer in the team
 				for (var [id, streamer] of Object.entries(db.streamer)){
 					if (streamer.slug === res.slug){
@@ -45,10 +45,10 @@ export async function startSocketServer(server){
 		})
 	})
 
-	while (true){
-		updateFront()
-		await sleep(500)
-	}
+	// while (true){
+	// 	update.updateFrontHeavy()
+	// 	await sleep(5000)
+	// }
 }
 
 /**

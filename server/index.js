@@ -21,8 +21,8 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // dir path constructor
-function publicPathFile(path, file) {
-	return join(__dirname, '4_web', 'public', path, file);
+function publicPathFile(path) {
+	return join(__dirname, '4_web', 'public', path);
 }
 
 //TODO REMOVE DEBUG
@@ -50,7 +50,6 @@ const streamlog = new Console({
 /**/
 /**/ startSocketClient()
 /**/ await startRecovery();
-/**/ recoveryMode = false;
 /**/
 //////////// RECOVERY MODE ////////////
 
@@ -82,12 +81,12 @@ app.get('/u/', (req, res) => {
 
 // Dashboard for user
 app.get('/u/:slug', (req, res) => {//TODO chage to slug
-	res.sendFile(publicPathFile('html', 'u.html'))
+	res.sendFile(publicPathFile(join('html', 'streamerDashboard.html')))
 })
 
 // Donation goal for user
-app.get('/a/:id/streamergoal', (req, res) => {//TODO chage to slug
-	res.sendFile(publicPathFile('html', 'aStreamerGoal.html'))
+app.get('/a/:id/streamertotal', (req, res) => {//TODO chage to slug
+	res.sendFile(publicPathFile(publicPathFile(join('html', 'asset', 'streamertotal.html'))))
 })
 
 // Redirect to auth link streamlab
@@ -118,6 +117,10 @@ app.get('/forceRefresh', (req, res) => {
 
 const server = app.listen(process.env.PORT, () => {
 	console.log(`[*.*]:${process.env.PORT}`);
-})
 
-startSocketServer(server)
+	// Run WS server only when the web serv is started
+	startSocketServer(server)
+
+	// Disable recovery mode to allow fronten update
+	recoveryMode = false;
+})

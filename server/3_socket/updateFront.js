@@ -1,12 +1,56 @@
 import db				from '../2_dbManagement/database.js'
 import { front }		from './socketServer.js';
 
-export function updateFront(){
+// export function updateFrontHeavy(){
+// 	let res = {
+// 		donation_biggest: {},
+// 	}
+	
+// 	//update dif
+// 	for (const [id, don] of Object.entries(db.don)) {
+// 		//add biggest donations	
+// 		if (!res.donation_biggest[don.streamer_id]){
+// 			res.donation_biggest[don.streamer_id] = [];
+// 		}
+
+// 		if (res.donation_biggest[don.streamer_id].length === 0){
+// 			res.donation_biggest[don.streamer_id].push(don)
+// 		}
+// 		else{
+// 			for (let i in res.donation_biggest[don.streamer_id] + 1){
+// 				if ((res.donation_biggest[don.streamer_id]?.[i-1]?.amount ?? Infinity) >= don.amount
+// 					&& (don.amount >= (res.donation_biggest[don.streamer_id]?.[i]?.amount ?? -Infinity))){
+// 					res.donation_biggest[don.streamer_id].splice(i, 0, don);
+// 					res.donation_biggest[don.streamer_id][i]._id = id 
+// 					break
+// 				}
+// 			}
+// 			res.donation_biggest[don.streamer_id].splice(10)
+// 		}
+		
+// 	}
+
+// 	//check dif
+
+// 	//check biggest donation for single streamer
+// 	for (let id in res.donation_biggest){
+// 		for (let i in res.donation_biggest[id]){
+// 			if (res.donation_biggest[id].at(-i)._id !== db.front.donation_biggest?.[id]?.at(-i)?._id ?? null){
+// 				front.emit(`donation_biggest.${id}`, res.donation_biggest[id])
+// 				// console.log(`donation_biggest.${id}`)
+// 				break
+// 			}
+// 		}
+// 	}
+
+// 	db.front = res
+// }
+
+export function updateFrontLight(){
 	let res = {
 		total: 0,
 		total_streamer: {},
 		donation_last: {},
-		donation_biggest: {},
 	}
 	
 	//update dif
@@ -30,34 +74,15 @@ export function updateFront(){
 		if (res.donation_last[don.streamer_id].length > 10){
 			res.donation_last[don.streamer_id].shift()
 		}
-
-		//add biggest donations	
-		if (!res.donation_biggest[don.streamer_id]){
-			res.donation_biggest[don.streamer_id] = [];
-		}
-
-		if (res.donation_biggest[don.streamer_id].length === 0){
-			res.donation_biggest[don.streamer_id].push(don)
-		}
-		else{
-			for (let i in res.donation_biggest[don.streamer_id] + 1){
-				if ((res.donation_biggest[don.streamer_id]?.[i-1]?.amount ?? Infinity) >= don.amount
-					&& (don.amount >= (res.donation_biggest[don.streamer_id]?.[i]?.amount ?? -Infinity))){
-					res.donation_biggest[don.streamer_id].splice(i, 0, don);
-					res.donation_biggest[don.streamer_id][i]._id = id 
-					break
-				}
-			}
-			res.donation_biggest[don.streamer_id].splice(10)
-		}
-		
 	}
 
 	//check dif
+
 	//check Total
 	if (res.total !== db.front.total){
 		front.emit(`total`, res.total)
 		// console.log(`total`)
+		db.front.total = res.total
 	}
 
 	//check Total for single streamer
@@ -66,26 +91,17 @@ export function updateFront(){
 			front.emit(`total.${id}`, res.total_streamer[id])
 			// console.log(`total.${id}`)
 		}
-	}
-
-	//check last donation for single streamer
-	for (let id in res.donation_last){
-		if (res.donation_last[id].at(-1)._id != db.front.donation_last?.[id]?.at(-1)?._id ?? null){
+		// console.log(id, res.donation_last[id])
+		if (res.donation_last[id] && (res.donation_last[id].at(-1)._id != db.front.donation_last?.[id]?.at(-1)?._id ?? null)){
 			front.emit(`donation_last.${id}`, res.donation_last[id])
 			// console.log(`donation_last.${id}`)
 		}
 	}
+	db.front.total_streamer = res.total_streamer
+	db.front.donation_last = res.donation_last
+}
 
-	//check biggest donation for single streamer
-	for (let id in res.donation_biggest){
-		for (let i in res.donation_biggest[id]){
-			if (res.donation_biggest[id].at(-i)._id !== db.front.donation_biggest?.[id]?.at(-i)?._id ?? null){
-				front.emit(`donation_biggest.${id}`, res.donation_biggest[id])
-				// console.log(`donation_biggest.${id}`)
-				break
-			}
-		}
-	}
-
-	db.front = res
+export default {
+	updateFrontLight,
+	// updateFrontHeavy,
 }
