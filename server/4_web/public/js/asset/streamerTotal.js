@@ -1,13 +1,14 @@
+let displayAmount = 0;
 let amount = 0;
-function updateDOM(lastD) {
+function updateDOM() {
 const interval = setInterval(function() {
-  let change = (lastD-amount) / 10;
-  change = change >= 0 ? Math.ceil(change) : Math.floor(change);
-  amount += change;
-  console.log(amount)
-  if (amount === lastD)
-      clearInterval(interval);
-	  document.getElementById('animateCount').textContent = amount;
+	if (displayAmount === amount)
+		clearInterval(interval);
+	let change = (amount-displayAmount) / 10;
+	change = change >= 0 ? Math.ceil(change) : Math.floor(change);
+	displayAmount += change;
+	// console.log(displayAmount)
+	document.getElementById('animateCount').textContent = displayAmount;
 }, 20);
 }
 
@@ -20,7 +21,8 @@ async function start() {
 		socket.emit('init', {test: '123'});
 		socket.on(`total.${id}`, (res) => {
 			console.log('res socket', res);
-			updateDOM(res)
+			updateDOM()
+			amount = res;
 		});
 	} else {
 		document.location = '/u/'
