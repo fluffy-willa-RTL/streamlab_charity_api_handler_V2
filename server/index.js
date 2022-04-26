@@ -13,6 +13,8 @@ import dotenv from 'dotenv'
 // Init .env
 dotenv.config()
 
+export let recoveryMode = true
+
 // Set the __diname 
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -48,6 +50,7 @@ const streamlog = new Console({
 /**/
 /**/ startSocketClient()
 /**/ await startRecovery();
+/**/ recoveryMode = false;
 /**/
 //////////// RECOVERY MODE ////////////
 

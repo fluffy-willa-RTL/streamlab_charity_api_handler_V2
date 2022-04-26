@@ -3,21 +3,23 @@ import io 				from 'socket.io-client';
 import dotenv			from 'dotenv';
 dotenv.config();
 
+import { recoveryMode } from '../index.js';
 import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js';
 import { updateFront }	from './updateFront.js';
 
-let streamlabs;
 let is_first = true;
 export let first_id = null;
 export let socketClientIsConnected = null;
+
+export let streamlabs;
 
 /**
  * Start the socket for both streamlab and front-end connection
  */
 export function startSocketClient(){
 	console.log(color.FgCyan, 'Try to connect WS streamlabs', color.Reset);
-	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_DEV;
+	const streamlabUrl = 'https://sockets.streamlabs.com?token=' + process.env.SOCKET_WILLA;
 	// WS client /!\ streamlab use V2 server /!\
 	streamlabs = io(streamlabUrl, {transports: ['websocket']});
 
@@ -33,13 +35,17 @@ export function startSocketClient(){
 	streamlabs.on('event', 	 (data) => {
 		// Write donation in `db.don`
 		if (data.type === 'streamlabscharitydonation'){
-			let _id = '341903121934585856'//TODO REMOVE debug
-			// let _id	= data?.message?.[0]?.charityDonationId									?? parseInt(Math.random() * (10 ** 16)) //TODO REMOVE TESTING
-
+			let _id;
 			if (is_first){
+				_id = '341678066055122944'//TODO REMOVE debug
 				first_id = _id
 				is_first = false;
 			}
+			else {
+				_id	= data?.message?.[0]?.charityDonationId				?? parseInt(Math.random() * (10 ** 16)) //TODO REMOVE TESTING
+			}
+
+			console.log(_id)
 
 			// Check if the id exist in the db
 			if (db.don[_id] === undefined){
@@ -51,9 +57,11 @@ export function startSocketClient(){
 					streamer_id	: data?.message?.[0]?.memberId								?? 72567 //parseInt(Math.random() * (10 ** 16)), //TODO REMOVE TESTING
 				}
 			}
+
 			console.log(_id);
 			//TODO why ? @willa
-			updateFront(streamlabs)//TODO CHECK
+			if (!recoveryMode)
+				updateFront()//TODO CHECK
 		}
 	})
 }

@@ -18,18 +18,16 @@ async function start() {
 
 		// Listen if a connection have made with the backend
 		socket.on('connect', () => {
-			console.log('Connected!')
-			console.log('listen', `total.${id}`);
-			// socket.on(`total.${id}`, (res) => {
-				socket.on('total.341572882440261632', (res) => {
-					console.log('res socket', res);
-			});
-			socket.on('debug', () => console.log('update dom'));//TODO DEBUG
+			console.log(`Connected! Listening for (total.${id})`)
 		})
+
+		// socket.on('total.72567', (res) => {
 		socket.on(`total.${id}`, (res) => {
-			console.log('res socket', res);
+				console.log('res socket', res);
 		});
 
+		socket.on('debug', () => console.log('update dom'));//TODO DEBUG
+		
 		// Forece refresh the tab
 		socket.on('forceRefresh', () => {
 			document.location.reload(true)

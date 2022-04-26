@@ -7,7 +7,7 @@ import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js'
 
 
-let front
+export let front = null
 
 /**
  * Start the socket for both streamlab and front-end connection

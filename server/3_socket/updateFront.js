@@ -1,6 +1,7 @@
-import db			from '../2_dbManagement/database.js'
+import db				from '../2_dbManagement/database.js'
+import { front }		from './socketServer.js';
 
-export function updateFront(socket){
+export function updateFront(){
 	let res = {
 		total: 0,
 		total_streamer: {},
@@ -8,7 +9,7 @@ export function updateFront(socket){
 		donation_biggest: {},
 	}
 	
-//update dif
+	//update dif
 	for (const [id, don] of Object.entries(db.don)) {
 		// console.log(don)
 		//add total amount
@@ -52,23 +53,26 @@ export function updateFront(socket){
 		
 	}
 
-//check dif
+	//check dif
 	//check Total
 	if (res.total !== db.front.total){
-		socket.emit(`total`, res.total)
+		front.emit(`total`, res.total)
+		// console.log(`total`)
 	}
 
 	//check Total for single streamer
 	for (let id in res.total_streamer){
 		if (res.total_streamer[id] != db.front.total_streamer[id]){
-			socket.emit(`total.${id}`, res.total_streamer[id])
+			front.emit(`total.${id}`, res.total_streamer[id])
+			// console.log(`total.${id}`)
 		}
 	}
 
 	//check last donation for single streamer
 	for (let id in res.donation_last){
 		if (res.donation_last[id].at(-1)._id != db.front.donation_last?.[id]?.at(-1)?._id ?? null){
-			socket.emit(`donation_biggest.${id}`, res.donation_last[id])
+			front.emit(`donation_last.${id}`, res.donation_last[id])
+			// console.log(`donation_last.${id}`)
 		}
 	}
 
@@ -76,7 +80,8 @@ export function updateFront(socket){
 	for (let id in res.donation_biggest){
 		for (let i in res.donation_biggest[id]){
 			if (res.donation_biggest[id].at(-i)._id !== db.front.donation_biggest?.[id]?.at(-i)?._id ?? null){
-				socket.emit(`donation_biggest.${id}`, res.donation_biggest[id])
+				front.emit(`donation_biggest.${id}`, res.donation_biggest[id])
+				// console.log(`donation_biggest.${id}`)
 				break
 			}
 		}
