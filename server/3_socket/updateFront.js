@@ -1,6 +1,9 @@
 import db				from '../2_dbManagement/database.js'
 import { front }		from './socketServer.js';
 
+let nbLastDonation = 25
+let nbBiggestDonation = 25
+
 export function updateFrontHeavy(){
 	let res = {
 		donation_biggest: {},
@@ -25,7 +28,7 @@ export function updateFrontHeavy(){
 					break
 				}
 			}
-			res.donation_biggest[don.streamer_id].splice(10)
+			res.donation_biggest[don.streamer_id].splice(nbBiggestDonation)
 		}
 		
 	}
@@ -43,7 +46,7 @@ export function updateFrontHeavy(){
 		}
 	}
 
-	db.front = res
+	db.front.donation_biggest = res.donation_biggest
 }
 
 export function updateFrontLight(){
@@ -71,7 +74,7 @@ export function updateFrontLight(){
 		}
 		res.donation_last[don.streamer_id].push(don)
 		res.donation_last[don.streamer_id].at(-1)._id = id 
-		if (res.donation_last[don.streamer_id].length > 10){
+		if (res.donation_last[don.streamer_id].length > nbLastDonation){
 			res.donation_last[don.streamer_id].shift()
 		}
 	}
