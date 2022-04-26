@@ -5,6 +5,7 @@ let nbLastDonation = 25
 let nbBiggestDonation = 25
 
 export function updateFrontHeavy(){
+	// console.log('heavy')
 	let res = {
 		donation_biggest: {},
 	}
@@ -50,6 +51,7 @@ export function updateFrontHeavy(){
 }
 
 export function updateFrontLight(){
+	// console.log('light')
 	let res = {
 		total: 0,
 		total_streamer: {},
@@ -104,7 +106,26 @@ export function updateFrontLight(){
 	db.front.donation_last = res.donation_last
 }
 
+function getFront(){
+	front.emit(`total`, db.front.total)
+	// console.log(`total`)
+
+	for (let id in db.front.total_streamer){
+		front.emit(`total.${id}`,  db.front.total_streamer[id])
+		// console.log(`total.${id}`)
+
+		front.emit(`donation_last.${id}`,  db.front.donation_last[id])
+		// console.log(`donation_last.${id}`)
+
+		front.emit(`donation_biggest.${id}`,  db.front.donation_biggest[id])
+		// console.log(`donation_biggest.${id}`)
+
+	}
+}
+
+
 export default {
+	getFront,
 	updateFrontLight,
 	updateFrontHeavy,
 }

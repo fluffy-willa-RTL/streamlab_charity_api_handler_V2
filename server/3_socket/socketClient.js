@@ -50,7 +50,7 @@ export function startSocketClient(){
 				db.don[_id] = {
 					name		: data?.message?.[0]?.from									?? null,
 					message		: data?.message?.[0]?.message								?? null,
-					amount		: parseInt(parseFloat(data?.message?.[0]?.amount) * 100)	?? 0,
+					amount		: parseInt(parseFloat(data?.message?.[0]?.amount) /** 100*/)	?? 0,//TODO why *100 ?, le front recois les dons en *100 DEBUG test to remove TOFIX
 					date		: Date.parse(data?.message?.[0]?.createdAt)	/ 1000			?? 0,
 					streamer_id	: data?.message?.[0]?.memberId								?? 1000 //parseInt(Math.random() * (10 ** 16)), //TODO REMOVE TESTING
 				}

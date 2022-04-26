@@ -76,7 +76,11 @@ app.use(express.static(join(__dirname, '4_web', 'public')));
 // })
 
 app.get('/u/', (req, res) => {
-	res.sendFile(publicPathFile('html', 'linkAccount.html'))
+	res.sendFile(publicPathFile(join('html', 'streamerNotFound.html')))
+})
+
+app.get('/a/', (req, res) => {
+	res.sendFile(publicPathFile(join('html', 'streamerNotFound.html')))
 })
 
 // Dashboard for user
@@ -85,8 +89,8 @@ app.get('/u/:slug', (req, res) => {//TODO chage to slug
 })
 
 // Donation goal for user
-app.get('/a/:id/streamertotal', (req, res) => {//TODO chage to slug
-	res.sendFile(publicPathFile(publicPathFile(join('html', 'asset', 'streamertotal.html'))))
+app.get('/a/:id/streamertotal', (req, res) => {
+	res.sendFile(publicPathFile(join('html', 'asset', 'streamerTotal.html')))
 })
 
 // Redirect to auth link streamlab
