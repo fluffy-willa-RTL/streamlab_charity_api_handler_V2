@@ -40,6 +40,9 @@ export async function startSocketServer(server){
 		})
 
 		update.updateFrontLight();
+		data.on('init', () => {
+			update.getFront();
+		})
 
 		//Listen for Page Admin to refresh streamer subscribed in streamlab charity team
 		data.on('refresh-streamer',(res) => {

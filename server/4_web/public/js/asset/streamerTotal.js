@@ -9,6 +9,7 @@ async function start() {
 	{
 		const socket = await connect();
 		// Listen update for the total amount
+		socket.emit('init', {test: '123'});
 		socket.on(`total.${id}`, (res) => {
 			console.log('res socket', res);
 			updateDOM(res, id)
