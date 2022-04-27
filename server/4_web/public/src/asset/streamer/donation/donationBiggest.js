@@ -1,4 +1,4 @@
-let totalStreamer = {
+const totalStreamer = {
 	amount: 0,
 	display: 0
 }

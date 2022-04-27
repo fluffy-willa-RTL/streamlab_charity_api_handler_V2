@@ -1,9 +1,9 @@
-let totalGlobal = {
+const totalGlobal = {
 	amount: 0,
 	display: 0
 }
 
-let totalStreamer = {
+const totalStreamer = {
 	amount: 0,
 	display: 0
 }
