@@ -10,6 +10,7 @@ import { startRecovery } 							from './1_recovery/recovery.js'
 import { getAllStreamer }							from './2_dbManagement/getAllStreamer.js'
 import { startSocketClient } 						from './3_socket/socketClient.js'
 import { startSocketServer, forceRefreshClient }	from './3_socket/socketServer.js'
+import update										from './3_socket/updateFront.js'
 
 
 import dotenv from 'dotenv'
@@ -56,7 +57,7 @@ startSocketClient()
 /**/ if (await yesno({question: 'Start Recovery mode ?', defaultValue: true})){
 /**/ 	await startRecovery();
 /**/ }
-/**/ 
+/**/
 //////////// RECOVERY MODE ////////////
 
 // Fetch all streamer in the team
@@ -114,6 +115,14 @@ app.get('/a/:id/total/me-all', (req, res) => {
 })
 
 /******************************************************************************/
+
+// Donation goal for user
+app.get('/a/:id/donation/last', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast.html')))
+})
+
+
+/******************************************************************************/
 /******************************************************************************/
 
 // Redirect to auth link streamlab
@@ -160,6 +169,10 @@ const server = app.listen(process.env.PORT, () => {
 
 	// Run WS server only when the web serv is started
 	startSocketServer(server)
+
+	// Init the front buffer
+	update.updateFrontLight();
+	update.updateFrontHeavy();
 
 	// Disable recovery mode to allow fronten update
 	recoveryMode = false;
