@@ -27,7 +27,8 @@
     "mongodb": "4.5",
     "mysql": "^2.18.1",
     "socket.io": "^4.4.1",
-    "socket.io-client": "^2.3.1"
+    "socket.io-client": "^2.3.1",
+    "yesno": "^0.3.1"
   },
   "devDependencies": {
     "@types/socket.io-client": "^3.0.0"

@@ -2,7 +2,9 @@ import * as connect		from './0_utils/connect.js';
 import cors				from 'cors';
 import express			from "express";
 import db				from './2_dbManagement/database.js'
+import yesno			from 'yesno'
 
+import { sleep } 									from './0_utils/sleep.js';
 import { startRecovery } 							from './1_recovery/recovery.js'
 import { getAllStreamer }							from './2_dbManagement/getAllStreamer.js'
 import { startSocketClient } 						from './3_socket/socketClient.js'
@@ -37,6 +39,7 @@ import fs from 'node:fs'
 // 	stderr: fs.createWriteStream("streamer_log.err"),
 // });
 
+startSocketClient()
 
 /**
  * When the back start it will run the `RECOVERY MODE`, all the component will be
@@ -47,10 +50,12 @@ import fs from 'node:fs'
  * if we find the first donation from the WS.
  */
 //////////// RECOVERY MODE ////////////
-/**/
-/**/ startSocketClient()
-/**/ await startRecovery();
-/**/
+/**/ 
+/**/ await sleep(1000)
+/**/ if (await yesno({question: 'Start Recovery mode ?', defaultValue: true})){
+/**/ 	await startRecovery();
+/**/ }
+/**/ 
 //////////// RECOVERY MODE ////////////
 
 // Fetch all streamer in the team
