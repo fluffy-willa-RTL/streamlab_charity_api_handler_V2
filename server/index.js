@@ -3,6 +3,7 @@ import cors				from 'cors';
 import express			from "express";
 import db				from './2_dbManagement/database.js'
 import yesno			from 'yesno'
+import color from './0_utils/color.js';
 
 import { sleep } 									from './0_utils/sleep.js';
 import { startRecovery } 							from './1_recovery/recovery.js'
@@ -81,22 +82,36 @@ app.use(express.static(join(__dirname, '4_web', 'public')));
 // })
 
 app.get('/u/', (req, res) => {
-	res.sendFile(publicPathFile(join('html', 'streamerNotFound.html')))
+	res.sendFile(publicPathFile(join('src', 'streamerNotFound.html')))
 })
 
 app.get('/a/', (req, res) => {
-	res.sendFile(publicPathFile(join('html', 'streamerNotFound.html')))
+	res.sendFile(publicPathFile(join('src', 'streamerNotFound.html')))
 })
 
 // Dashboard for user
-app.get('/u/:slug', (req, res) => {//TODO chage to slug
-	res.sendFile(publicPathFile(join('html', 'streamerDashboard.html')))
+app.get('/u/:slug', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'streamerDashboard.html')))
+})
+
+/******************************************************************************/
+
+// Donation goal for user
+app.get('/a/:id/total/me', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total', 'totalMe.html')))
 })
 
 // Donation goal for user
-app.get('/a/:id/streamertotal', (req, res) => {
-	res.sendFile(publicPathFile(join('html', 'asset', 'streamerTotal.html')))
+app.get('/a/:id/total/all', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalGlobal.html')))
 })
+
+// Donation goal for user
+app.get('/a/:id/total/me-all', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMeAndGlobal.html')))
+})
+
+/******************************************************************************/
 
 // Redirect to auth link streamlab
 app.get('/', (req, res) => {
@@ -104,17 +119,30 @@ app.get('/', (req, res) => {
 })
 
 // Get the `code` query to acces the user info and generate they link for `/u/:slug`
-app.get('/redirect', async (req, res) => {//TODO TODO TODO TODO 							TODO slug the username 
-	let data;
-	if ('code' in req.query){
-		data = await connect.getUserData(req.query.code);
+app.get('/redirect', async (req, res) => {
+	if (!Object.hasOwn(req.query, 'code')) {
+		console.log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
+		res.status(400).send("Fatal error ! Streamlabs send null response ! Réessayer de vous connecter si le problème ce rèpète constactez les dev.");
+		return;
 	}
-	data ? res.redirect('/u/'+ data.slug) : res.send("Error!")
-})
+	const data = await connect.getUserData(req.query.code);
+	if (data === null) {
+		console.log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
+		res.status(400).send("Fatal error ! Streamlabs send null response ! Réessayer de vous connecter si le problème ce rèpète constactez les dev.");
+		return;
+	}
+	res.redirect('/u/'+ data.slug);
+});
 
 /**
  * DEV ENDPOINT
  */
+
+
+app.get('/9je5vyhjh8doxj-admin', (req, res) => {
+	res.sendFile(publicPathFile(join('html', '9je5vyhjh8doxj-admin.html')))
+})
+
 app.get('/forceRefresh', (req, res) => {
 	forceRefreshClient();
 	res.send("Send forceRefresh all client")
