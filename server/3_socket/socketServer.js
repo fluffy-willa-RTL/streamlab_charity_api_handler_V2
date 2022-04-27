@@ -39,9 +39,9 @@ export async function startSocketServer(server){
 			data.emit('youare', {"error": 404});
 		})
 
-		update.updateFrontLight();
+		// update.updateFrontLight();
 		data.on('init', () => {
-			update.getFront();
+			update.getFront(data);
 		})
 
 		//Listen for Page Admin to refresh streamer subscribed in streamlab charity team

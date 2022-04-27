@@ -106,18 +106,18 @@ export function updateFrontLight(){
 	db.front.donation_last = res.donation_last
 }
 
-function getFront(){
-	front.emit(`total`, db.front.total)
+function getFront(socket){
+	socket.emit(`total`, db.front.total)
 	// console.log(`total`)
 
 	for (let id in db.front.total_streamer){
-		front.emit(`total.${id}`,  db.front.total_streamer[id])
+		socket.emit(`total.${id}`,  db.front.total_streamer[id])
 		// console.log(`total.${id}`)
 
-		front.emit(`donation_last.${id}`,  db.front.donation_last[id])
+		socket.emit(`donation_last.${id}`,  db.front.donation_last[id])
 		// console.log(`donation_last.${id}`)
 
-		front.emit(`donation_biggest.${id}`,  db.front.donation_biggest[id])
+		socket.emit(`donation_biggest.${id}`,  db.front.donation_biggest[id])
 		// console.log(`donation_biggest.${id}`)
 
 	}
