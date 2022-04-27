@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+	<script>
+		// GLOBAL VARIABLE
+		const	slug = window.location.pathname.substring('/u/'.length)
+		// Info message
+		let		msg = 'Error refresh';
+		let		data = null;
+	</script>
+</head>
+<body>
+	<div class="topnav">
+		<a class="active" href="#home">Home</a>
+	  </div>
+	<h1 id="welcomeMessage"></h1>
+	<p>Ici tu peux retrouver tout les assets que tu peux utiliser lors de ton stream.</p>
+
+	<iframe width="560" height="315" src="http://dev.fluffy.dreemcloud.net/a/1000/streamertotal" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</body>
+<script src="../src/u.js"></script>
+</html>
+
+<style>
+body {
+	background-color: #36393f;
+}
+
+h1, h2, h3, a, p {
+	color: #fff;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #2f3136;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+</style>
