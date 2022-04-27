@@ -5,8 +5,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
-	<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
-	<script>
+	<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+	<script defer src="/script/socket.js"></script>
+	<script defer>
 		// GLOBAL VARIABLE
 		const	slug = window.location.pathname.substring('/u/'.length)
 		// Info message
@@ -21,9 +22,13 @@
 	<h1 id="welcomeMessage"></h1>
 	<p>Ici tu peux retrouver tout les assets que tu peux utiliser lors de ton stream.</p>
 
-	<iframe width="560" height="315" src="http://dev.fluffy.dreemcloud.net/a/1000/streamertotal" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	<ul id="myList"></ul>
+
+
+
+
 </body>
-<script src="../src/u.js"></script>
+<script defer src="../src/u.js"></script>
 </html>
 
 <style>

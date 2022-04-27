@@ -1,0 +1,8 @@
+/* body {
+} */
+
+p, h1, h2, h3 {
+	color: #fff;
+	           /* color | offset-x | offset-y | blur-radius */
+	text-shadow: #000      1px       0            10px;
+}
