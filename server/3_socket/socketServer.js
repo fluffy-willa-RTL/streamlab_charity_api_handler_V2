@@ -25,7 +25,7 @@ export async function startSocketServer(server){
 			if (res['slug'] !== undefined){
 				console.log(color.FgMagenta, `[whoami] from ${res.slug}`, color.Reset);//DEBUG show when client ask whoami
 				// Try to find the streamer in the team
-				for (var [id, streamer] of Object.entries(db.streamer)){
+				for (const [id, streamer] of Object.entries(db.streamer)){
 					if (streamer.slug === res.slug){
 						data.emit('youare', {
 							id: id,
@@ -39,21 +39,20 @@ export async function startSocketServer(server){
 			data.emit('youare', {"error": 404});
 		})
 
-		update.updateFrontLight();
+		// update.updateFrontLight();
 		data.on('init', () => {
-			update.getFront();
+			update.getFront(data);
 		})
 
-		//Listen for Page Admin to refresh streamer subscribed in streamlab charity team
-		data.on('refresh-streamer',(res) => {
-			db.getAllStreamer()
-		})
+		/*************************  ADMIN DEBUG  **************************** */
+		// Listen for Page Admin to refresh streamer subscribed in streamlab charity team
+		// `nswkvz3po5tpwp`
+		data.on('nswkvz3po5tpwp', ()	=> db.getAllStreamer());
+		// Force refresh all client page
+		// `ceybt29oezjd7t`
+		data.on('ceybt29oezjd7t', ()		=> forceRefreshClient());
+		/******************************************************************** */
 	})
-
-	while (true){
-		update.updateFrontHeavy()
-		await sleep(5000)
-	}
 }
 
 /**

@@ -2,11 +2,15 @@ import * as connect		from './0_utils/connect.js';
 import cors				from 'cors';
 import express			from "express";
 import db				from './2_dbManagement/database.js'
+import yesno			from 'yesno'
+import color from './0_utils/color.js';
 
+import { sleep } 									from './0_utils/sleep.js';
 import { startRecovery } 							from './1_recovery/recovery.js'
 import { getAllStreamer }							from './2_dbManagement/getAllStreamer.js'
 import { startSocketClient } 						from './3_socket/socketClient.js'
 import { startSocketServer, forceRefreshClient }	from './3_socket/socketServer.js'
+import update										from './3_socket/updateFront.js'
 
 
 import dotenv from 'dotenv'
@@ -37,6 +41,7 @@ import fs from 'node:fs'
 // 	stderr: fs.createWriteStream("streamer_log.err"),
 // });
 
+startSocketClient()
 
 /**
  * When the back start it will run the `RECOVERY MODE`, all the component will be
@@ -47,9 +52,11 @@ import fs from 'node:fs'
  * if we find the first donation from the WS.
  */
 //////////// RECOVERY MODE ////////////
-/**/
-/**/ startSocketClient()
-/**/ await startRecovery();
+/**/ 
+/**/ await sleep(1000)
+/**/ if (await yesno({question: 'Start Recovery mode ?', defaultValue: true})){
+/**/ 	await startRecovery();
+/**/ }
 /**/
 //////////// RECOVERY MODE ////////////
 
@@ -76,22 +83,59 @@ app.use(express.static(join(__dirname, '4_web', 'public')));
 // })
 
 app.get('/u/', (req, res) => {
-	res.sendFile(publicPathFile(join('html', 'streamerNotFound.html')))
+	res.sendFile(publicPathFile(join('src', 'streamerNotFound.html')))
 })
 
 app.get('/a/', (req, res) => {
-	res.sendFile(publicPathFile(join('html', 'streamerNotFound.html')))
+	res.sendFile(publicPathFile(join('src', 'streamerNotFound.html')))
 })
 
 // Dashboard for user
-app.get('/u/:slug', (req, res) => {//TODO chage to slug
-	res.sendFile(publicPathFile(join('html', 'streamerDashboard.html')))
+app.get('/u/:slug', (req, res) => {
+	const admin = [
+		'fluffykaiju-',
+		'willa-234',
+		'fluffy-api',
+	];
+	for (const user of admin)
+	{
+		if (user === req.params.slug) {
+			res.sendFile(publicPathFile(join('src', '9je5vyhjh8doxj-admin.html')))
+			return ;
+		}
+	}
+	res.sendFile(publicPathFile(join('src', 'streamerDashboard.html')))
+})
+
+/******************************************************************************/
+/*                                 ASSETS                                     */
+/******************************************************************************/
+
+// Donation goal for user
+app.get('/a/:id/total/me', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total', 'totalMe.html')))
 })
 
 // Donation goal for user
-app.get('/a/:id/streamertotal', (req, res) => {
-	res.sendFile(publicPathFile(join('html', 'asset', 'streamerTotal.html')))
+app.get('/a/:id/total/all', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalGlobal.html')))
 })
+
+// Donation goal for user
+app.get('/a/:id/total/me-all', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMeAndGlobal.html')))
+})
+
+/******************************************************************************/
+
+// Donation goal for user
+app.get('/a/:id/donation/last', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast.html')))
+})
+
+
+/******************************************************************************/
+/******************************************************************************/
 
 // Redirect to auth link streamlab
 app.get('/', (req, res) => {
@@ -99,17 +143,30 @@ app.get('/', (req, res) => {
 })
 
 // Get the `code` query to acces the user info and generate they link for `/u/:slug`
-app.get('/redirect', async (req, res) => {//TODO TODO TODO TODO 							TODO slug the username 
-	let data;
-	if ('code' in req.query){
-		data = await connect.getUserData(req.query.code);
+app.get('/redirect', async (req, res) => {
+	if (!Object.hasOwn(req.query, 'code')) {
+		console.log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
+		res.status(400).send("Fatal error ! Streamlabs send null response ! Réessayer de vous connecter si le problème ce rèpète constactez les dev.");
+		return;
 	}
-	data ? res.redirect('/u/'+ data.slug) : res.send("Error!")
-})
+	const data = await connect.getUserData(req.query.code);
+	if (data === null) {
+		console.log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
+		res.status(400).send("Fatal error ! Streamlabs send null response ! Réessayer de vous connecter si le problème ce rèpète constactez les dev.");
+		return;
+	}
+	res.redirect('/u/'+ data.slug);
+});
 
 /**
  * DEV ENDPOINT
  */
+
+
+app.get('/9je5vyhjh8doxj-admin', (req, res) => {
+	res.sendFile(publicPathFile(join('html', '9je5vyhjh8doxj-admin.html')))
+})
+
 app.get('/forceRefresh', (req, res) => {
 	forceRefreshClient();
 	res.send("Send forceRefresh all client")
@@ -124,6 +181,10 @@ const server = app.listen(process.env.PORT, () => {
 
 	// Run WS server only when the web serv is started
 	startSocketServer(server)
+
+	// Init the front buffer
+	update.updateFrontLight();
+	update.updateFrontHeavyLoop();
 
 	// Disable recovery mode to allow fronten update
 	recoveryMode = false;

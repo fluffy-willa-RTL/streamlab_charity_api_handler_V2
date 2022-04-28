@@ -1,8 +1,9 @@
 import db				from '../2_dbManagement/database.js'
 import { front }		from './socketServer.js';
+import { sleep }		from '../0_utils/sleep.js'
 
-let nbLastDonation = 25
-let nbBiggestDonation = 25
+let nbLastDonation = 10
+let nbBiggestDonation = 10
 
 export function updateFrontHeavy(){
 	// console.log('heavy')
@@ -106,26 +107,33 @@ export function updateFrontLight(){
 	db.front.donation_last = res.donation_last
 }
 
-function getFront(){
-	front.emit(`total`, db.front.total)
+function getFront(socket){
+	socket.emit(`total`, db.front.total)
 	// console.log(`total`)
 
 	for (let id in db.front.total_streamer){
-		front.emit(`total.${id}`,  db.front.total_streamer[id])
+		socket.emit(`total.${id}`,  db.front.total_streamer[id])
 		// console.log(`total.${id}`)
 
-		front.emit(`donation_last.${id}`,  db.front.donation_last[id])
+		socket.emit(`donation_last.${id}`,  db.front.donation_last[id])
 		// console.log(`donation_last.${id}`)
 
-		front.emit(`donation_biggest.${id}`,  db.front.donation_biggest[id])
+		socket.emit(`donation_biggest.${id}`,  db.front.donation_biggest[id])
 		// console.log(`donation_biggest.${id}`)
 
 	}
 }
 
+async function updateFrontHeavyLoop () {
+	while (true){
+		updateFrontHeavy()
+		await sleep(5000)
+	}
+}
 
 export default {
 	getFront,
 	updateFrontLight,
 	updateFrontHeavy,
+	updateFrontHeavyLoop,
 }
