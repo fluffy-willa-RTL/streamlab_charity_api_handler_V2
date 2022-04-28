@@ -40,30 +40,42 @@ async function start () {
 					if (linkToGenerate === null) {
 						linkToGenerate = [
 							{
-								title: `Total récolté par ${data.streamer.display_name}`,
-								src: `/a/${data.id}/total/me`,
+								title:	`Total récolté par ${data.streamer.display_name}`,
+								src:	`/a/${data.id}/total/me`,
+								width:	500,
+								height:	200,
 							},
 							{
-								title: `Total récolté par la Team`,
-								src: `/a/${data.id}/total/all`,
+								title:	`Total récolté par la Team`,
+								src:	`/a/${data.id}/total/all`,
+								width:	500,
+								height:	200,
 							},
 							{
-								title: `Total récolté par ${data.streamer.display_name} et la Team`,
-								src: `/a/${data.id}/total/me-all`,
+								title:	`Total récolté par ${data.streamer.display_name} et la Team`,
+								src:	`/a/${data.id}/total/me-all`,
+								width:	500,
+								height:	200,
+							},
+							{
+								title:	`10 dèrnière doantion de ${data.streamer.display_name}.`,
+								src:	`/a/${data.id}/donation/last`,
+								width:	500,
+								height:	800,
 							},
 						];
 						const list = document.getElementById("myList");
 						linkToGenerate.forEach((item) => {
 							const div = document.createElement('div');
-							div.style = '  margin: auto;   width: 50%;   border: 3px solid green;   padding: 10px;'
+							div.className = 'listElement'
 							const title = document.createElement("a");
 							title.textContent = item.title;
 							title.href = item.src;
 							div.appendChild(title);
 							const frame = document.createElement("iframe");
 							frame.src = item.src;
-							frame.width = 200;
-							frame.height = 250;
+							frame.width = item.width;
+							frame.height = item.height;
 							div.appendChild(frame);
 							list.appendChild(div);
 						});
