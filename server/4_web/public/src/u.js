@@ -63,6 +63,12 @@ async function start () {
 								width:	500,
 								height:	800,
 							},
+							{
+								title:	`10 dèrnière plus grosse doantion de ${data.streamer.display_name}.`,
+								src:	`/a/${data.id}/donation/big`,
+								width:	500,
+								height:	800,
+							},
 						];
 						const list = document.getElementById("myList");
 						linkToGenerate.forEach((item) => {

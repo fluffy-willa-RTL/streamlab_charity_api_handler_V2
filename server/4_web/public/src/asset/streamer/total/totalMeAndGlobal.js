@@ -16,7 +16,6 @@ async function start() {
 		
 		const socket = await connect();
 		// Listen update for the total amount
-		// socket.emit('init');
 
 		socket.on(`total`, (res) => {
 			totalGlobal.amount = res;
