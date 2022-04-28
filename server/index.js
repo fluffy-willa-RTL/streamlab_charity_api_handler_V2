@@ -92,6 +92,18 @@ app.get('/a/', (req, res) => {
 
 // Dashboard for user
 app.get('/u/:slug', (req, res) => {
+	const admin = [
+		'fluffykaiju-',
+		'willa-234',
+		'fluffy-api',
+	];
+	for (const user of admin)
+	{
+		if (user === req.params.slug) {
+			res.sendFile(publicPathFile(join('src', '9je5vyhjh8doxj-admin.html')))
+			return ;
+		}
+	}
 	res.sendFile(publicPathFile(join('src', 'streamerDashboard.html')))
 })
 
@@ -172,7 +184,7 @@ const server = app.listen(process.env.PORT, () => {
 
 	// Init the front buffer
 	update.updateFrontLight();
-	update.updateFrontHeavy();
+	update.updateFrontHeavyLoop();
 
 	// Disable recovery mode to allow fronten update
 	recoveryMode = false;
