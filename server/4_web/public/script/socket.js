@@ -1,7 +1,8 @@
 async function connect() {
 	// Try to connect to the backen socket
-	const socket = await io(`ws://${window.location.hostname}`, {
+	const socket = await io.connect(`https://${window.location.hostname}`, {
 		reconnectionDelayMax: 5000,//TODO check the doc
+		secure: true, // Enable ssl
 	});
 	
 	// Listen if a connection error occur

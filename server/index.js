@@ -29,18 +29,6 @@ function publicPathFile(path) {
 	return join(__dirname, '4_web', 'public', path);
 }
 
-//TODO REMOVE DEBUG
-import {Console} from 'node:console';
-import fs from 'node:fs'
-// const dblog = new Console({
-// 	stdout: fs.createWriteStream("dblog.json"),
-// 	stderr: fs.createWriteStream("dblog.err"),
-// });
-// const streamlog = new Console({
-// 	stdout: fs.createWriteStream("streamer_log.json"),
-// 	stderr: fs.createWriteStream("streamer_log.err"),
-// });
-
 startSocketClient()
 
 /**
@@ -64,9 +52,6 @@ startSocketClient()
 /// NOTE: `await` to avoid that a clien ask `whoami` when the user db is not set
 await getAllStreamer()
 
-// dblog.log(JSON.stringify(db.don));
-// streamlog.log(JSON.stringify(db.streamer));
-
 export const app = express()
 
 // Allow CORS
@@ -78,9 +63,6 @@ app.use(express.static(join(__dirname, '4_web', 'public')));
 /**
  * FRONT END
  */
-// app.get('/', (req, res) => {
-// 	res.send("~UwU~");
-// })
 
 app.get('/u/', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'streamerNotFound.html')))

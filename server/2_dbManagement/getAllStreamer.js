@@ -11,7 +11,9 @@ dotenv.config()
  */
 export async function getAllStreamer(){
 	const url = `https://streamlabscharity.com/api/v1/teams/${process.env.STREAMLAB_CHARITY_TEAM}/members`
-	const nbPage = await axios.get(url).then((res) => {return res.data.last_page;})
+	const nbPage = await axios.get(url)
+						.then((res) => {return res.data.last_page;})
+						.catch((err) => {console.log(err)})
 
 	for (let i = 1; i < nbPage + 1; i++){
 		const data =  await axios.get(url + `?page=${i}`)
