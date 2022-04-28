@@ -3,8 +3,9 @@ let linkToGenerate = null;
 async function start () {
 	if (slug) {
 		// Try to connect to the backen socket
-		const socket = await io(`ws://${window.location.hostname}`, {
+		const socket = await io(`${window.location.protocol}//${window.location.hostname}`, {
 			reconnectionDelayMax: 5000,//TODO check the doc
+			secure: true, // Enable ssl
 		});
 
 		// Listen if a connection error occur
@@ -61,13 +62,13 @@ async function start () {
 								title:	`10 dèrnière doantion de ${data.streamer.display_name}.`,
 								src:	`/a/${data.id}/donation/last`,
 								width:	500,
-								height:	800,
+								height:	1000,
 							},
 							{
 								title:	`10 dèrnière plus grosse doantion de ${data.streamer.display_name}.`,
 								src:	`/a/${data.id}/donation/big`,
 								width:	500,
-								height:	800,
+								height:	1000,
 							},
 						];
 						const list = document.getElementById("myList");
