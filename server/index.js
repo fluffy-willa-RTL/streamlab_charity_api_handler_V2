@@ -133,6 +133,11 @@ app.get('/a/:id/donation/last', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast.html')))
 })
 
+// Donation goal for user
+app.get('/a/:id/donation/big', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))
+})
+
 
 /******************************************************************************/
 /******************************************************************************/

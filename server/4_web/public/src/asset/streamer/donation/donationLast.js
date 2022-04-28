@@ -10,7 +10,6 @@ async function start() {
 		
 		const socket = await connect();
 		// Listen update for the total amount
-		socket.emit('init');
 
 		socket.on(`donation_last.${id}`, (res) => {
 			data = {}
@@ -21,15 +20,23 @@ async function start() {
 			let donationList = document.getElementById(`donationList`)
 
 			for (let el of Object.values(data)){			
+				let test = true
 				if (prev[el._id] === undefined){
+					test = false
 					const newElem = (document.getElementById("templateDonation")).content.cloneNode(true);
 					newElem.getElementById(`donation`).id = `donation_${el._id}`;
 					donationList.appendChild(newElem);
 				}
 				
 				let elem = document.getElementById(`donation_${el._id}`);
+				if (test){
+					elem.getElementsByClassName('value')[0].textContent = moneyConverter.format(el.amount / 100)
+				}
+				else{
+					animateMoneySingle(el.amount, elem)
+				}
 				elem.getElementsByClassName('name')[0].textContent = convertLongText(el.name);
-				elem.getElementsByClassName('value')[0].textContent = moneyConverter.format(el.amount / 100);
+				
 				
 			}
 

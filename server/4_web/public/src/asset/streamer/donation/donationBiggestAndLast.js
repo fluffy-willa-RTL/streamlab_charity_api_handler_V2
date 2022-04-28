@@ -10,7 +10,6 @@ async function start() {
 	{
 		document.getElementById('streamerId').textContent = id;
 		
-		const socket = await connect();
 		// Listen update for the total amount
 		socket.emit('init');
 

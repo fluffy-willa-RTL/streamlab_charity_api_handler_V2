@@ -23,6 +23,29 @@ function animateMoney(obj, id) {
 	}, 20);
 };
 
+/*
+input :
+	obj: {
+		diplay: xxx		=> set to set 0 as global variable
+		amount: xxx		=> set to set 0 as global variable
+	}
+	id:
+		css id of the item we want to change
+	break at 10000000000000000
+*/
+function animateMoneySingle(amount, id) {
+	console.log('amount',amount);
+	let display = 0;
+	const interval = setInterval(function() {
+		if (display === amount)
+			clearInterval(interval);
+		let change = (amount - display) / 10;
+		change = change >= 0 ? Math.ceil(change) : Math.floor(change);
+		display += change;
+		id.getElementsByClassName('value')[0].textContent = moneyConverter.format(display / 100);
+	}, 15);
+};
+
 function convertLongText(text, len = 15){
 	if (text.length > len){
 		text = text.slice(0, len);
