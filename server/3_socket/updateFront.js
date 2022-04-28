@@ -1,8 +1,9 @@
 import db				from '../2_dbManagement/database.js'
 import { front }		from './socketServer.js';
+import { sleep }		from '../0_utils/sleep.js'
 
-let nbLastDonation = 25
-let nbBiggestDonation = 25
+let nbLastDonation = 10
+let nbBiggestDonation = 10
 
 export function updateFrontHeavy(){
 	// console.log('heavy')
@@ -123,9 +124,16 @@ function getFront(socket){
 	}
 }
 
+async function updateFrontHeavyLoop () {
+	while (true){
+		updateFrontHeavy()
+		await sleep(5000)
+	}
+}
 
 export default {
 	getFront,
 	updateFrontLight,
 	updateFrontHeavy,
+	updateFrontHeavyLoop,
 }
