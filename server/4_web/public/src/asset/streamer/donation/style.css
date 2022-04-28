@@ -1,0 +1,53 @@
+html body {
+	height: 100%;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+#header {
+	display: block;
+	background-color: #004f9c;
+	margin: 0px;
+	padding: 20px 5px 20px 5px;
+	font-size: 4em;
+	color: white;
+}
+
+#donationList {
+	display: block;
+	background-color: #28beff;
+	margin: 0px;
+	padding: 5px;
+}
+
+.donation {
+	display: flex;
+	/* border: 2px solid #077bad; */
+	background-color: #9ae1ff;
+	padding: 10px;
+	margin: 10px 0;
+	min-height: 50px;
+	justify-content: space-between;
+	border-radius: 10px;
+}
+
+.name {
+	display: flex;
+}
+
+.value {
+	display: flex;
+	/* border: 2px solid #077bad; */
+	background-color: #ccf0ff;
+	justify-content: flex-end;
+	min-width: 5em;
+	padding: 0px 10px 0px 10px;
+	border-radius: 10px;
+}
+
+.text {
+	align-items: center;
+	font-size: 1.5em;
+	font-family: "Lucida Console", "Courier New", monospace;
+}

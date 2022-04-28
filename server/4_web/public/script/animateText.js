@@ -22,3 +22,11 @@ function animateMoney(obj, id) {
 		document.getElementById(id).textContent = moneyConverter.format(obj.display / 100);
 	}, 20);
 };
+
+function convertLongText(text, len = 15){
+	if (text.length > len){
+		text = text.slice(0, len);
+		text += '...'
+	}
+	return text
+}
