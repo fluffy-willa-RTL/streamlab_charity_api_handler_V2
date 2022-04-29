@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
-	<script defer src="/script/socket.js"></script>
-	<script defer>
-		// GLOBAL VARIABLE
-		const	slug = window.location.pathname.substring('/u/'.length)
-		// Info message
-		let		msg = 'Error refresh';
-		let		data = null;
-	</script>
-</head>
-<body>
-	<div class="topnav">
-		<a class="active" href="#home">Home</a>
-	  </div>
-	<h1 id="welcomeMessage"></h1>
-	<p>Ici tu peux retrouver tout les assets que tu peux utiliser lors de ton stream.</p>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+		<script defer src="/script/socket.js"></script>
+		<script defer>
+			// GLOBAL VARIABLE
+			const	slug = window.location.pathname.substring('/u/'.length)
+			// Info message
+			let		msg = 'Error refresh';
+			let		data = null;
+		</script>
+	</head>
+	<body>
+		<div class="topnav">
+			<a class="active" href="#home">Home</a>
+		</div>
+		<h1 id="welcomeMessage"></h1>
+		<p>Ici tu peux retrouver tout les assets que tu peux utiliser lors de ton stream.</p>
 
-	<ul id="myList"></ul>
-
-
+		<ul id="myList"></ul>
 
 
-</body>
-<script defer src="../src/menu/streamerDashboard.js"></script>
+
+
+	</body>
+	<script defer src="../src/menu/streamerDashboard.js"></script>
 </html>
 
 <style>

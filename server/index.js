@@ -103,28 +103,34 @@ app.get('/a/:id/total/me', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total', 'totalMe.html')))
 })
 
-// Donation goal for user
+// Donation goal for the team
 app.get('/a/:id/total/all', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalGlobal.html')))
 })
 
-// Donation goal for user
+// Donation goal for both
 app.get('/a/:id/total/me-all', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMeAndGlobal.html')))
 })
 
 /******************************************************************************/
 
-// Donation goal for user
+// Last 10 donations goal for user
 app.get('/a/:id/donation/last', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast.html')))
 })
 
-// Donation goal for user
+// 10 Biggest donations goal for user
 app.get('/a/:id/donation/big', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))
 })
 
+// The last and the biggest donation for user
+app.get('/a/:id/donation/last-big', (req, res) => {
+	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggestAndLast.html')))
+})
+
+/******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
 
