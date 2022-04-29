@@ -10,8 +10,14 @@ async function start() {
 	const socket = await connect();
 	// Listen update for the total amount
 
+	// Get query
+	const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop),});
+
+	if (params.color) {
+		document.getElementById(textId).style.color = `#${params.color}`;
+	}
+
 	socket.on(socketListeningEvent, (res) => {
-		console.log(res)
 		if (type === 0)
 			totalGlobal.amount = res?.at(0)?.amount ?? 0;
 		else if (type === 1)

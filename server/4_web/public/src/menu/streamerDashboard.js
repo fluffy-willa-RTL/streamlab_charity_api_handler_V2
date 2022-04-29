@@ -14,7 +14,7 @@ async function start () {
 
 		// Listen if we lost connection
 		socket.on('disconnect', () => {
-			console.log('WS disconnect')
+			console.warn('WS disconnect')
 		});
 
 		// Forece refresh the tab
@@ -108,15 +108,20 @@ async function start () {
 							const div = document.createElement('div');
 							div.className	= `listElement`
 							div.id			= `listElement_${id}`
-							
-							const copyButton = document.createElement('button');
-							copyButton.textContent = 'Click to copy'
-							copyButton.onclick = function () {pastbin(`${window.location.protocol}//${window.location.hostname}${item.src}`)};
-							div.appendChild(copyButton);
+
+							// Pastebin work only on https
+							if (window.location.protocol === 'https:') {
+								const copyButton = document.createElement('button');
+								copyButton.textContent = 'Click to copy'
+								copyButton.onclick = function () {pastbin(`${window.location.protocol}//${window.location.hostname}${item.src}`)};
+								div.appendChild(copyButton);
+							} else console.warn("connection is on http:");
 
 							const title = document.createElement("a");
 							title.textContent		= item.title;
 							title.href				= item.src;
+							title.target			= '_blank';
+							title.id				= `a_${id}`;
 							div.appendChild(title);
 
 							const frame = document.createElement("iframe");
@@ -139,9 +144,13 @@ async function start () {
 }
 
 function pastbin (data) {
-	console.log(data);
-	navigator.clipboard.writeText(data);
-	alert("Copied the text: " + data);
+	try {
+		navigator.clipboard.writeText(data);
+		alert(`Copied the text: ${data}`);
+	}
+	catch {
+		alert(`Error!`);
+	}
 }
 
 let colorWell
@@ -166,10 +175,11 @@ function colorlisten() {
   }
 
   function updateAllColor(event) {
-	const len = document.getElementById('myList').childElementCount;
+	  const len = document.getElementById('myList').childElementCount;
 	for (let i = 0; i < len; i++) {
-		document.getElementById(`frame_${i}`).src = `${linkToGenerate[i].src}?color:${event.target.value.substring(1)}`;
-		console.log(`${linkToGenerate[i].src}?color:${event.target.value.substring(1)}`);
+		const url = `${linkToGenerate[i].src}?color=${event.target.value.substring(1)}`;
+		document.getElementById(`frame_${i}`).src = url;
+		document.getElementById(`a_${i}`).href = url; 
 	}
 }
  

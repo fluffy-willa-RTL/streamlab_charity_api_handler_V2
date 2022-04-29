@@ -6,11 +6,11 @@ async function connect() {
 	});
 	
 	// Listen if a connection error occur
-	socket.on('connect_error', (err) => {console.log(`err`, err);})
+	socket.on('connect_error', (err) => {console.error(`err`, err);})
 	
 	// Listen if we lost connection
 	socket.on('disconnect', () => {
-		console.log('WS disconnect')
+		console.warn('WS disconnect')
 	});
 	
 	// Listen if a connection have made with the backend
