@@ -7,6 +7,7 @@ let nbBiggestDonation = 10
 
 export function updateFrontHeavy(){
 	let res = {
+		don_big: [],
 		don_streamer_big: {},
 	}
 	
@@ -16,6 +17,7 @@ export function updateFrontHeavy(){
 		if (!res.don_streamer_big[don.streamer_id])
 			res.don_streamer_big[don.streamer_id] = [];
 		
+		addOnlyBiggestInArray(res.don_big, don, id);
 		addOnlyBiggestInArray(res.don_streamer_big[don.streamer_id], don, id);
 	}
 	
@@ -30,7 +32,15 @@ export function updateFrontHeavy(){
 			}
 		}
 	}
+
+	for (let i in res.don_big){
+		if (res.don_big.at(-i)._id !== db.front.don_big?.at(-i)?._id ?? null){
+			front.emit(`donation_biggest`, res.don_big);
+			break;
+		}
+	}
 	
+	db.front.don_big = res.don_big;
 	db.front.don_streamer_big = res.don_streamer_big;
 }
 
@@ -38,6 +48,7 @@ export function updateFrontLight(){
 	let res = {
 		total: 0,
 		total_streamer: {},
+		don_last: [],
 		don_streamer_last: {},
 	}
 	
@@ -58,8 +69,14 @@ export function updateFrontLight(){
 		res.don_streamer_last[don.streamer_id].at(-1)._id = id 
 		if (res.don_streamer_last[don.streamer_id].length > nbLastDonation)
 			res.don_streamer_last[don.streamer_id].shift();
+
+		//add global last donation
+		res.don_last.push(don)
+		res.don_last.at(-1)._id = id 
+		if (res.don_last.length > nbLastDonation)
+			res.don_last.shift();
 	}
-	
+
 	//check dif
 	
 	//check Total
@@ -68,6 +85,9 @@ export function updateFrontLight(){
 		db.front.total = res.total
 	}
 	
+	if (res.don_last.at(-1)._id != (db.front.don_last?.at(-1)?._id ?? null))
+		front.emit(`donation_last`, res.don_last)
+
 	//check Total for single streamer
 	for (let id in res.total_streamer){
 		if (res.total_streamer[id] != (db.front.total_streamer?.[id] ?? null))
@@ -76,12 +96,15 @@ export function updateFrontLight(){
 			front.emit(`donation_last.${id}`, res.don_streamer_last[id])
 	}
 	
-	db.front.total_streamer = res.total_streamer
-	db.front.don_streamer_last = res.don_streamer_last
+	db.front.total_streamer		= res.total_streamer
+	db.front.don_last			= res.don_last
+	db.front.don_streamer_last	= res.don_streamer_last
 }
 
 function getFront(socket){
 	socket.emit(`total`, db.front.total)
+	socket.emit(`donation_last`,				db.front.don_last)
+	socket.emit(`donation_biggest`,				db.front.don_big)
 	for (let id in db.front.total_streamer){
 		socket.emit(`total.${id}`,				db.front.total_streamer[id])
 		socket.emit(`donation_last.${id}`,		db.front.don_streamer_last[id])
