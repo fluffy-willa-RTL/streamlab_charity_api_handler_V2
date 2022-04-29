@@ -112,8 +112,8 @@ async function start () {
 							// Pastebin work only on https
 							if (window.location.protocol === 'https:') {
 								const copyButton = document.createElement('button');
-								copyButton.textContent = 'Click to copy'
-								copyButton.onclick = function () {pastbin(`${window.location.protocol}//${window.location.hostname}${item.src}`)};
+								copyButton.textContent	= 'Click to copy';
+								copyButton.onclick		= function () {pastbin(`${window.location.protocol}//${window.location.hostname}${item.src}`)};
 								div.appendChild(copyButton);
 							} else console.warn("connection is on http:");
 
@@ -121,14 +121,12 @@ async function start () {
 							title.textContent		= item.title;
 							title.href				= item.src;
 							title.target			= '_blank';
-							title.id				= `a_${id}`;
 							div.appendChild(title);
 
 							const frame = document.createElement("iframe");
 							frame.src = item.src;
 							frame.width = item.width;
 							frame.height = item.height;
-							frame.id = `frame_${id}`
 							div.appendChild(frame);
 							list.appendChild(div);
 							id++;
@@ -176,10 +174,12 @@ function colorlisten() {
 
   function updateAllColor(event) {
 	  const len = document.getElementById('myList').childElementCount;
-	for (let i = 0; i < len; i++) {
-		const url = `${linkToGenerate[i].src}?color=${event.target.value.substring(1)}`;
-		document.getElementById(`frame_${i}`).src = url;
-		document.getElementById(`a_${i}`).href = url; 
+	for (let id = 0; id < len; id++) {
+		const url = `${linkToGenerate[id].src}?color=${event.target.value.substring(1)}`;
+		const elements = document.getElementById(`listElement_${id}`);
+		elements.getElementsByTagName('iframe')[0].src = url;
+		elements.getElementsByTagName('a')[0].href = url;
+		elements.getElementsByTagName('button')[0].onclick = function () {pastbin(`${window.location.protocol}//${window.location.hostname}${linkToGenerate[id].src}?color=${event.target.value.substring(1)}`)};
 	}
 }
  
