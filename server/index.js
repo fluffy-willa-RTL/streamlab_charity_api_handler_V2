@@ -107,8 +107,8 @@ app.get('/9je5vyhjh8doxj-admin', (req, res) => {res.sendFile(publicPathFile(join
 app.get('/a/total/all',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','total','totalGlobal.html')))})
 app.get('/a/donation/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast.html')))})
 app.get('/a/donation/big',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest.html')))})
-app.get('/a/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast.html')))})
-app.get('/a/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest.html')))})
+app.get('/a/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast10.html')))})
+app.get('/a/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest10.html')))})
 
 /************************           STREAMER           ************************/
 
