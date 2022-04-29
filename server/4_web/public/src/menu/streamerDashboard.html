@@ -23,14 +23,11 @@
 		<p>Ici tu peux retrouver tout les assets que tu peux utiliser lors de ton stream.</p>
 
 
-		<label for="colorpicker">Color Picker:</label>
-		<input type="color" id="colorpicker" value="#0000ff">
+		<label for="colorWell">Couleur :</label>
+		<input type="color" value="#ff0000" id="colorWell">
+		<h1 id="colorPreview">0123456789</h1>
 
 		<ul id="myList"></ul>
-
-
-
-
 	</body>
 	<script defer src="../src/menu/streamerDashboard.js"></script>
 </html>
@@ -79,9 +76,19 @@
 
 	.listElement a {
 		position: absolute;
+		margin-left: 100px;
+	}
+	
+	.listElement button {
+		position: absolute;
 	}
 
 	.listElement iframe {
 		margin-top: 50px;
+	}
+
+	#colorPreview {
+	color: #fff;
+	text-shadow: #000 1px 0 10px;
 	}
 </style>

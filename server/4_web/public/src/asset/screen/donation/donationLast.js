@@ -13,6 +13,7 @@ async function start() {
 	// Listen update for the total amount
 
 	socket.on(`donation_last`, (res) => {
+		console.log(res)
 		totalGlobal.amount = res?.at(-1)?.amount ?? 0;
 		animateMoney(totalGlobal, 'lastDon');
 	});

@@ -9,19 +9,14 @@ const totalStreamer = {
 }
 
 async function start() {
-	const	id = window.location.pathname.split('/')[2]
-	if (id)
-	{
-		const socket = await connect();
-		// Listen update for the total amount
+	const socket = await connect();
+	// Listen update for the total amount
 
-		socket.on(`donation_biggest.${id}`, (res) => {
-			totalStreamer.amount = res?.[0].amount ?? 0;
-			animateMoney(totalStreamer, 'biggestDon');
-		});
-	} else {
-		document.location = '/u/'
-	}
+	socket.on(`donation_biggest`, (res) => {
+		console.log(res)
+		totalGlobal.amount = res?.at(0)?.amount ?? 0;
+		animateMoney(totalGlobal, 'biggestDon');
+	});
 }
 
 start();

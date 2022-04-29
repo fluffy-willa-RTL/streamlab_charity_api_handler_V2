@@ -49,7 +49,7 @@ async function start () {
 							},
 							{
 								title:	`Total récolté par la Team`,
-								src:	`/a/${data.id}/total/all`,
+								src:	`/a/total/all`,
 								width:	500,
 								height:	200,
 							},
@@ -79,21 +79,33 @@ async function start () {
 							},
 						];
 						const list = document.getElementById("myList");
+						let id = 0;
 						linkToGenerate.forEach((item) => {
 							const div = document.createElement('div');
-							div.className = 'listElement'
+							div.className	= `listElement`
+							div.id			= `listElement_${id}`
+							
+							const copyButton = document.createElement('button');
+							copyButton.textContent = 'Click to copy'
+							copyButton.onclick = function () {pastbin(`${window.location.protocol}//${window.location.hostname}${item.src}`)};
+							div.appendChild(copyButton);
+
 							const title = document.createElement("a");
-							title.textContent = item.title;
-							title.href = item.src;
+							title.textContent		= item.title;
+							title.href				= item.src;
 							div.appendChild(title);
+
 							const frame = document.createElement("iframe");
 							iframeId = frame;
 							frame.src = item.src;
 							frame.width = item.width;
 							frame.height = item.height;
+							frame.className = `frame_${id}`
 							div.appendChild(frame);
 							list.appendChild(div);
+							id++;
 						});
+						colorInit()
 					}
 				}
 			})
@@ -102,5 +114,38 @@ async function start () {
 	}
 	window.location = '/u/';
 }
+
+function pastbin (data) {
+	console.log(data);
+	navigator.clipboard.writeText(data);
+	alert("Copied the text: " + data);
+}
+
+let colorWell
+let defaultColor = "#0000ff";
+let colorPreview = document.getElementById('colorPreview');
+function colorInit() {
+	
+	window.addEventListener("load", colorInit, false);
+	colorlisten();
+}
+
+function colorlisten() {
+	colorWell = document.querySelector("#colorWell");
+	colorWell.value = defaultColor;
+	colorWell.addEventListener("input", updateFirstColor, false);
+	colorWell.addEventListener("change", updateAllColor, false);
+	colorWell.select();
+  }
+
+  function updateFirstColor(event) {
+	console.log('first', event.target.value);
+	colorPreview.style.color = event.target.value;
+  }
+
+  function updateAllColor(event) {
+	console.log('update', event.target.value);
+}
+ 
 
 start();
