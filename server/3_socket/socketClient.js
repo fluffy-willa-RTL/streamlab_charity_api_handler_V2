@@ -58,7 +58,7 @@ export function startSocketClient(){
 			}
 
 			if (!recoveryMode){
-				update.updateFrontLight(db.don[_id])
+				update.updateFrontLight()
 
 			}
 		}

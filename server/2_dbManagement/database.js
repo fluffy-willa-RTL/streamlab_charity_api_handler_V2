@@ -3,9 +3,11 @@ let don = {}
 
 let front = {
 	total: 0,
+	don_last: [],
+	don_biggest: [],
 	total_streamer: {},
-	donation_last: {},
-	donation_biggest: {},
+	don_streamer_last: {},
+	don_streamer_big: {},
 }
 
 let streamer = {}
