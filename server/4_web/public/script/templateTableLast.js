@@ -5,7 +5,7 @@ async function start() {
 	const socket = await connect();
 	// Listen update for the total amount
 
-	socket.on(`donation_last`, (res) => {
+	socket.on(socketListeningEvent, (res) => {
 		data = {}
 
 		for (let i of res){

@@ -10,8 +10,14 @@
 		<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
 		<script defer src="/script/socket.js"></script>
 		<script defer src="/script/textUtils.js"></script>
-		<script defer src="/src/asset/screen/total/totalGlobal.js"></script>
 
+		<script defer>
+			const socketListeningEvent = `total`
+			const textId = `totalGlobal`
+			const type = 2
+		</script>
+		
+		<script defer src="/script/templateText.js"></script>
 	</head>
 	<body>
 		<h1 id="totalGlobal">0,00 €</h1>

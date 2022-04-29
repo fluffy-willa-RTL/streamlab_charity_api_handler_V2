@@ -85,7 +85,7 @@ export function updateFrontLight(){
 		db.front.total = res.total
 	}
 	
-	if (res.don_last.at(-1)._id != (db.front.don_last?.at(-1)?._id ?? null))
+	if (res.don_last?.at(-1)?._id ?? null != (db.front.don_last?.at(-1)?._id ?? null))
 		front.emit(`donation_last`, res.don_last)
 
 	//check Total for single streamer

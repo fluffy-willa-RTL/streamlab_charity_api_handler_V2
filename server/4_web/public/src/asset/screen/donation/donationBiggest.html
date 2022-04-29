@@ -11,8 +11,14 @@
 		<script defer src="/script/socket.js"></script>
 		<link rel="stylesheet" rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 		<script defer src="/script/textUtils.js"></script>
-		<script defer src="/src/asset/screen/donation/donationBiggest.js"></script>
 
+		<script defer>
+			const socketListeningEvent = `donation_biggest`
+			const textId = `biggestDon`
+			const type = 0
+		</script>
+		
+		<script defer src="/script/templateText.js"></script>
 	</head>
 	<body>
 		<h1 id="biggestDon">0,00 €</h1>
