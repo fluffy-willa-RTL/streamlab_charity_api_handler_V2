@@ -8,8 +8,6 @@ async function start() {
 
 	if (id)
 	{
-		document.getElementById('streamerId').textContent = id;
-		
 		const socket = await connect();
 		// Listen update for the total amount
 

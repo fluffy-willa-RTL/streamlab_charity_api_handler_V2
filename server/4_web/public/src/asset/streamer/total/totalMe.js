@@ -8,8 +8,6 @@ async function start() {
 
 	if (id)
 	{
-		document.getElementById('streamerId').textContent = id;
-		
 		const socket = await connect();
 		// Listen update for the total amount
 
@@ -17,7 +15,6 @@ async function start() {
 			totalStreamer.amount = res;
 			animateMoney(totalStreamer, 'totalStreamer');
 		});
-
 	} else {
 		document.location = '/u/'
 	}

@@ -1,4 +1,5 @@
 let linkToGenerate = null;
+let iframeId = [];
 
 async function start () {
 	if (slug) {
@@ -53,20 +54,26 @@ async function start () {
 								height:	200,
 							},
 							{
-								title:	`Total récolté par ${data.streamer.display_name} et la Team`,
-								src:	`/a/${data.id}/total/me-all`,
+								title:	`Total récolté par ${data.streamer.display_name}`,
+								src:	`/a/${data.id}/donation/last`,
+								width:	500,
+								height:	200,
+							},
+							{
+								title:	`Total récolté par la Team`,
+								src:	`/a/${data.id}/donation/big`,
 								width:	500,
 								height:	200,
 							},
 							{
 								title:	`10 dèrnière doantion de ${data.streamer.display_name}.`,
-								src:	`/a/${data.id}/donation/last`,
+								src:	`/a/${data.id}/donation/last10`,
 								width:	500,
 								height:	1000,
 							},
 							{
 								title:	`10 dèrnière plus grosse doantion de ${data.streamer.display_name}.`,
-								src:	`/a/${data.id}/donation/big`,
+								src:	`/a/${data.id}/donation/big10`,
 								width:	500,
 								height:	1000,
 							},
@@ -80,6 +87,7 @@ async function start () {
 							title.href = item.src;
 							div.appendChild(title);
 							const frame = document.createElement("iframe");
+							iframeId = frame;
 							frame.src = item.src;
 							frame.width = item.width;
 							frame.height = item.height;
