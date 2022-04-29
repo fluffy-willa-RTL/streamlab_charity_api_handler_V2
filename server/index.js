@@ -65,11 +65,11 @@ app.use(express.static(join(__dirname, '4_web', 'public')));
  */
 
 app.get('/u/', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'streamerNotFound.html')))
+	res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))
 })
 
 app.get('/a/', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'streamerNotFound.html')))
+	res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))
 })
 
 // Dashboard for user
@@ -82,11 +82,16 @@ app.get('/u/:slug', (req, res) => {
 	for (const user of admin)
 	{
 		if (user === req.params.slug) {
-			res.sendFile(publicPathFile(join('src', '9je5vyhjh8doxj-admin.html')))
+			res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'admin.html')))
 			return ;
 		}
 	}
-	res.sendFile(publicPathFile(join('src', 'streamerDashboard.html')))
+	res.sendFile(publicPathFile(join('src', 'menu', 'streamerDashboard.html')))
+})
+
+// Donation goal for user
+app.get('/favicon.ico', (req, res) => {
+	res.sendFile(publicPathFile(join('png', 'favicon-televie.png')))
 })
 
 /******************************************************************************/
@@ -120,7 +125,6 @@ app.get('/a/:id/donation/big', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))
 })
 
-
 /******************************************************************************/
 /******************************************************************************/
 
@@ -151,7 +155,7 @@ app.get('/redirect', async (req, res) => {
 
 
 app.get('/9je5vyhjh8doxj-admin', (req, res) => {
-	res.sendFile(publicPathFile(join('html', '9je5vyhjh8doxj-admin.html')))
+	res.sendFile(publicPathFile(join('html', 'menu', '9je5vyhjh8doxj', 'admin.html')))
 })
 
 app.get('/forceRefresh', (req, res) => {
