@@ -51,7 +51,7 @@ export function updateFrontHeavy(){
 	db.front.donation_biggest = res.donation_biggest
 }
 
-export function updateFrontLight(){
+export function updateFrontLight(don){
 	// console.log('light')
 	let res = {
 		total: 0,
@@ -103,6 +103,9 @@ export function updateFrontLight(){
 			// console.log(`donation_last.${id}`)
 		}
 	}
+
+	// front.emit('donation_last', don)
+
 	db.front.total_streamer = res.total_streamer
 	db.front.donation_last = res.donation_last
 }

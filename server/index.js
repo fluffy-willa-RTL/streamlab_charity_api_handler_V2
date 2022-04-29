@@ -64,13 +64,9 @@ app.use(express.static(join(__dirname, '4_web', 'public')));
  * FRONT END
  */
 
-app.get('/u/', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))
-})
-
-app.get('/a/', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))
-})
+app.get('/u/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))})
+app.get('/a/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))})
+app.get('/favicon.ico',	(req, res) => {res.sendFile(publicPathFile(join('png', 'favicon-televie.png')))})
 
 // Dashboard for user
 app.get('/u/:slug', (req, res) => {
@@ -89,55 +85,45 @@ app.get('/u/:slug', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'menu', 'streamerDashboard.html')))
 })
 
-// Donation goal for user
-app.get('/favicon.ico', (req, res) => {
-	res.sendFile(publicPathFile(join('png', 'favicon-televie.png')))
-})
+app.get('/9je5vyhjh8doxj-admin', (req, res) => {res.sendFile(publicPathFile(join('html', 'menu', '9je5vyhjh8doxj', 'admin.html')))})
 
 /******************************************************************************/
 /*                                 ASSETS                                     */
-/******************************************************************************/
+/*******************************************************************************
+/a/total/all			=> Total of all streamers						(text)
+/a/donation/last		=> Last donation of all streamers				(text)
+/a/donation/big			=> Biggest donation of all streamers			(text)
+/a/donation/last10		=> Last 10 donations of all streamers			(asset)
+/a/donation/big10		=> Biggest 10 donations of all streamers		(asset)
 
-// Donation goal for user
-app.get('/a/:id/total/me', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total', 'totalMe.html')))
-})
+/a/:id/total/all		=> Total of streamer id							(text)
+/a/:id/donation/last	=> Last donation of streamer id					(text)
+/a/:id/donation/big		=> Biggest donation of streamer id				(text)
+/a/:id/donation/last10	=> Last 10 donations of streamer id				(asset)
+/a/:id/donation/big10	=> Biggest 10 donations of streamer id			(asset)
 
-// Donation goal for the team
-app.get('/a/:id/total/all', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalGlobal.html')))
-})
+*************************            GLOBAL            ************************/
 
-// Donation goal for both
-app.get('/a/:id/total/me-all', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMeAndGlobal.html')))
-})
+app.get('/a/total/all',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','total','totalGlobal.html')))})
+app.get('/a/donation/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast.html')))})
+app.get('/a/donation/big',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest.html')))})
+app.get('/a/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast.html')))})
+app.get('/a/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest.html')))})
 
-/******************************************************************************/
+/************************           STREAMER           ************************/
 
-// Last 10 donations goal for user
-app.get('/a/:id/donation/last', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast.html')))
-})
-
-// 10 Biggest donations goal for user
-app.get('/a/:id/donation/big', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))
-})
-
-// The last and the biggest donation for user
-app.get('/a/:id/donation/last-big', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggestAndLast.html')))
-})
+app.get('/a/:id/total/me',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMe.html')))})
+app.get('/a/:id/donation/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation', 'donationLast.html')))})
+app.get('/a/:id/donation/big',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))})
+app.get('/a/:id/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast10.html')))})
+app.get('/a/:id/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest10.html')))})
 
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
 
 // Redirect to auth link streamlab
-app.get('/', (req, res) => {
-	res.redirect(connect.get_auth_url());
-})
+app.get('/', (req, res) => {res.redirect(connect.get_auth_url());})
 
 // Get the `code` query to acces the user info and generate they link for `/u/:slug`
 app.get('/redirect', async (req, res) => {
@@ -158,11 +144,6 @@ app.get('/redirect', async (req, res) => {
 /**
  * DEV ENDPOINT
  */
-
-
-app.get('/9je5vyhjh8doxj-admin', (req, res) => {
-	res.sendFile(publicPathFile(join('html', 'menu', '9je5vyhjh8doxj', 'admin.html')))
-})
 
 app.get('/forceRefresh', (req, res) => {
 	forceRefreshClient();
