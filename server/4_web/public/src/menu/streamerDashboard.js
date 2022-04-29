@@ -54,28 +54,52 @@ async function start () {
 								height:	200,
 							},
 							{
-								title:	`Total récolté par ${data.streamer.display_name}`,
+								title:	`Derniere donation récoltée ${data.streamer.display_name}`,
 								src:	`/a/${data.id}/donation/last`,
 								width:	500,
 								height:	200,
 							},
 							{
-								title:	`Total récolté par la Team`,
+								title:	`Plus grosse donation récoltée ${data.streamer.display_name}`,
 								src:	`/a/${data.id}/donation/big`,
 								width:	500,
 								height:	200,
 							},
 							{
-								title:	`10 dèrnière doantion de ${data.streamer.display_name}.`,
-								src:	`/a/${data.id}/donation/last10`,
+								title:	`Derniere donation récoltée la team`,
+								src:	`/a/donation/last`,
 								width:	500,
-								height:	1000,
+								height:	200,
 							},
 							{
-								title:	`10 dèrnière plus grosse doantion de ${data.streamer.display_name}.`,
+								title:	`Plus grosse donation récoltée la team`,
+								src:	`/a/donation/big`,
+								width:	500,
+								height:	200,
+							},
+							{
+								title:	`10 Derniere donation récoltée ${data.streamer.display_name}`,
+								src:	`/a/${data.id}/donation/last10`,
+								width:	500,
+								height:	1025,
+							},
+							{
+								title:	`10 Plus grosse donation récoltée ${data.streamer.display_name}`,
 								src:	`/a/${data.id}/donation/big10`,
 								width:	500,
-								height:	1000,
+								height:	1025,
+							},
+							{
+								title:	`10 Derniere donation récoltée la team`,
+								src:	`/a/donation/last10`,
+								width:	500,
+								height:	1025,
+							},
+							{
+								title:	`10 Plus grosse donation récoltée la team`,
+								src:	`/a/donation/big10`,
+								width:	500,
+								height:	1025,
 							},
 						];
 						const list = document.getElementById("myList");
@@ -96,11 +120,10 @@ async function start () {
 							div.appendChild(title);
 
 							const frame = document.createElement("iframe");
-							iframeId = frame;
 							frame.src = item.src;
 							frame.width = item.width;
 							frame.height = item.height;
-							frame.className = `frame_${id}`
+							frame.id = `frame_${id}`
 							div.appendChild(frame);
 							list.appendChild(div);
 							id++;
@@ -139,12 +162,15 @@ function colorlisten() {
   }
 
   function updateFirstColor(event) {
-	console.log('first', event.target.value);
 	colorPreview.style.color = event.target.value;
   }
 
   function updateAllColor(event) {
-	console.log('update', event.target.value);
+	const len = document.getElementById('myList').childElementCount;
+	for (let i = 0; i < len; i++) {
+		document.getElementById(`frame_${i}`).src = `${linkToGenerate[i].src}?color:${event.target.value.substring(1)}`;
+		console.log(`${linkToGenerate[i].src}?color:${event.target.value.substring(1)}`);
+	}
 }
  
 
