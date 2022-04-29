@@ -9,3 +9,4 @@ dblog.err
 dblog.json
 streamer_log.err
 streamer_log.json
+.env
