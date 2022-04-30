@@ -6,7 +6,7 @@ import { slugify } from './slugify.js';
 export function get_auth_url() {
 	const paramsAutorization = {
 		'client_id'     : process.env.CLIENT_ID,
-		'redirect_uri'  : 'http://' + process.env.BASE_URL + '/redirect',
+		'redirect_uri'  : process.env.PROTOCOL + '://' + process.env.BASE_URL + '/redirect',
 		'response_type' : 'code',
 		'scope'         : '',
 	};
@@ -18,7 +18,7 @@ export async function getUserData(code) {
 		'grant_type'   : 'authorization_code',
 		'client_id'    : process.env.CLIENT_ID,
 		'client_secret': process.env.SL_SECRET,
-		'redirect_uri' : 'http://' + process.env.BASE_URL + '/redirect',
+		'redirect_uri' : process.env.PROTOCOL + '://' + process.env.BASE_URL + '/redirect',
 		'code'         : code
 	};
 	console.log('connection...');
@@ -30,7 +30,7 @@ export async function refreshUserData(refreshToken) {
 		'grant_type'   : 'refresh_token',
 		'client_id'    : process.env.CLIENT_ID,
 		'client_secret': process.env.SL_SECRET,
-		'redirect_uri' : 'http://' + process.env.BASE_URL + '/redirect',
+		'redirect_uri' : process.env.PROTOCOL + '://' + process.env.BASE_URL + '/redirect',
 		'refresh_token': refreshToken
 	};
 	console.log('refreshing...');
