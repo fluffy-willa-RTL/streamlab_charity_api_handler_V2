@@ -78,14 +78,33 @@ app.get('/u/:slug', (req, res) => {
 	for (const user of admin)
 	{
 		if (user === req.params.slug) {
+			const reject = () => {
+				res.setHeader('www-authenticate', 'Basic')
+				res.sendStatus(401)
+			}
+			// Request auth
+			const authorization = req.headers.authorization
+
+			// Check if auth is not empty
+			if(!authorization) {
+				console.log(color.FgRed + color.BgWhite + "Fail admin auth !!" + color.Reset);
+				return reject()
+			}
+
+			// Decode username and password
+			const [username, password] = Buffer.from(authorization.replace('Basic ', ''), 'base64').toString().split(':')
+
+			// Check the username and password
+			if(! (username === process.env.ADMUSR && password === process.env.ADMPSSWRD)) {
+				console.log(color.FgRed + color.BgWhite + `Fail admin auth !! [${username}][${password}]` + color.Reset);
+				return reject()
+			}
 			res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'admin.html')))
 			return ;
 		}
 	}
 	res.sendFile(publicPathFile(join('src', 'menu', 'streamerDashboard.html')))
 })
-
-app.get('/9je5vyhjh8doxj-admin', (req, res) => {res.sendFile(publicPathFile(join('html', 'menu', '9je5vyhjh8doxj', 'admin.html')))})
 
 /******************************************************************************/
 /*                                 ASSETS                                     */
