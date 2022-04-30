@@ -34,7 +34,6 @@ input :
 	break at 10000000000000000
 */
 function animateMoneySingle(amount, id) {
-	console.log('amount',amount);
 	let display = 0;
 	const interval = setInterval(function() {
 		if (display === amount)

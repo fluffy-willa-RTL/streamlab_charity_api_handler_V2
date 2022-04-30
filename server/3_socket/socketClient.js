@@ -57,8 +57,10 @@ export function startSocketClient(){
 				console.log(color.FgCyan, 'New donation from', db.don[_id].name, color.Reset)
 			}
 
-			if (!recoveryMode)
+			if (!recoveryMode){
 				update.updateFrontLight()
+
+			}
 		}
 	})
 }

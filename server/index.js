@@ -1,12 +1,12 @@
-import * as connect		from './0_utils/connect.js';
 import cors				from 'cors';
 import express			from "express";
-import db				from './2_dbManagement/database.js'
 import yesno			from 'yesno'
-import color from './0_utils/color.js';
 
+import * as connect									from './0_utils/connect.js';
+import color 										from './0_utils/color.js';
 import { sleep } 									from './0_utils/sleep.js';
 import { startRecovery } 							from './1_recovery/recovery.js'
+import db											from './2_dbManagement/database.js'
 import { getAllStreamer }							from './2_dbManagement/getAllStreamer.js'
 import { startSocketClient } 						from './3_socket/socketClient.js'
 import { startSocketServer, forceRefreshClient }	from './3_socket/socketServer.js'
@@ -28,18 +28,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 function publicPathFile(path) {
 	return join(__dirname, '4_web', 'public', path);
 }
-
-//TODO REMOVE DEBUG
-import {Console} from 'node:console';
-import fs from 'node:fs'
-// const dblog = new Console({
-// 	stdout: fs.createWriteStream("dblog.json"),
-// 	stderr: fs.createWriteStream("dblog.err"),
-// });
-// const streamlog = new Console({
-// 	stdout: fs.createWriteStream("streamer_log.json"),
-// 	stderr: fs.createWriteStream("streamer_log.err"),
-// });
 
 startSocketClient()
 
@@ -64,9 +52,6 @@ startSocketClient()
 /// NOTE: `await` to avoid that a clien ask `whoami` when the user db is not set
 await getAllStreamer()
 
-// dblog.log(JSON.stringify(db.don));
-// streamlog.log(JSON.stringify(db.streamer));
-
 export const app = express()
 
 // Allow CORS
@@ -78,17 +63,10 @@ app.use(express.static(join(__dirname, '4_web', 'public')));
 /**
  * FRONT END
  */
-// app.get('/', (req, res) => {
-// 	res.send("~UwU~");
-// })
 
-app.get('/u/', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'streamerNotFound.html')))
-})
-
-app.get('/a/', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'streamerNotFound.html')))
-})
+app.get('/u/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))})
+app.get('/a/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))})
+app.get('/favicon.ico',	(req, res) => {res.sendFile(publicPathFile(join('png', 'favicon-televie.png')))})
 
 // Dashboard for user
 app.get('/u/:slug', (req, res) => {
@@ -100,52 +78,52 @@ app.get('/u/:slug', (req, res) => {
 	for (const user of admin)
 	{
 		if (user === req.params.slug) {
-			res.sendFile(publicPathFile(join('src', '9je5vyhjh8doxj-admin.html')))
+			res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'admin.html')))
 			return ;
 		}
 	}
-	res.sendFile(publicPathFile(join('src', 'streamerDashboard.html')))
+	res.sendFile(publicPathFile(join('src', 'menu', 'streamerDashboard.html')))
 })
+
+app.get('/9je5vyhjh8doxj-admin', (req, res) => {res.sendFile(publicPathFile(join('html', 'menu', '9je5vyhjh8doxj', 'admin.html')))})
 
 /******************************************************************************/
 /*                                 ASSETS                                     */
+/*******************************************************************************
+/a/total/all			=> Total of all streamers						(text)
+/a/donation/last		=> Last donation of all streamers				(text)
+/a/donation/big			=> Biggest donation of all streamers			(text)
+/a/donation/last10		=> Last 10 donations of all streamers			(asset)
+/a/donation/big10		=> Biggest 10 donations of all streamers		(asset)
+
+/a/:id/total/all		=> Total of streamer id							(text)
+/a/:id/donation/last	=> Last donation of streamer id					(text)
+/a/:id/donation/big		=> Biggest donation of streamer id				(text)
+/a/:id/donation/last10	=> Last 10 donations of streamer id				(asset)
+/a/:id/donation/big10	=> Biggest 10 donations of streamer id			(asset)
+
+*************************            GLOBAL            ************************/
+
+app.get('/a/total/all',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','total','totalGlobal.html')))})
+app.get('/a/donation/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast.html')))})
+app.get('/a/donation/big',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest.html')))})
+app.get('/a/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast10.html')))})
+app.get('/a/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest10.html')))})
+
+/************************           STREAMER           ************************/
+
+app.get('/a/:id/total/me',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMe.html')))})
+app.get('/a/:id/donation/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation', 'donationLast.html')))})
+app.get('/a/:id/donation/big',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))})
+app.get('/a/:id/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast10.html')))})
+app.get('/a/:id/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest10.html')))})
+
 /******************************************************************************/
-
-// Donation goal for user
-app.get('/a/:id/total/me', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total', 'totalMe.html')))
-})
-
-// Donation goal for user
-app.get('/a/:id/total/all', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalGlobal.html')))
-})
-
-// Donation goal for user
-app.get('/a/:id/total/me-all', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMeAndGlobal.html')))
-})
-
-/******************************************************************************/
-
-// Donation goal for user
-app.get('/a/:id/donation/last', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast.html')))
-})
-
-// Donation goal for user
-app.get('/a/:id/donation/big', (req, res) => {
-	res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))
-})
-
-
 /******************************************************************************/
 /******************************************************************************/
 
 // Redirect to auth link streamlab
-app.get('/', (req, res) => {
-	res.redirect(connect.get_auth_url());
-})
+app.get('/', (req, res) => {res.redirect(connect.get_auth_url());})
 
 // Get the `code` query to acces the user info and generate they link for `/u/:slug`
 app.get('/redirect', async (req, res) => {
@@ -166,11 +144,6 @@ app.get('/redirect', async (req, res) => {
 /**
  * DEV ENDPOINT
  */
-
-
-app.get('/9je5vyhjh8doxj-admin', (req, res) => {
-	res.sendFile(publicPathFile(join('html', '9je5vyhjh8doxj-admin.html')))
-})
 
 app.get('/forceRefresh', (req, res) => {
 	forceRefreshClient();

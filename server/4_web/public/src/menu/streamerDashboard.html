@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Dashboard</title>
+		<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+		<script defer src="/script/socket.js"></script>
+		<script defer>
+			// GLOBAL VARIABLE
+			const	slug = window.location.pathname.substring('/u/'.length)
+			// Info message
+			let		msg = 'Error refresh';
+			let		data = null;
+		</script>
+	</head>
+	<body>
+		<h1 id="welcomeMessage"></h1>
+		<p>Ici tu peux retrouver tout les assets que tu peux utiliser lors de ton stream.</p>
+
+		<div id="colorPreview">
+			0123456789
+		</div>
+		
+		<label for="colorWell">Couleur :</label>
+		<input type="color" value="#ff0000" id="colorWell">
+
+		<ul id="myList"></ul>
+	</body>
+	<script defer src="../src/menu/streamerDashboard.js"></script>
+</html>
+
+<style>
+	body {
+		background-color: #36393f;
+	}
+
+	h1, h2, h3, a, p {
+		color: #fff;
+	}
+
+	#myList {
+		display: grid;
+		grid-template-columns: auto auto;
+	}
+
+	.listElement {
+		display: flex;
+		position: relative;
+		margin-top: 50px;
+	}
+
+	.listElement a {
+		position: absolute;
+		margin-left: 100px;
+	}
+	
+	.listElement button {
+		position: absolute;
+	}
+
+	.listElement iframe {
+		margin-top: 50px;
+	}
+
+	#colorPreview {
+		color: #fff;
+		text-shadow: #000 1px 0 10px;
+		font-size: 2.5em;
+	}
+</style>
