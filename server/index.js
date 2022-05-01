@@ -123,6 +123,7 @@ app.get('/dashboard', (req, res) => {
 
 	// Check if auth is not empty
 	if(!authorization) {
+		log(`${color.FgYellow}Tech team try to auth${color.Reset}`);
 		return reject()
 	}
 
