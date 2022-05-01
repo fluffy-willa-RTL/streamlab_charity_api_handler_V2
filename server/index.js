@@ -1,5 +1,8 @@
 import cors				from 'cors';
 import express			from "express";
+import https			from 'https';
+import http				from 'http';
+import	fs				from 'fs'
 import yesno			from 'yesno'
 
 import * as connect									from './0_utils/connect.js';
@@ -200,16 +203,46 @@ app.get('/forceRefresh', (req, res) => {
  * BACK END
  */
 
-const server = app.listen(process.env.PORT, () => {
-	console.log(`[*.*]:${process.env.PORT}`);
+//  const server = app.listen(process.env.PORT, () => {
+	 
+// 	 // Run WS server only when the web serv is started
+// 	 startSocketServer(server)
+	 
+// 	// Init the front buffer
+// 	update.updateFrontLight();
+// 	update.updateFrontHeavyLoop();
+	
+// 	// Disable recovery mode to allow fronten update
+// 	recoveryMode = false;
+// 	console.log(`[*.*]:${process.env.PORT}`);
+// });
 
-	// Run WS server only when the web serv is started
-	startSocketServer(server)
+// Certificate
+const privateKey = fs.readFileSync(process.env.PKEY, 'utf8');
+const certificate = fs.readFileSync(process.env.CERT, 'utf8');
+const ca = fs.readFileSync(process.env.CA, 'utf8');
 
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+
+// const httpServer = http.createServer(app);
+
+const httpsServer = https.createServer(credentials ,app);
+
+httpsServer.listen(process.env.PORT, () => {
+	 
+	 // Run WS server only when the web serv is started
+	 startSocketServer(httpsServer)
+	 
 	// Init the front buffer
 	update.updateFrontLight();
 	update.updateFrontHeavyLoop();
-
+	
 	// Disable recovery mode to allow fronten update
 	recoveryMode = false;
-})
+	console.log(`[*.*]:${process.env.PORT}`);
+});
+
