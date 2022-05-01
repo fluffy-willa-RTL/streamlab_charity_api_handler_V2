@@ -7,8 +7,8 @@ export function log(msg) {
 }
 
 export function logErr(msg) {
-	console.error();(`[${new Date().toLocaleTimeString()}]: ${msg}`);
-	logFile.error();(`[${new Date().toLocaleTimeString()}]: ${msg}`);
+	console.log(`[${new Date().toLocaleTimeString()}]: ${msg}`);
+	logFile.error(`[${new Date().toLocaleTimeString()}]: ${msg}`);
 }
 
 export const logFile = new Console({

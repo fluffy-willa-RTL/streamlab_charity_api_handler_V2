@@ -92,6 +92,7 @@ app.get('/u/:slug', (req, res) => {
 
 			// Check if auth is not empty
 			if(!authorization) {
+				log(`${color.FgYellow}Admin try to auth${color.Reset}`);
 				return reject()
 			}
 
@@ -99,8 +100,8 @@ app.get('/u/:slug', (req, res) => {
 			const [username, password] = Buffer.from(authorization.replace('Basic ', ''), 'base64').toString().split(':')
 
 			// Check the username and password
-			if(! (username === process.env.ADMUSR && password === process.env.ADMPSSWRD)) {
-				logErr(`${color.FgRed}  ${color.BgWhite}Fail admin auth !! [${username}][${password}]  ${color.Reset}`);
+			if(!(username === process.env.ADMUSR && password === process.env.ADMPSSWRD)) {
+				logErr(`${color.FgRed}${color.BgWhite}Fail admin auth !! [${username}][${password}]${color.Reset}`);
 				return reject()
 			}
 			log(`${color.FgGreen}Admin auth${color.Reset}`);
