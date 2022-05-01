@@ -194,15 +194,6 @@ app.get('/redirect', async (req, res) => {
 });
 
 /**
- * DEV ENDPOINT
- */
-
-app.get('/forceRefresh', (req, res) => {
-	forceRefreshClient();
-	res.send("Send forceRefresh all client")
-})
-
-/**
  * BACK END
  */
 	const server = app.listen(process.env.HTTP_PORT, () => {
