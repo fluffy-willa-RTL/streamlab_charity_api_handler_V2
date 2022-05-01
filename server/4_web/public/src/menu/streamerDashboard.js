@@ -144,7 +144,6 @@ async function start () {
 function pastbin (data) {
 	try {
 		navigator.clipboard.writeText(data);
-		alert(`Copied the text: ${data}`);
 	}
 	catch {
 		alert(`Error!`);
