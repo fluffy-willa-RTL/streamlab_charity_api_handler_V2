@@ -2,6 +2,7 @@ import db										from '../2_dbManagement/database.js'
 import mongo									from '../0_utils/mongo.js'
 import { first_id, socketClientIsConnected }	from '../3_socket/socketClient.js';
 import { sleep }								from '../0_utils/sleep.js';
+import { log }									from '../0_utils/log.js';
 import axios									from 'axios';
 
 import dotenv									from 'dotenv';
@@ -16,10 +17,10 @@ async function get3000(donationId = null){
 	if (donationId)
 		url += `?id=${donationId}`
 
-	console.log(color.FgRed, url, color.Reset)
+	log(`${color.FgRed}${url}${color.Reset}`)
 	let data = await axios.get(url)
 					.then((res) => {return res.data;})
-					.catch((err)=> {console.log(err);})
+					.catch((err)=> {log(`${err}`);})
 	
 	for (let i in data){
 		if (db.don[data[i]?.donation.id] === undefined){
@@ -40,14 +41,14 @@ async function get3000(donationId = null){
  */
 export async function startRecovery () {
 	// Wait the clien connection to streamlab
-	console.log(color.FgRed, '============== RECOVERY MODE START ==============', color.Reset);
-	console.log(color.FgRed, 'Wait the WS client to connect', color.Reset);
+	log(`${color.FgRed}============== RECOVERY MODE START ==============${color.Reset}`);
+	log(`${color.FgRed}Wait the WS client to connect${color.Reset}`);
 	while (!socketClientIsConnected) {
 		await sleep(50);
 	}
 	let last_id;
 
-	console.log(color.FgRed, 'Fetch all donation from backup db', color.Reset);
+	log(`${color.FgRed}Fetch all donation from backup db${color.Reset}`);
 
 	// Ask all raw donation in the db
 	await	mongo.don.find({})
@@ -68,9 +69,9 @@ export async function startRecovery () {
 			}
 		}
 	})
-	console.log(color.FgRed, 'All backup data processed', color.Reset);
+	log(`${color.FgRed}All backup data processed${color.Reset}`);
 
-	console.log(color.FgCyan, 'Waiting for WS donation', color.Reset);
+	log(`${color.FgCyan}Waiting for WS donation${color.Reset}`);
 
 	// Wait for the first WS donation.
 	while (!first_id)
@@ -88,15 +89,15 @@ export async function startRecovery () {
 		data = await get3000(tempId)
 	}
 	
-	console.log(color.FgRed, 'First WS id: ', first_id, color.Reset);
-	console.log(color.FgRed, '============== RECOVERY MODE END ==============', color.Reset);
+	log(`${color.FgRed}First WS id: ${first_id}${color.Reset}`);
+	log(`${color.FgRed}============== RECOVERY MODE END ==============${color.Reset}`);
 }
 
 // Check if the first donnation we recieved from WS is in the local.db
 function check_firstId_in_data(data, first_id) {
 	for (let don of data) {
 		if ((don?.donation?.id ?? -1) === first_id){
-			console.log(color.FgRed, 'Found first socket', first_id, color.Reset);
+			log(`${color.FgRed}Found first socket ${first_id}${color.Reset}`);
 			return true
 		}
 	}

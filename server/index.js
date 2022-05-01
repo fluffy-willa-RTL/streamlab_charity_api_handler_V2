@@ -5,6 +5,7 @@ import http				from 'http';
 import	fs				from 'fs'
 import yesno			from 'yesno'
 
+import { log, logErr }			from './0_utils/log.js'
 import * as connect									from './0_utils/connect.js';
 import color 										from './0_utils/color.js';
 import { sleep } 									from './0_utils/sleep.js';
@@ -30,10 +31,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // dir path constructor
 function publicPathFile(path) {
 	return join(__dirname, '4_web', 'public', path);
-}
-
-function log(msg) {
-	console.log(`[${new Date().toLocaleTimeString()}]: ${msg}`);
 }
 
 startSocketClient()
@@ -102,10 +99,10 @@ app.get('/u/:slug', (req, res) => {
 
 			// Check the username and password
 			if(! (username === process.env.ADMUSR && password === process.env.ADMPSSWRD)) {
-				log(color.FgRed + color.BgWhite + `Fail admin auth !! [${username}][${password}]` + color.Reset);
+				logErr(`${color.FgRed}  ${color.BgWhite}Fail admin auth !! [${username}][${password}]  ${color.Reset}`);
 				return reject()
 			}
-			log(color.FgGreen + 'Admin auth' + color.Reset);
+			log(`${color.FgGreen}Admin auth${color.Reset}`);
 			res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'admin.html')))
 			return ;
 		}
@@ -132,10 +129,10 @@ app.get('/dashboard', (req, res) => {
 
 	// Check the username and password
 	if(! (username === process.env.TCHUSR && password === process.env.TCHPSSWD)) {
-		log(color.FgRed + color.BgWhite + `Fail Tech team auth !! [${username}][${password}]` + color.Reset);
+		logErr(`${color.FgRed}${color.BgWhite}Fail Tech team auth !! [${username}][${password}]${color.Reset}`);
 		return reject()
 	}
-	log(color.FgGreen + 'Tech team auth' + color.Reset);
+	log(`${color.FgGreen}Tech team auth${color.Reset}`);
 	res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'admin.html')))// TODO create a new page
 	return ;
 })
@@ -149,7 +146,7 @@ app.get('/dashboard', (req, res) => {
 /a/donation/last10		=> Last 10 donations of all streamers			(asset)
 /a/donation/big10		=> Biggest 10 donations of all streamers		(asset)
 
-/a/:id/total/all		=> Total of streamer id							(text)
+/a/:id/total/me			=> Total of streamer id							(text)
 /a/:id/donation/last	=> Last donation of streamer id					(text)
 /a/:id/donation/big		=> Biggest donation of streamer id				(text)
 /a/:id/donation/last10	=> Last 10 donations of streamer id				(asset)
@@ -181,13 +178,13 @@ app.get('/', (req, res) => {res.redirect(connect.get_auth_url());})
 // Get the `code` query to acces the user info and generate they link for `/u/:slug`
 app.get('/redirect', async (req, res) => {
 	if (!Object.hasOwn(req.query, 'code')) {
-		log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
+		logErr(`${color.FgRed}${color.BgWhite}Error streamlab auth return null !${color.Reset}`);
 		res.status(400).send("Fatal error ! Streamlabs send null response ! Réessayer de vous connecter si le problème ce rèpète constactez les dev.");
 		return;
 	}
 	const data = await connect.getUserData(req.query.code);
 	if (data === null) {
-		log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
+		logErr(`${color.FgRed} + ${color.BgWhite}Error streamlab auth return null !${color.Reset}`);
 		res.status(400).send("Fatal error ! Streamlabs send null response ! Réessayer de vous connecter si le problème ce rèpète constactez les dev.");
 		return;
 	}
@@ -220,29 +217,32 @@ app.get('/forceRefresh', (req, res) => {
 		log(`[*.*]:${process.env.HTTP_PORT}`);
 	});
 
-	// Certificate
-	const privateKey = fs.readFileSync(process.env.PKEY, 'utf8');
-	const certificate = fs.readFileSync(process.env.CERT, 'utf8');
-	const ca = fs.readFileSync(process.env.CA, 'utf8');
-	
-	const credentials = {
-		key: privateKey,
-		cert: certificate,
-		ca: ca
-	};
+	if (process.env.PROTOCOL === 'https') {
 
-	const httpsServer = https.createServer(credentials ,app);
-
-	httpsServer.listen(process.env.HTTPS_PORT, () => {
+		// Certificate
+		const privateKey = fs.readFileSync(process.env.PKEY, 'utf8');
+		const certificate = fs.readFileSync(process.env.CERT, 'utf8');
+		const ca = fs.readFileSync(process.env.CA, 'utf8');
 		
-		// Run WS server only when the web serv is started
-		startSocketServer(httpsServer)
+		const credentials = {
+			key: privateKey,
+			cert: certificate,
+			ca: ca
+		};
 		
-		// Init the front buffer
-		update.updateFrontLight();
-		update.updateFrontHeavyLoop();
+		const httpsServer = https.createServer(credentials ,app);
 		
-		// Disable recovery mode to allow fronten update
-		recoveryMode = false;
-		log(`[*.*]:${process.env.HTTPS_PORT}`);
-	});
+		httpsServer.listen(process.env.HTTPS_PORT, () => {
+		
+			// Run WS server only when the web serv is started
+			startSocketServer(httpsServer)
+			
+			// Init the front buffer
+			update.updateFrontLight();
+			update.updateFrontHeavyLoop();
+			
+			// Disable recovery mode to allow fronten update
+			recoveryMode = false;
+			log(`[*.*]:${process.env.HTTPS_PORT}`);
+		});
+	}
