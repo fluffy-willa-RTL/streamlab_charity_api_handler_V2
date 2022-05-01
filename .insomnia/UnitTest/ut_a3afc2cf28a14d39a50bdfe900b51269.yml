@@ -1,0 +1,10 @@
+_id: ut_a3afc2cf28a14d39a50bdfe900b51269
+type: UnitTest
+parentId: uts_8a0e2c89b43846218a3e244dd186d7bf
+modified: 1651439482817
+created: 1651438874477
+requestId: req_wrk_bf0b55f97743499ca25af4228ded1c19944983ef
+name: Admin page
+code: |-
+  const response1 = await insomnia.send();
+  expect(response1.status).to.equal(401);

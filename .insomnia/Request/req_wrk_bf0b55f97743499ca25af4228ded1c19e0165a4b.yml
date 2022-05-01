@@ -1,0 +1,21 @@
+_id: req_wrk_bf0b55f97743499ca25af4228ded1c19e0165a4b
+type: Request
+parentId: fld_wrk_bf0b55f97743499ca25af4228ded1c1930c4b464
+modified: 1651437501960
+created: 1651437501960
+url: "{{ base_url }}/a/donation/last"
+name: Total of all streamers
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1651437501960
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

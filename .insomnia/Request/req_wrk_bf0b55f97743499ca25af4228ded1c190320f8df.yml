@@ -1,0 +1,21 @@
+_id: req_wrk_bf0b55f97743499ca25af4228ded1c190320f8df
+type: Request
+parentId: fld_wrk_bf0b55f97743499ca25af4228ded1c1930c4b464
+modified: 1651437501958
+created: 1651437501958
+url: "{{ base_url }}/a/donation/big"
+name: Biggest donation of all streamers
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1651437501958
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
