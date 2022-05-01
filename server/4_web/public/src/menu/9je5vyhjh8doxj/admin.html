@@ -5,9 +5,37 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Admin</title>
+		<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+		<script defer src="/script/socket.js"></script>
+		<script defer src="/src/menu/9je5vyhjh8doxj/admin.js"></script>
 	</head>
 	<body>
-		<button>Refresh streamer</button>
-		<button>Force refresh all client</button>
+	<!-- Refresh streamer subscribed in streamlab charity team -->
+		<button onclick="socketEmit('nswkvz3po5tpwp')" >Refresh streamer</button>
+		<!-- Force refresh all client page -->
+		<button onclick="socketEmit('ceybt29oezjd7t')" >Force refresh all client</button>
 	</body>
 </html>
+
+<style>
+button {
+	padding: 5px 15px;
+	font-size: 12px;
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+	color: #fff;
+	background-color: #04AA6D;
+	border: none;
+	border-radius: 15px;
+	box-shadow: 0 4px #999;
+}
+
+button:hover {background-color: #3e8e41}
+
+button:active {
+	background-color: #8e3e3e;
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+}
+</style>
