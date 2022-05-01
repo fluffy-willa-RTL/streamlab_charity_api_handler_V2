@@ -1,0 +1,21 @@
+_id: req_wrk_bf0b55f97743499ca25af4228ded1c19d96ff9d4
+type: Request
+parentId: fld_wrk_bf0b55f97743499ca25af4228ded1c194e7afebc
+modified: 1651440896996
+created: 1651440811631
+url: "{{ base_url }}/dashboard"
+name: Tech team dashboard
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1651440811631
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

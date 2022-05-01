@@ -1,7 +1,7 @@
 _id: spc_a94420b1d18b404d9c3c5811bd7307c5
 type: ApiSpec
 parentId: wrk_bf0b55f97743499ca25af4228ded1c19
-modified: 1651440101467
+modified: 1651440893302
 created: 1651437486726
 fileName: fluffy-api.yaml
 contents: |
@@ -119,6 +119,15 @@ contents: |
         tags:
           - Admin
         summary: Admin dashboard
+        description: ''
+        responses:
+          '401':
+            description: Ok
+    /dashboard:
+      get:
+        tags:
+          - Admin
+        summary: Tech team dashboard
         description: ''
         responses:
           '401':
