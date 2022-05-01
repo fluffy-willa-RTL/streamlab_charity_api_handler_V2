@@ -106,6 +106,33 @@ app.get('/u/:slug', (req, res) => {
 	res.sendFile(publicPathFile(join('src', 'menu', 'streamerDashboard.html')))
 })
 
+// Dashboard for technical team
+app.get('/dashboard', (req, res) => {
+	const reject = () => {
+		res.setHeader('www-authenticate', 'Basic')
+		res.sendStatus(401)
+	}
+	// Request auth
+	const authorization = req.headers.authorization
+
+	// Check if auth is not empty
+	if(!authorization) {
+		console.log(color.FgRed + color.BgWhite + "Fail admin auth !!" + color.Reset);
+		return reject()
+	}
+
+	// Decode username and password
+	const [username, password] = Buffer.from(authorization.replace('Basic ', ''), 'base64').toString().split(':')
+
+	// Check the username and password
+	if(! (username === process.env.TCHUSR && password === process.env.TCHPSSWD)) {
+		console.log(color.FgRed + color.BgWhite + `Fail admin auth !! [${username}][${password}]` + color.Reset);
+		return reject()
+	}
+	res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'admin.html')))// TODO create a new page
+	return ;
+})
+
 /******************************************************************************/
 /*                                 ASSETS                                     */
 /*******************************************************************************
