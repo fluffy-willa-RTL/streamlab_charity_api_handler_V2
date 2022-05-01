@@ -32,6 +32,10 @@ function publicPathFile(path) {
 	return join(__dirname, '4_web', 'public', path);
 }
 
+function log(msg) {
+	console.log(`[${new Date().toLocaleTimeString()}]: ${msg}`);
+}
+
 startSocketClient()
 
 /**
@@ -90,7 +94,6 @@ app.get('/u/:slug', (req, res) => {
 
 			// Check if auth is not empty
 			if(!authorization) {
-				console.log(color.FgRed + color.BgWhite + "Fail admin auth !!" + color.Reset);
 				return reject()
 			}
 
@@ -99,9 +102,10 @@ app.get('/u/:slug', (req, res) => {
 
 			// Check the username and password
 			if(! (username === process.env.ADMUSR && password === process.env.ADMPSSWRD)) {
-				console.log(color.FgRed + color.BgWhite + `Fail admin auth !! [${username}][${password}]` + color.Reset);
+				log(color.FgRed + color.BgWhite + `Fail admin auth !! [${username}][${password}]` + color.Reset);
 				return reject()
 			}
+			log(color.FgGreen + 'Admin auth' + color.Reset);
 			res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'admin.html')))
 			return ;
 		}
@@ -120,7 +124,6 @@ app.get('/dashboard', (req, res) => {
 
 	// Check if auth is not empty
 	if(!authorization) {
-		console.log(color.FgRed + color.BgWhite + "Fail admin auth !!" + color.Reset);
 		return reject()
 	}
 
@@ -129,9 +132,10 @@ app.get('/dashboard', (req, res) => {
 
 	// Check the username and password
 	if(! (username === process.env.TCHUSR && password === process.env.TCHPSSWD)) {
-		console.log(color.FgRed + color.BgWhite + `Fail admin auth !! [${username}][${password}]` + color.Reset);
+		log(color.FgRed + color.BgWhite + `Fail Tech team auth !! [${username}][${password}]` + color.Reset);
 		return reject()
 	}
+	log(color.FgGreen + 'Tech team auth' + color.Reset);
 	res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'admin.html')))// TODO create a new page
 	return ;
 })
@@ -177,13 +181,13 @@ app.get('/', (req, res) => {res.redirect(connect.get_auth_url());})
 // Get the `code` query to acces the user info and generate they link for `/u/:slug`
 app.get('/redirect', async (req, res) => {
 	if (!Object.hasOwn(req.query, 'code')) {
-		console.log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
+		log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
 		res.status(400).send("Fatal error ! Streamlabs send null response ! Réessayer de vous connecter si le problème ce rèpète constactez les dev.");
 		return;
 	}
 	const data = await connect.getUserData(req.query.code);
 	if (data === null) {
-		console.log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
+		log(color.FgRed + color.BgWhite + 'Error streamlab auth return null !' + color.Reset);
 		res.status(400).send("Fatal error ! Streamlabs send null response ! Réessayer de vous connecter si le problème ce rèpète constactez les dev.");
 		return;
 	}
@@ -202,47 +206,45 @@ app.get('/forceRefresh', (req, res) => {
 /**
  * BACK END
  */
-
-//  const server = app.listen(process.env.PORT, () => {
-	 
-// 	 // Run WS server only when the web serv is started
-// 	 startSocketServer(server)
-	 
-// 	// Init the front buffer
-// 	update.updateFrontLight();
-// 	update.updateFrontHeavyLoop();
+if (process.env.PROTOCOL === 'http') {
+	const server = app.listen(process.env.PORT, () => {
+		
+		// Run WS server only when the web serv is started
+		startSocketServer(server)
+		
+		// Init the front buffer
+		update.updateFrontLight();
+		update.updateFrontHeavyLoop();
+		
+		// Disable recovery mode to allow fronten update
+		recoveryMode = false;
+		log(`[*.*]:${process.env.PORT}`);
+	});
+} else if (process.env.PROTOCOL === 'https') {
+	// Certificate
+	const privateKey = fs.readFileSync(process.env.PKEY, 'utf8');
+	const certificate = fs.readFileSync(process.env.CERT, 'utf8');
+	const ca = fs.readFileSync(process.env.CA, 'utf8');
 	
-// 	// Disable recovery mode to allow fronten update
-// 	recoveryMode = false;
-// 	console.log(`[*.*]:${process.env.PORT}`);
-// });
+	const credentials = {
+		key: privateKey,
+		cert: certificate,
+		ca: ca
+	};
 
-// Certificate
-const privateKey = fs.readFileSync(process.env.PKEY, 'utf8');
-const certificate = fs.readFileSync(process.env.CERT, 'utf8');
-const ca = fs.readFileSync(process.env.CA, 'utf8');
+	const httpsServer = https.createServer(credentials ,app);
 
-const credentials = {
-	key: privateKey,
-	cert: certificate,
-	ca: ca
-};
-
-// const httpServer = http.createServer(app);
-
-const httpsServer = https.createServer(credentials ,app);
-
-httpsServer.listen(process.env.PORT, () => {
-	 
-	 // Run WS server only when the web serv is started
-	 startSocketServer(httpsServer)
-	 
-	// Init the front buffer
-	update.updateFrontLight();
-	update.updateFrontHeavyLoop();
-	
-	// Disable recovery mode to allow fronten update
-	recoveryMode = false;
-	console.log(`[*.*]:${process.env.PORT}`);
-});
-
+	httpsServer.listen(process.env.PORT, () => {
+		
+		// Run WS server only when the web serv is started
+		startSocketServer(httpsServer)
+		
+		// Init the front buffer
+		update.updateFrontLight();
+		update.updateFrontHeavyLoop();
+		
+		// Disable recovery mode to allow fronten update
+		recoveryMode = false;
+		log(`[*.*]:${process.env.PORT}`);
+	});
+}
