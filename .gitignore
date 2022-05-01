@@ -10,3 +10,5 @@ dblog.json
 streamer_log.err
 streamer_log.json
 .env
+errLog.txt
+log.txt
