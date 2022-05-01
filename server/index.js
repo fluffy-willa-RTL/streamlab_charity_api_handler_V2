@@ -206,8 +206,7 @@ app.get('/forceRefresh', (req, res) => {
 /**
  * BACK END
  */
-if (process.env.PROTOCOL === 'http') {
-	const server = app.listen(process.env.PORT, () => {
+	const server = app.listen(process.env.HTTP_PORT, () => {
 		
 		// Run WS server only when the web serv is started
 		startSocketServer(server)
@@ -218,9 +217,9 @@ if (process.env.PROTOCOL === 'http') {
 		
 		// Disable recovery mode to allow fronten update
 		recoveryMode = false;
-		log(`[*.*]:${process.env.PORT}`);
+		log(`[*.*]:${process.env.HTTP_PORT}`);
 	});
-} else if (process.env.PROTOCOL === 'https') {
+
 	// Certificate
 	const privateKey = fs.readFileSync(process.env.PKEY, 'utf8');
 	const certificate = fs.readFileSync(process.env.CERT, 'utf8');
@@ -234,7 +233,7 @@ if (process.env.PROTOCOL === 'http') {
 
 	const httpsServer = https.createServer(credentials ,app);
 
-	httpsServer.listen(process.env.PORT, () => {
+	httpsServer.listen(process.env.HTTPS_PORT, () => {
 		
 		// Run WS server only when the web serv is started
 		startSocketServer(httpsServer)
@@ -245,6 +244,5 @@ if (process.env.PROTOCOL === 'http') {
 		
 		// Disable recovery mode to allow fronten update
 		recoveryMode = false;
-		log(`[*.*]:${process.env.PORT}`);
+		log(`[*.*]:${process.env.HTTPS_PORT}`);
 	});
-}
