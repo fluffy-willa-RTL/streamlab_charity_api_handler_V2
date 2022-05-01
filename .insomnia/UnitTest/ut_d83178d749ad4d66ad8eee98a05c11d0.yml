@@ -1,0 +1,10 @@
+_id: ut_d83178d749ad4d66ad8eee98a05c11d0
+type: UnitTest
+parentId: uts_5b3ad439d17145c7bdde766724747f1f
+modified: 1651437599797
+created: 1651437557234
+requestId: req_wrk_bf0b55f97743499ca25af4228ded1c190320f8df
+name: /a/donation/big
+code: |-
+  const response1 = await insomnia.send();
+  expect(response1.status).to.equal(200);

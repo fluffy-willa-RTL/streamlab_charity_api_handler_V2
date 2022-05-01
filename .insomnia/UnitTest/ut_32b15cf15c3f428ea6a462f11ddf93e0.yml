@@ -1,0 +1,10 @@
+_id: ut_32b15cf15c3f428ea6a462f11ddf93e0
+type: UnitTest
+parentId: uts_5b3ad439d17145c7bdde766724747f1f
+modified: 1651437598115
+created: 1651437551639
+requestId: req_wrk_bf0b55f97743499ca25af4228ded1c19e0165a4b
+name: /a/donation/last
+code: |-
+  const response1 = await insomnia.send();
+  expect(response1.status).to.equal(200);

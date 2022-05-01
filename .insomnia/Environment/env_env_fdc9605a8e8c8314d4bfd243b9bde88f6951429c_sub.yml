@@ -1,0 +1,14 @@
+_id: env_env_fdc9605a8e8c8314d4bfd243b9bde88f6951429c_sub
+type: Environment
+parentId: env_fdc9605a8e8c8314d4bfd243b9bde88f6951429c
+modified: 1651437501966
+created: 1651437501966
+name: OpenAPI env
+data:
+  scheme: https
+  base_path: ""
+  host: demo.prod.dreemcloud.net
+dataPropertyOrder: null
+color: null
+isPrivate: false
+metaSortKey: 1651437501966
