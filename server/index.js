@@ -78,6 +78,7 @@ app.get('/u/:slug', (req, res) => {
 		'fluffykaiju-',
 		'willa-234',
 		'fluffy-api',
+		'admin'
 	];
 	for (const user of admin)
 	{
