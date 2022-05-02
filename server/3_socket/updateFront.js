@@ -94,7 +94,7 @@ export function updateFrontLight(){
 			front.emit(`total.${id}`, res.total_streamer[id])
 			front.emit(`bar.${id}`, {
 				total: res.total_streamer[id],
-				goals: Object.hasOwn(db.goals, id) ? db.goals[id] : null,
+				goals: Object.hasOwn(db.goals, id) ? db.goals[id] : {},
 			})
 		}
 		if (res.don_streamer_last[id].at(-1)._id != (db.front.don_streamer_last?.[id]?.at(-1)?._id ?? null))
@@ -110,13 +110,13 @@ function getFront(socket){
 	socket.emit(`total`, db.front.total)
 	socket.emit(`donation_last`,				db.front.don_last)
 	socket.emit(`donation_biggest`,				db.front.don_big)
-	for (let id in db.front.total_streamer){
+	for (let id of Object.keys(db.front.total_streamer)){
 		socket.emit(`total.${id}`,				db.front.total_streamer[id])
 		socket.emit(`donation_last.${id}`,		db.front.don_streamer_last[id])
 		socket.emit(`donation_biggest.${id}`,	db.front.don_streamer_big[id])
 		socket.emit(`bar.${id}`, {
 			total: db.front.total_streamer[id],
-			goals: Object.hasOwn(db.goals, id) ? db.goals[id] : null,
+			goals: Object.hasOwn(db.goals, id) ? db.goals[id] : {},
 		})
 	}
 }

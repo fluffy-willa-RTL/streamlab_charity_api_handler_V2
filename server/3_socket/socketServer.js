@@ -22,8 +22,8 @@ export async function startSocketServer(server){
 	// Listen all incoming connection of the 
 	front.on('connect', (data) => {
 		// Add new client
+		log(`${color.FgMagenta}[${connectedClient}][connect]:${data.id} ${color.Reset}`);
 		connectedClient++;
-			log(`${color.FgMagenta}[${connectedClient}][connect]:${data.id} ${color.Reset}`);
 		// Client will ask `whoami` to recive all streamer info (slug, name, id, PP)
 		data.on('whoami',(res) => {
 			if (res['slug'] !== undefined){
@@ -78,8 +78,7 @@ export async function startSocketServer(server){
 				value: res.value,
 				text: res.text
 			}
-			console.log(res)
-			console.log(db.goals)
+			update.getFront(data);
 		});
 		
 	})
