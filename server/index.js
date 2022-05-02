@@ -150,6 +150,7 @@ app.get('/dashboard', (req, res) => {
 /a/donation/big10		=> Biggest 10 donations of all streamers		(asset)
 
 /a/:id/total/me			=> Total of streamer id							(text)
+/a/:id/total/bar		=> Donation bar of the Streamer					(asset)
 /a/:id/donation/last	=> Last donation of streamer id					(text)
 /a/:id/donation/big		=> Biggest donation of streamer id				(text)
 /a/:id/donation/last10	=> Last 10 donations of streamer id				(asset)

@@ -90,8 +90,14 @@ export function updateFrontLight(){
 
 	//check Total for single streamer
 	for (let id in res.total_streamer){
-		if (res.total_streamer[id] != (db.front.total_streamer?.[id] ?? null))
+		if (res.total_streamer[id] != (db.front.total_streamer?.[id] ?? null)){
 			front.emit(`total.${id}`, res.total_streamer[id])
+			front.emit(`bar.${id}`, {
+				prevGoal: 0,
+				actualGoal: 0,
+				
+			})
+		}
 		if (res.don_streamer_last[id].at(-1)._id != (db.front.don_streamer_last?.[id]?.at(-1)?._id ?? null))
 			front.emit(`donation_last.${id}`, res.don_streamer_last[id])
 	}
