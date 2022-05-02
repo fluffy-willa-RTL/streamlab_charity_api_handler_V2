@@ -19,14 +19,23 @@
 		<h1 id="welcomeMessage"></h1>
 		<p>Ici tu peux retrouver tout les assets que tu peux utiliser lors de ton stream.</p>
 
-		<button id="addGoalButtun">add new goal</button>
-
+		
 		<label for="colorWell">Couleur :</label>
 		<input type="color" value="#ff0000" id="colorWell">
 		<div id="colorPreview">
 			0123456789
 		</div>
-		
+		<button id="addGoalButton">add new goal</button>
+		<div id="goalList">
+			<template id="goalTemplate">
+				<div class="goal" id="goal">
+					<div class="text goalIndex">index</div>
+					<div class="text goalValue">value</div>
+					<div class="text goalText">text</div>
+				</div>
+			</template>
+		</div>
+
 
 		<ul id="myList"></ul>
 	</body>
@@ -40,6 +49,11 @@
 
 	h1, h2, h3, a, p {
 		color: #fff;
+	}
+
+	.goal	 {
+		display: grid;
+		grid-template-columns: auto auto auto;
 	}
 
 	#myList {

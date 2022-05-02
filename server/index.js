@@ -166,6 +166,7 @@ app.get('/a/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('sr
 /************************           STREAMER           ************************/
 
 app.get('/a/:id/total/me',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMe.html')))})
+app.get('/a/:id/total/bar',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationBar.html')))})
 app.get('/a/:id/donation/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation', 'donationLast.html')))})
 app.get('/a/:id/donation/big',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))})
 app.get('/a/:id/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast10.html')))})

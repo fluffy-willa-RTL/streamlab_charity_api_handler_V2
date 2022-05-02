@@ -18,4 +18,5 @@ export default {
 	don,
 	front,
 	streamer,
+	goals,
 }

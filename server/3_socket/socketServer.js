@@ -33,7 +33,8 @@ export async function startSocketServer(server){
 					if (streamer.slug === res.slug){
 						data.emit('youare', {
 							id: id,
-							streamer: streamer
+							streamer: streamer,
+							goals: Object.hasOwn(db.goals, id) ? db.goals[id] : null,
 						});
 						return;
 					}
@@ -67,6 +68,20 @@ export async function startSocketServer(server){
 			forceRefreshClient();
 		});
 		/******************************************************************** */
+
+		data.on('addNewGoal', (res) => {
+			log(`${color.FgMagenta}${color.Dim}addNewGoal${color.Reset}`)
+			if (!Object.hasOwn(db.goals, res.id)){
+				db.goals[res.id] = {}
+			}
+			db.goals[res.id][res.index] = {
+				value: res.value,
+				text: res.text
+			}
+			console.log(res)
+			console.log(db.goals)
+		});
+		
 	})
 }
 
