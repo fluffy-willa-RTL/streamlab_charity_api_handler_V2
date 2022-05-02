@@ -188,13 +188,19 @@ function generateArray(data){
 			height:	200,
 		},
 		{
-			title:	`Derniere donation récoltée ${data.streamer.display_name}`,
+			title:	`Derniere donation récoltée par ${data.streamer.display_name}`,
 			src:	`/a/${data.id}/donation/last`,
 			width:	500,
 			height:	200,
 		},
 		{
-			title:	`Plus grosse donation récoltée ${data.streamer.display_name}`,
+			title:	`Dernier donateur pour ${data.streamer.display_name}`,
+			src:	`/a/${data.id}/donator/last`,
+			width:	500,
+			height:	200,
+		},
+		{
+			title:	`Plus grosse donation récoltée par ${data.streamer.display_name}`,
 			src:	`/a/${data.id}/donation/big`,
 			width:	500,
 			height:	200,

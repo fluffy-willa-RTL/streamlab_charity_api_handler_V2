@@ -1,10 +1,12 @@
-function socketEmit(event) {
-	socket.emit(event);
-}
+let socket = null;
 
 async function start () {
-
-	const socket = await connect();
+	socket = await connect();
 }
 
+function socketEmit(event) {
+	if (socket === null)
+		return ;
+	socket.emit(event);
+}
 start();
