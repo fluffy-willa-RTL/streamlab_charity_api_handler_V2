@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
+
 html body {
 	height: 100%;
 	width: 100%;
@@ -12,6 +14,7 @@ html body {
 	padding: 20px 5px 20px 5px;
 	font-size: 4em;
 	color: white;
+	font-family: 'Concert One', cursive;
 }
 
 #donationList {
@@ -30,10 +33,12 @@ html body {
 	min-height: 50px;
 	justify-content: space-between;
 	border-radius: 10px;
+	font-family: 'Concert One', cursive;
 }
 
 .name {
 	display: flex;
+	font-family: 'Concert One', cursive;
 }
 
 .value {
@@ -44,10 +49,12 @@ html body {
 	min-width: 5em;
 	padding: 0px 10px 0px 10px;
 	border-radius: 10px;
+	font-family: 'Concert One', cursive;
 }
 
 .text {
 	align-items: center;
 	font-size: 1.5em;
 	font-family: "Lucida Console", "Courier New", monospace;
+	font-family: 'Concert One', cursive;
 }

@@ -1,8 +1,11 @@
 /* body {
 } */
 
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
+
 p, h1, h2, h3 {
-	color: #fff;
+	color: #0a4a91;
 	           /* color | offset-x | offset-y | blur-radius */
 	text-shadow: #000      1px       0            10px;
+	font-family: 'Concert One', cursive;
 }
