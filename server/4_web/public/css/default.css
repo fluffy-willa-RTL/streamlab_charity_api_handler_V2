@@ -3,10 +3,22 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
 
-p, h1, h2, h3 {
-	font-size: 150px;
+p, h1, h2, h3, .text{
+	/* font-size: 150px; */
+	font-size: 100%;
 	margin: 0px;
 	margin-right: 25px;
+	color: #0a4a91;
+	           /* color | offset-x | offset-y | blur-radius */
+	text-shadow: rgb(124, 124, 124)      1px       0            10px;
+	font-family: 'Concert One', cursive;
+	text-align: end;
+}
+
+.displayBig {
+	font-size: 150px;
+	margin: 0px;
+	/* margin-right: 25px; */
 	color: #0a4a91;
 	           /* color | offset-x | offset-y | blur-radius */
 	text-shadow: rgb(124, 124, 124)      1px       0            10px;
