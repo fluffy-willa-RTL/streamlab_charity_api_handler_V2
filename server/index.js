@@ -214,18 +214,29 @@ app.get('/redirect', async (req, res) => {
 	if (process.env.PROTOCOL === 'https') {
 
 		// Certificate
-		const privateKey = fs.readFileSync(process.env.PKEY, 'utf8');
-		const certificate = fs.readFileSync(process.env.CERT, 'utf8');
-		const ca = fs.readFileSync(process.env.CA, 'utf8');
+		const privateKey1 = fs.readFileSync(process.env.PKEY1, 'utf8');
+		const certificate1 = fs.readFileSync(process.env.CERT1, 'utf8');
+		const ca1 = fs.readFileSync(process.env.CA1, 'utf8');
 		
-		const credentials = {
-			key: privateKey,
-			cert: certificate,
-			ca: ca
+		const credentials1 = {
+			key: privateKey1,
+			cert: certificate1,
+			ca: ca1
+		};
+		// Certificate
+		const privateKey2 = fs.readFileSync(process.env.PKEY2, 'utf8');
+		const certificate2 = fs.readFileSync(process.env.CERT2, 'utf8');
+		const ca2 = fs.readFileSync(process.env.CA2, 'utf8');
+		
+		const credentials2 = {
+			key: privateKey2,
+			cert: certificate2,
+			ca: ca2
 		};
 		
-		const httpsServer = https.createServer(credentials ,app);
-		
+		const httpsServer = https.createServer(credentials1 ,app);
+		httpsServer.addContext(process.env.SECOND_BASE_URL, credentials2);
+
 		httpsServer.listen(process.env.HTTPS_PORT, () => {
 		
 			// Run WS server only when the web serv is started
