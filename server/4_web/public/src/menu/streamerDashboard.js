@@ -182,5 +182,6 @@ function colorlisten() {
 	}
 }
  
+// document.getElementById("sub").addEventListener("click", validate);
 
 start();

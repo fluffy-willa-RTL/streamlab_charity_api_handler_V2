@@ -10,6 +10,8 @@ let front = {
 	don_streamer_big: {},
 }
 
+let goals = {}
+
 let streamer = {}
 
 export default {
