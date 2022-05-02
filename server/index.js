@@ -173,6 +173,8 @@ app.get('/a/:id/donation/big',		(req, res) => {res.sendFile(publicPathFile(join(
 app.get('/a/:id/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast10.html')))})
 app.get('/a/:id/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest10.html')))})
 
+app.get('/a/:id/donator/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donator', 'donationLastDonator.html')))})
+
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
