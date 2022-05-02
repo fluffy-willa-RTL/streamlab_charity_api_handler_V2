@@ -14,7 +14,7 @@ async function start() {
 
 	socket.on(socketListeningEvent, (res) => {
 		console.log(res);
-		document.getElementById(textId).textContent = res?.at(-1)?.name;
+		document.getElementById(textId).textContent = convertLongText(res?.at(-1)?.name, 10);
 	});
 }
 
