@@ -199,6 +199,7 @@ app.get('/redirect', async (req, res) => {
 /**
  * BACK END
  */
+if (process.env.PROTOCOL === 'http') {
 	const server = app.listen(process.env.HTTP_PORT, () => {
 		
 		// Run WS server only when the web serv is started
@@ -212,6 +213,7 @@ app.get('/redirect', async (req, res) => {
 		recoveryMode = false;
 		log(`[*.*]:${process.env.HTTP_PORT}`);
 	});
+}
 
 	if (process.env.PROTOCOL === 'https') {
 
