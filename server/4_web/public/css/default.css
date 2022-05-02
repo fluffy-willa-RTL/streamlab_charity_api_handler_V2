@@ -3,6 +3,17 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
 
+html {
+	width: 100%;
+	height: 100%;
+	display: table;
+}
+
+body {
+	width: 100%;
+	display: table-cell;
+}
+
 p, h1, h2, h3 {
 	font-size: 150px;
 	margin: 0px;
