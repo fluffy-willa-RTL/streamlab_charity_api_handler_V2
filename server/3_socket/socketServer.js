@@ -54,6 +54,10 @@ export async function startSocketServer(server){
 			log(`${color.FgMagenta}${color.Dim}[${connectedClient}][disconnect]:${data.id} ${color.Reset}`);
 		})
 
+		data.on('getStreamer', () => {
+			data.emit('allStreamer', db.streamer);
+		})
+
 		/*************************  ADMIN DEBUG  **************************** */
 		// Listen for Page Admin to refresh streamer subscribed in streamlab charity team
 		// `nswkvz3po5tpwp`
@@ -78,9 +82,14 @@ export async function startSocketServer(server){
 				value: res.value,
 				text: res.text
 			}
-			update.getFront(data);
+			console.log(`goals.${res.id}`)
+			console.log(Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
+			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
 		});
 		
+		data.on('goals', (id) => {
+			data.emit(`goals.${id}`, Object.hasOwn(db.goals, id) ? db.goals[id] : {})
+		});
 	})
 }
 

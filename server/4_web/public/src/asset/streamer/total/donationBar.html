@@ -9,54 +9,73 @@
 		<link rel="stylesheet" href="/css/default.css">
 		<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
 		<script defer src="/script/socket.js"></script>
-
-		<script defer>
-			const id = window.location.pathname.split('/')[2];
-			if (!id){
-				document.location = '/u/';
-			}
-			const socketListeningEvent = `bar.${id}`;
-		</script>
 		<script defer src="/script/templateBar.js"></script>
 	</head>
 	<body>
-		<div class="bar" id="bar">
-			<div class="filter"></div>
-			<div class="barElem"></div>
+		<div class="meter">
+			<div id="filled" style="width: 0%"></div>
 		</div>
 	</body>
 </html>
 <style>
-	.bar, .filter, .barElem {
-		height: 100%;
-		width: 100%;
+
+:root {
+	--color-lines: #198bf7;
+	--color-lines-gray: rgba(255, 255, 255, 0.374);
+	--color-background: #0b1d4f;
+}
+
+.meter {
+	box-sizing: content-box;
+	height: 40px;
+	position: relative;
+	background: var(--color-background);
+	border-radius: 25px;
+	padding: 10px;
+	margin: 10px;
+}
+
+.meter > #filled {
+	display: block;
+	height: 100%;
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+	background-color: var(--color-lines);
+	position: relative;
+	overflow: hidden;
+	transition: width 1s;
+}
+.meter > #filled:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-image: linear-gradient(
+		-45deg,
+		var(--color-lines-gray) 25%,
+		transparent 25%,
+		transparent 50%,
+		var(--color-lines-gray) 50%,
+		var(--color-lines-gray) 75%,
+		transparent 75%,
+		transparent
+	);
+	z-index: 1;
+	background-size: 50px 50px;
+	animation: move 20s linear infinite;
+}
+
+@keyframes move {
+	from {
+		background-position: 0 0;
 	}
-	
-	.bar, .filter {
-		position: absolute;
-		top:0%;
-		left:0%;
+	to {
+		background-position: 50px 50px;
 	}
-	
-	.filter {
-		background-color: #e2610a;
-		opacity: 0.5;
-	}
-	
-	.bar {
-		display: grid;
-		background-color: #ffffff;
-		grid-template-columns: 25% auto;
-	}
-	
-	.barElem {
-		border-right: 1em solid #838383;
-		background: repeating-linear-gradient(
-			-75deg,
-			#838383 ,
-			#838383 1em,
-			#a7a7a7 1em,
-			#a7a7a7 2em
-		);
-	}
+}
+
 </style>

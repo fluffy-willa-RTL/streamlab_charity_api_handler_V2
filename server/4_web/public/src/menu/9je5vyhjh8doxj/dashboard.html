@@ -5,8 +5,81 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+	<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+	<script defer src="/script/socket.js"></script>
+	<script defer src="/src/menu/9je5vyhjh8doxj/dashboard.js"></script>
 </head>
 <body>
-	
+	<div id="list"></div>
 </body>
 </html>
+
+<style>
+	body {
+		background-color: #36393f;
+	}
+
+	h1, h2, h3, a, p {
+		color: #fff;
+	}
+
+	.goal	 {
+		display: grid;
+		grid-template-columns: auto auto auto;
+	}
+	
+	iframe {
+		background-color: #fff;
+	}
+
+	#myList {
+		display:list-item;
+		grid-template-columns: auto auto;
+	}
+
+	.listElement {
+		display: flex;
+		position: relative;
+		margin-top: 50px;
+	}
+
+	.listElement a {
+		position: absolute;
+		margin-left: 100px;
+	}
+	
+	.listElement button {
+		position: absolute;
+	}
+
+	.listElement iframe {
+		margin-top: 50px;
+	}
+
+	#colorPreview {
+		color: #fff;
+		text-shadow: #000 1px 0 10px;
+		font-size: 2.5em;
+	}
+
+button {
+	padding: 5px 15px;
+	font-size: 12px;
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+	color: #fff;
+	background-color: #04AA6D;
+	border: none;
+	border-radius: 15px;
+box-shadow: 0 4px #999;
+}
+
+button:hover {background-color: #3e8e41}
+
+button:active {
+	background-color: #8e3e3e;
+	box-shadow: 0 5px #666;
+transform: translateY(4px);
+}
+</style>

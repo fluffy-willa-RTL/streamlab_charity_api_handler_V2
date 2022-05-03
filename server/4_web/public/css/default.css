@@ -2,22 +2,33 @@
 } */
 
 @import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-p, h1, h2, h3, .text{
+html body {
+	height: 100%;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+.text p, 
+.text h1, 
+.text h2, 
+.text h3 {
 	/* font-size: 150px; */
 	font-size: 100%;
 	margin: 0px;
 	margin-right: 25px;
 	color: #0a4a91;
-	           /* color | offset-x | offset-y | blur-radius */
-	text-shadow: rgb(124, 124, 124)      1px       0            10px;
+	/* color | offset-x | offset-y | blur-radius */
+	text-shadow: rgba(0, 0, 0, 0.275)      1px       0            0.1em;
 	font-family: 'Concert One', cursive;
 	text-align: end;
 }
 
 .displayBig {
-	font-size: 150px;
-	margin: 0px;
+	font-size: 15vw;
+	margin-right: 2%;
 	/* margin-right: 25px; */
 	color: #0a4a91;
 	           /* color | offset-x | offset-y | blur-radius */

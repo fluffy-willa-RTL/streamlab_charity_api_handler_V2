@@ -44,9 +44,12 @@ async function start () {
 			if (linkToGenerate !== null) {
 				return ;
 			}
+			// Get all previews settings
 			linkToGenerate = generateArray(data);
+			// Get the parent list
 			const list = document.getElementById("myList");
 			let id = 0;
+			// For each settings generate all component in the parent list
 			linkToGenerate.forEach((item) => {
 				const div = document.createElement('div');
 				div.className	= `listElement`
@@ -66,6 +69,10 @@ async function start () {
 				title.target			= '_blank';
 				div.appendChild(title);
 
+				const text = document.createElement("p");
+				text.textContent		= `width: ${item.width} px, height: ${item.height} px`;
+				div.appendChild(text);
+
 				const frame = document.createElement("iframe");
 				frame.src = item.src;
 				frame.width = item.width;
@@ -79,7 +86,7 @@ async function start () {
 			if (data.goals !== null){
 				for (let [id, elem] of Object.entries(data.goals)){
 					addGoalDiv(id, elem.value, elem.text)
-					indexGoal = id + 1
+					indexGoal = parseInt(id) + 1
 				}
 			}
 

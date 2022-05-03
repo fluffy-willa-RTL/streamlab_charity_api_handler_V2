@@ -7,6 +7,7 @@
 		<title>Dashboard</title>
 		<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
 		<script defer src="/script/socket.js"></script>
+		<link rel="stylesheet" href="/css/default.css">
 		<script defer>
 			// GLOBAL VARIABLE
 			const	slug = window.location.pathname.substring('/u/'.length)
@@ -16,26 +17,32 @@
 		</script>
 	</head>
 	<body>
-		<h1 id="welcomeMessage"></h1>
-		<p>Ici tu peux retrouver tout les assets que tu peux utiliser lors de ton stream.</p>
-
-		
-		<label for="colorWell">Couleur :</label>
-		<input type="color" value="#ff0000" id="colorWell">
-		<div id="colorPreview">
-			0123456789
-		</div>
-		<button id="addGoalButton">add new goal</button>
-		<div id="goalList">
-			<template id="goalTemplate">
-				<div class="goal" id="goal">
-					<div class="text goalIndex">index</div>
-					<div class="text goalValue">value</div>
-					<div class="text goalText">text</div>
-				</div>
-			</template>
+		<div class="welcome">
+			<h1 id="welcomeMessage"></h1>
+			<p>Ici tu peux retrouver tout les assets que tu peux utiliser lors de ton stream.</p>
 		</div>
 
+		<div class="welcome">
+<div class="colorPick">
+	
+	<label for="colorWell">Couleur :</label>
+	<input type="color" value="#ff0000" id="colorWell">
+	<span id="colorPreview">
+		123,456.78 €
+	</span>
+</div>
+			<button id="addGoalButton">add new goal</button>
+			<div id="goalList">
+				<template id="goalTemplate">
+					<div class="goal" id="goal">
+						<div class="text goalIndex">index</div>
+						<div class="text goalValue">value</div>
+						<div class="text goalText">text</div>
+					</div>
+				</template>
+			</div>
+		</div>
+			
 
 		<ul id="myList"></ul>
 	</body>
@@ -43,52 +50,77 @@
 </html>
 
 <style>
-	body {
+
+* {
+	font-family: 'Roboto', sans-serif;
+	color: #fff;
+}
+
+.colorPick {
+	margin: 2% 2%;
+}
+
+.colorPick * {
+	font-family: 'Concert One', cursive;
+}
+
+.colorPick span {
+	background-color: #fff;
+	margin-inline: 2%;
+	padding: 0.25em;
+}
+
+.welcome {
+	margin: 2%;
+}
+
+body {
 		background-color: #36393f;
-	}
+}
 
-	h1, h2, h3, a, p {
-		color: #fff;
-	}
+.goal	 {
+	display: grid;
+	grid-template-columns: auto auto auto;
+}
 
-	.goal	 {
-		display: grid;
-		grid-template-columns: auto auto auto;
-	}
-	
-	iframe {
-		background-color: #fff;
-	}
+iframe {
+	width: 100%;
+	background-color: #fff;
+	/* aspect-ratio: 9 / 2; */
+	max-width: 900px;
+}
 
-	#myList {
-		display:list-item;
-		grid-template-columns: auto auto;
-	}
+#myList {
+	display:list-item;
+	grid-template-columns: auto auto;
+}
 
-	.listElement {
-		display: flex;
-		position: relative;
-		margin-top: 50px;
-	}
+.listElement {
+	display: flex;
+	position: relative;
+	margin-top: 50px;
+}
 
-	.listElement a {
-		position: absolute;
-		margin-left: 100px;
-	}
-	
-	.listElement button {
-		position: absolute;
-	}
+.listElement a,
+.listElement p {
+	flex: 12;
+	position: absolute;
+	margin-left: 100px;
+}
 
-	.listElement iframe {
-		margin-top: 50px;
-	}
+.listElement button {
+	position: absolute;
+}
 
-	#colorPreview {
-		color: #fff;
-		text-shadow: #000 1px 0 10px;
-		font-size: 2.5em;
-	}
+.listElement iframe {
+	margin-top: 50px;
+}
+
+#colorPreview {
+	color: #fff;
+	text-shadow: #000 1px 0 10px;
+	font-size: 2.5em;
+}
 
 button {
 	padding: 5px 15px;
@@ -100,7 +132,7 @@ button {
 	background-color: #04AA6D;
 	border: none;
 	border-radius: 15px;
-box-shadow: 0 4px #999;
+	box-shadow: 0 4px #999;
 }
 
 button:hover {background-color: #3e8e41}
@@ -108,6 +140,6 @@ button:hover {background-color: #3e8e41}
 button:active {
 	background-color: #8e3e3e;
 	box-shadow: 0 5px #666;
-transform: translateY(4px);
+	transform: translateY(4px);
 }
 </style>
