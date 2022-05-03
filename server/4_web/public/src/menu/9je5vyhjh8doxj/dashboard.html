@@ -15,81 +15,47 @@
 </html>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+	font-family: 'Roboto', sans-serif;
+	color: #fff;
+}
+
 	body {
 		background-color: #36393f;
 	}
 
+	#list {
+		display: flex;
+		flex-wrap: wrap;
+		grid-template-columns: auto auto auto auto auto auto;
+	}
+
 	img {
-		width: 50px;
-		height: 50px;
+		width: 100px;
 	}
 
 	.nameLink {
-		padding-left: 60px;
-	}
-
-	h1, h2, h3, a, p {
-		color: #fff;
-	}
-
-	.goal	 {
-		display: grid;
-		grid-template-columns: auto auto auto;
+		padding-bottom: 0.5em;
 	}
 	
-	iframe {
-		background-color: #fff;
-	}
-
-	#myList {
-		display:list-item;
-		grid-template-columns: auto auto;
-	}
-
 	.listElement {
-		display: flex;
-		grid-template-columns: auto auto;
-		/* position: relative; */
-		margin: 50px 50px;
+		display: grid;
+		margin: 0.25em;
+		padding: 0.5em;
+		width: min-content;
+		grid-template-columns: 1 / 1;
+		align-items: center;
+		border: solid 1px #fff ;
+		border-radius: 1em;
 	}
 
 	.listElement a {
-		position: absolute;
-		margin-left: 100px;
+		color: #fff;
 	}
 	
-	.listElement button {
-		position: absolute;
-	}
-
 	.listElement iframe {
 		margin-top: 50px;
 	}
 
-	#colorPreview {
-		color: #fff;
-		text-shadow: #000 1px 0 10px;
-		font-size: 2.5em;
-	}
-
-button {
-	padding: 5px 15px;
-	font-size: 12px;
-	text-align: center;
-	cursor: pointer;
-	outline: none;
-	color: #fff;
-	background-color: #04AA6D;
-	border: none;
-	border-radius: 15px;
-box-shadow: 0 4px #999;
-}
-
-button:hover {background-color: #3e8e41}
-
-button:active {
-	background-color: #8e3e3e;
-	box-shadow: 0 5px #666;
-transform: translateY(4px);
-}
 </style>
