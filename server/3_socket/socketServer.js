@@ -7,11 +7,17 @@ import { sleep }		from '../0_utils/sleep.js'
 import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js'
 import update			from './updateFront.js';
-import { log }			from '../0_utils/log.js'
+import { log, logErr }			from '../0_utils/log.js'
 
 export let front = null
 let connectedClient = 0;
 
+import	fs				from 'fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const streamerGoalFile = join(__dirname, '..', 'streamerGoal.json');
 /**
  * Start the socket for both streamlab and front-end connection
  */
@@ -76,7 +82,7 @@ export async function startSocketServer(server){
 		data.on('addNewGoal', (res) => {
 			log(`${color.FgMagenta}${color.Dim}addNewGoal${color.Reset}`)
 			if (!Object.hasOwn(db.goals, res.id)){
-				db.goals[res.id] = {}
+				db.goals[res.id] = []
 			}
 			db.goals[res.id][res.index] = {
 				value: res.value,
@@ -85,6 +91,10 @@ export async function startSocketServer(server){
 			console.log(`goals.${res.id}`)
 			console.log(Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
 			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
+			fs.writeFile(streamerGoalFile, JSON.stringify(db.goals), (err) => {
+				if (err) throw err;
+				console.log('');
+			  });
 		});
 		
 		data.on('goals', (id) => {
