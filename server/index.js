@@ -86,8 +86,8 @@ app.use(express.static(join(__dirname, '4_web', 'public')));
  * FRONT END
  */
 
-app.get('/u/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))})
-app.get('/a/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))})
+app.get('/u/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', "9je5vyhjh8doxj", 'streamerNotFound.html')))})
+app.get('/a/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', "9je5vyhjh8doxj", 'streamerNotFound.html')))})
 app.get('/favicon.ico',	(req, res) => {res.sendFile(publicPathFile(join('png', 'favicon-televie.png')))})
 
 // Dashboard for user
@@ -127,7 +127,7 @@ app.get('/u/:slug', (req, res) => {
 			return ;
 		}
 	}
-	res.sendFile(publicPathFile(join('src', 'menu', 'streamerDashboard.html')))
+	res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'streamerDashboard.html')))
 })
 
 // Dashboard for technical team
@@ -192,6 +192,11 @@ app.get('/a/:id/donation/last10',	(req, res) => {res.sendFile(publicPathFile(joi
 app.get('/a/:id/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest10.html')))})
 
 app.get('/a/:id/donator/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donator', 'donationLastDonator.html')))})
+
+/************************             TIME             ************************/
+
+app.get('/a/timer/countdown',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','timer','countdown.html')))})
+app.get('/a/timer/elapsedCount',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','timer','elapsedCount.html')))})
 
 /******************************************************************************/
 /******************************************************************************/
