@@ -12,4 +12,5 @@ streamer_log.json
 .env
 errLog.txt
 log.txt
+*.log
 server/streamerGoal.json
