@@ -33,6 +33,23 @@ function publicPathFile(path) {
 	return join(__dirname, '4_web', 'public', path);
 }
 
+const streamerGoalFile = join(__dirname, 'streamerGoal.json');
+
+// Check if file exist
+fs.open(streamerGoalFile, 'r', (err, file) => {
+	if (err) {
+		log(`${color.FgRed}${color.BgWhite}${streamerGoalFile} don't exist !${color.Reset}`);
+
+		// If don't exit create it
+		fs.open(streamerGoalFile, 'w', (err, file) => {
+			if (err) throw err;
+			log(`${color.FgYellow}${streamerGoalFile} Created${color.Reset}`);
+		});
+		return ;
+	}
+	log(`${color.FgYellow}${streamerGoalFile} exist.${color.Reset}`);
+});
+
 startSocketClient()
 
 /**
