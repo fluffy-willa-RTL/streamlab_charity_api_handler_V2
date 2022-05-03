@@ -257,6 +257,12 @@ function generateArray(data){
 			width:	500,
 			height:	1025,
 		},
+		{
+			title:	`10 Plus grosse donation récoltée la team`,
+			src:	`/a/donation/big10`,
+			width:	500,
+			height:	1025,
+		},
 	]);
 };
 
