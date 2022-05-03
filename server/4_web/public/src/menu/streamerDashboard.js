@@ -38,7 +38,26 @@ async function start () {
 				window.location = '/u/';
 			}
 			data = res;
+			console.log(res);
 			document.getElementById('welcomeMessage').textContent =  `Salut ${data.streamer.display_name}`;
+
+			// Generate the streamer donation link
+			const warnMessage = document.getElementById("warn");
+
+			const streamerDonationLink = document.createElement("a");
+			// TODO TODO find a way to get the base link from the back with dotenv
+			const donationLink = `https://streamlabscharity.com/teams/@24h-gaming-televie/24h-gaming?member=${data?.id}`;
+			streamerDonationLink.href = donationLink;
+			streamerDonationLink.textContent = donationLink;
+			streamerDonationLink.target = '_blank';
+
+			warnMessage.appendChild(streamerDonationLink);
+			
+			const copyButton = document.createElement('button');
+			copyButton.textContent	= 'Click to copy';
+			copyButton.onclick		= function () {pastbin(donationLink)};
+			warnMessage.appendChild(copyButton);
+
 			console.log(`Salut ${data.streamer.display_name}, tu n'es pas censé être là, ouste !`);
 			// Show all component
 			if (linkToGenerate !== null) {
@@ -191,7 +210,7 @@ function generateArray(data){
 			height:	50,
 		},
 		{
-			title:	`Derniere donateur pour ${data.streamer.display_name}`,
+			title:	`Pseudo du dernier donateur de ${data.streamer.display_name}`,
 			src:	`/a/${data.id}/donator/last`,
 			width:	400,
 			height:	60,
