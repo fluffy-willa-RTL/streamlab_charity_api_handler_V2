@@ -15,6 +15,9 @@
 			let		msg = 'Error refresh';
 			let		data = null;
 		</script>
+		<script defer src="../src/menu/streamerDashboardForm.js"></script>
+		<script defer src="../src/menu/streamerDashboard.js"></script>
+		<script defer src="../src/menu/streamerDashboardColor.js"></script>
 	</head>
 	<body>
 		<div class="welcome">
@@ -23,30 +26,29 @@
 		</div>
 
 		<div class="welcome">
-<div class="colorPick">
-	
-	<label for="colorWell">Couleur :</label>
-	<input type="color" value="#ff0000" id="colorWell">
-	<span id="colorPreview">
-		123,456.78 €
-	</span>
-</div>
+			<div class="colorPick">
+				<label for="colorWell">Couleur :</label>
+				<input type="color" value="#ff0000" id="colorWell">
+				<span id="colorPreview">
+					123,456.78 €
+				</span>
+			</div>
 			<button id="addGoalButton">add new goal</button>
 			<div id="goalList">
 				<template id="goalTemplate">
 					<div class="goal" id="goal">
-						<div class="text goalIndex">index</div>
-						<div class="text goalValue">value</div>
-						<div class="text goalText">text</div>
+						<div class="goalTextStyle goalIndex">index</div>
+						<div class="goalTextStyle goalValue">value</div>
+						<div class="goalTextStyle goalText">text</div>
+						<button class="editGoal">E</button>
+						<button class="deleteGoal">D</button>
 					</div>
 				</template>
 			</div>
 		</div>
-			
-
 		<ul id="myList"></ul>
 	</body>
-	<script defer src="../src/menu/streamerDashboard.js"></script>
+	
 </html>
 
 <style>
@@ -78,9 +80,24 @@ body {
 		background-color: #36393f;
 }
 
-.goal	 {
+.goalList {
+	width: fit-content;
+	border: solid 1px #fff;
+}
+
+.goalTextStyle {
+	margin: 0.1em 2em;
+}
+
+.goal {
+	width: fit-content;
+	margin: 0.5em 0;
 	display: grid;
-	grid-template-columns: auto auto auto;
+	border: solid #fff 1px;
+	border-radius: 0.2em;
+	grid-template-columns: auto auto auto auto auto;
+	min-width: 600px;
+	
 }
 
 iframe {
@@ -123,7 +140,9 @@ iframe {
 }
 
 button {
-	padding: 5px 15px;
+	width: fit-content;
+	padding: 0.25em 1em;
+	margin: 0.25em;
 	font-size: 12px;
 	text-align: center;
 	cursor: pointer;
@@ -132,14 +151,15 @@ button {
 	background-color: #04AA6D;
 	border: none;
 	border-radius: 15px;
-	box-shadow: 0 4px #999;
+	box-shadow: rgba(0, 0, 0, 0.8) 0 2px 0;
+	transition: all 0.075s ease-in-out;
 }
 
 button:hover {background-color: #3e8e41}
 
 button:active {
 	background-color: #8e3e3e;
-	box-shadow: 0 5px #666;
+	box-shadow: rgba(0, 0, 0, 0.25) 0 0.1em;
 	transform: translateY(4px);
 }
 </style>

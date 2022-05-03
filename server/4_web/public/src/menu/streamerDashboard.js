@@ -85,59 +85,49 @@ async function start () {
 
 			if (data.goals !== null){
 				for (let [id, elem] of Object.entries(data.goals)){
-					addGoalDiv(id, elem.value, elem.text)
+					addGoalDiv(id, elem.value, elem.text, socketClient, data.id)
 					indexGoal = parseInt(id) + 1
 				}
 			}
 
-			document.getElementById("addGoalButton").addEventListener("click", () => {
-				let promptValue;
-				let goalValue = Number('no')
-				while (!Number.isInteger(goalValue)){
-					promptValue = prompt('New Goal Value (EUR)');
-					if (!promptValue){
-						return;
-					}
-					goalValue = Number(promptValue)
-				}
-				const goalText = prompt('Text Associated with the Goal')
-				const verify = prompt('Are you sure ? (yes/no)')
-				if (verify !== 'yes' && verify !== 'y'){
-					console.log('hello')
-					return;
-				}
-				addGoalDiv(indexGoal, goalValue, goalText)
-				socketClient.emit('addNewGoal', {
-					id: data.id,
-					index: indexGoal,
-					value: goalValue,
-					text: goalText,
-				})
-				indexGoal++;
-			});
+			document.getElementById("addGoalButton").addEventListener("click", () => {addNewGoal(socketClient, data, data.id)});
 		})
 	})
 }
 
-function addGoalDiv(index, value, text){
+function addNewGoal(socket, data){
+	const form = addGoalForm()
+	if (Object.hasOwn(form, 'error')){
+		return ;
+	}
+	addGoalDiv(indexGoal, form.value, form.text, socket)
+	socket.emit('addNewGoal', {
+		id: data.id,
+		index: indexGoal,
+		value: form.value,
+		text: form.text,
+	})
+	indexGoal++;
+}
+
+function addGoalDiv(index, value, text, socket, id){
 	const goalList = document.getElementById('goalList')
 	const newElem = (document.getElementById('goalTemplate')).content.cloneNode(true);
 	const divElem = newElem.getElementById('goal')
 	divElem.id = `goal_${index}`;
-	divElem.getElementsByClassName("goalIndex")[0].textContent = index;
-	divElem.getElementsByClassName("goalValue")[0].textContent = value;
-	divElem.getElementsByClassName("goalText")[0].textContent = text;
+	divElem.getElementsByClassName('goalIndex')[0].textContent = index;
+	divElem.getElementsByClassName('goalValue')[0].textContent = value;
+	divElem.getElementsByClassName('goalText')[0].textContent = text;
+	divElem.getElementsByClassName('editGoal')[0].addEventListener('click', () => {editGoal(socket, id, index)})
 	goalList.appendChild(newElem);
 }
 
-// function editGoalDiv(index, value, text){
-// 	const divElem = newElem.getElementById('goal')
-// 	divElem.id = `goal_${index}`;
-// 	divElem.getElementsByClassName("goalIndex")[0].textContent = index;
-// 	divElem.getElementsByClassName("goalValue")[0].textContent = value;
-// 	divElem.getElementsByClassName("goalText")[0].textContent = text;
-// 	goalList.appendChild(newElem);
-// }
+function editGoalDiv(index, value, text){
+	const divElem = document.getElementById(`goal_${index}`)
+	divElem.getElementsByClassName('goalIndex')[0].textContent = index;
+	divElem.getElementsByClassName('goalValue')[0].textContent = value;
+	divElem.getElementsByClassName('goalText')[0].textContent = text;
+}
 
 function pastbin (data) {
 	try {
@@ -148,40 +138,40 @@ function pastbin (data) {
 	}
 }
 
-let colorWell
-let defaultColor = "#0000ff";
-let colorPreview = document.getElementById('colorPreview');
-function colorInit() {
-	
-	window.addEventListener("load", colorInit, false);
-	colorlisten();
+function editGoal(socket, id, index) {
+	socket.emit('goals', id)
+	socket.on(`goals.${id}`, (res) => {
+		console.log(res[index])
+		const form = editGoalForm(res[index])
+		if (Object.hasOwn(form, 'error')){
+			socket.off(`goals.${id}`);
+			return ;
+		}
+		console.log(form)
+		editGoalDiv(index, form.value, form.text)
+		socket.emit('addNewGoal', {
+			id: data.id,
+			index: index,
+			value: form.value,
+			text: form.text,
+		})
+		socket.off(`goals.${id}`);
+	})
 }
 
-function colorlisten() {
-	colorWell = document.querySelector("#colorWell");
-	colorWell.value = defaultColor;
-	colorWell.addEventListener("input", updateFirstColor, false);
-	colorWell.addEventListener("change", updateAllColor, false);
-	colorWell.select();
-  }
-
-  function updateFirstColor(event) {
-	colorPreview.style.color = event.target.value;
-  }
-
-  function updateAllColor(event) {
-	  const len = document.getElementById('myList').childElementCount;
-	for (let id = 0; id < len; id++) {
-		const url = `${linkToGenerate[id].src}?color=${event.target.value.substring(1)}`;
-		const elements = document.getElementById(`listElement_${id}`);
-		elements.getElementsByTagName('iframe')[0].src = url;
-		elements.getElementsByTagName('a')[0].href = url;
-		elements.getElementsByTagName('button')[0].onclick = function () {pastbin(`${window.location.protocol}//${window.location.hostname}${linkToGenerate[id].src}?color=${event.target.value.substring(1)}`)};
-	}
+function deleteGoal(){
+	console.log('deleteGoal')
+	deleteGoalForm()
 }
 
 function generateArray(data){
 	return ([
+		{
+			title:	`Donation goal de ${data.streamer.display_name}`,
+			src:	`/a/${data.id}/total/bar`,
+			width:	600,
+			height:	100,
+		},
 		{
 			title:	`Total récolté par ${data.streamer.display_name}`,
 			src:	`/a/${data.id}/total/me`,
