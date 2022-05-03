@@ -13,7 +13,7 @@ async function start() {
 	// Get query
 	const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop),});
 
-	if (params.color) {
+	if (params?.color ?? null) {
 		document.getElementById(textId).style.color = `#${params.color}`;
 	}
 
