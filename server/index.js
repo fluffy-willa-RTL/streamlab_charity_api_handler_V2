@@ -65,6 +65,7 @@ startSocketClient()
 /**/ await sleep(1000)
 /**/ if (await yesno({question: 'Start Recovery mode ?', defaultValue: true})){
 /**/ 	await startRecovery();
+					//TODO TODO TODO Force refresh all clien if recovery mode is enable
 /**/ }
 /**/
 //////////// RECOVERY MODE ////////////
