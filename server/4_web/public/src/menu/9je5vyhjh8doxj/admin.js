@@ -5,8 +5,11 @@ async function start () {
 }
 
 function socketEmit(event) {
-	if (socket === null)
+	if (confirm(`Emit ?`))
+	if (socket === null) {
+		alert("Emit fail! socket === null")
 		return ;
+	}
 	socket.emit(event);
 }
 start();
