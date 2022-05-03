@@ -8,6 +8,7 @@ import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js'
 import update			from './updateFront.js';
 import { log, logErr }			from '../0_utils/log.js'
+import { getAllStreamer } from '../2_dbManagement/getAllStreamer.js';
 
 export let front = null
 let connectedClient = 0;
@@ -69,7 +70,7 @@ export async function startSocketServer(server){
 		// `nswkvz3po5tpwp`
 		data.on('nswkvz3po5tpwp', () => {
 			log(`${color.FgRed}${color.BgWhite}Refresh all streamer!!!${color.Reset}`)
-			db.getAllStreamer();
+			getAllStreamer();
 		});
 		// Force refresh all client page
 		// `ceybt29oezjd7t`
