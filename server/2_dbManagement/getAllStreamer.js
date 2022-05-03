@@ -2,6 +2,7 @@ import axios 			from 'axios'
 
 import db 				from './database.js'
 import { slugify }		from '../0_utils/slugify.js'
+import { log, logTable }			from '../0_utils/log.js'
 
 import dotenv 			from 'dotenv'
 dotenv.config()
@@ -30,6 +31,5 @@ export async function getAllStreamer(){
 			}
 		}
 	}
-	
-	// console.table(streamer, ['display_name', 'slug', 'goal'])
+	logTable(db.streamer, ['display_name', 'slug'])
 }
