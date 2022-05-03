@@ -136,7 +136,7 @@ app.get('/dashboard', (req, res) => {
 		return reject()
 	}
 	log(`${color.FgGreen}Tech team auth${color.Reset}`);
-	res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'admin.html')))// TODO create a new page
+	res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'dashboard.html')))// TODO create a new page
 	return ;
 })
 
