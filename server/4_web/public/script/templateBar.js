@@ -33,15 +33,11 @@ async function start() {
 		for (let i of Object.values(goals)){
 			i.value *= 100;
 		}
-
-		console.log('goals', goals)
 		updateWidth()
 	});
 
 	socket.on(`total.${id}`, (res) => {
 		total = res;
-
-		console.log(total)
 		updateWidth()
 	});
 }

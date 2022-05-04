@@ -36,10 +36,6 @@ async function start() {
 			}
 			prevGoal = data[i];
 		}
-
-		console.log(data)
-		console.log(actualGoal)
-		console.log(prevGoal)
 		updateDOM()
 	});
 }
@@ -60,7 +56,6 @@ function updateDOM(){
 			res = null
 			break;
 	}
-	console.log(res)
 	document.getElementById(textId).textContent = res;
 }
 

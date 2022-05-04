@@ -15,14 +15,12 @@ async function start() {
 	}
 
 	socket.on(socketListeningEvent, (res) => {
-		console.log(res);
 		if (type === 0)
 			donatorName = res?.at(0)?.name ?? 0;
 		else if (type === 1)
 			donatorName = res?.at(-1)?.name ?? 0;
 		else if (type == 2)
 			donatorName = res;
-			console.log(donatorName);
 		document.getElementById(textId).textContent = donatorName;
 	});
 }
