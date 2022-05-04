@@ -2,7 +2,6 @@ async function start() {
 	const socket = await connect();
 	socket.emit('getStreamer');
 	socket.on('allStreamer', (data) => {
-		console.log(data);
 		const list = document.getElementById('list');
 		for (const item of Object.values(data)) {
 			const div = document.createElement(`div`);
