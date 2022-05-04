@@ -13,8 +13,14 @@ async function start () {
 		secure: true, // Enable ssl
 	});
 
+	// Increment eatch time a connection attempt.
+	let connectionAttempt = 0;
 	// Listen if a connection error occur
-	socketClient.on('connect_error', (err) => {console.log(`err`, err);})
+	socketClient.on('connect_error', (err) => {
+		connectionAttempt++;
+		document.getElementById('welcomeMessage').textContent =  `La connexion a été perdue tentative de reconnexion en cours #${connectionAttempt}`;
+		console.log(`connect_error`, err);
+	})
 
 	// Listen if we lost connection
 	socketClient.on('disconnect', () => {
@@ -27,6 +33,8 @@ async function start () {
 	});
 
 	socketClient.on('connect', () => {
+		// Reset conenction attempt counter
+		connectionAttempt = 0;
 		// Ask the streamer data
 		socketClient.emit('whoami', {"slug":slug})
 		// Listen for the streamer data
@@ -41,11 +49,11 @@ async function start () {
 			console.log(res);
 			
 			console.log(`Salut ${data.streamer.display_name}, tu n'es pas censé être là, ouste !`);
-			// Show all component
+			document.getElementById('welcomeMessage').textContent =  `Salut ${data.streamer.display_name}`;
+			// Dont generate the content if they have been generate befor.
 			if (linkToGenerate !== null) {
 				return ;
 			}
-			document.getElementById('welcomeMessage').textContent =  `Salut ${data.streamer.display_name}`;
 
 			// Generate the streamer donation link
 			const warnMessage = document.getElementById("warn");
@@ -130,6 +138,24 @@ function generateArray(data){
 		{
 			title:	`Donation goal de ${data.streamer.display_name}`,
 			src:	`/a/${data.id}/total/bar`,
+			width:	600,
+			height:	100,
+		},
+		{
+			title:	`Next donation goal ammount de ${data.streamer.display_name}`,
+			src:	`/a/${data.id}/goal/next`,
+			width:	600,
+			height:	100,
+		},
+		{
+			title:	`Last donation goal ammount de ${data.streamer.display_name}`,
+			src:	`/a/${data.id}/goal/before`,
+			width:	600,
+			height:	100,
+		},
+		{
+			title:	`Text of the actual donation goal de ${data.streamer.display_name}`,
+			src:	`/a/${data.id}/goal/text`,
 			width:	600,
 			height:	100,
 		},
