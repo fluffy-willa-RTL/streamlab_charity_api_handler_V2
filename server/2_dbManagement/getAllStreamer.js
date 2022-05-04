@@ -2,7 +2,7 @@ import axios 			from 'axios'
 
 import db 				from './database.js'
 import { slugify }		from '../0_utils/slugify.js'
-import { log, logTable }			from '../0_utils/log.js'
+import { logErr, logTable }			from '../0_utils/log.js'
 
 import dotenv 			from 'dotenv'
 dotenv.config()
@@ -14,12 +14,18 @@ export async function getAllStreamer(){
 	const url = `https://streamlabscharity.com/api/v1/teams/${process.env.STREAMLAB_CHARITY_TEAM}/members`
 	const nbPage = await axios.get(url)
 						.then((res) => {return res.data.last_page;})
-						.catch((err) => {console.log(err)})
+						.catch((err) => {
+							logErr(err);
+							throw err;
+						})
 
 	for (let i = 1; i < nbPage + 1; i++){
 		const data =  await axios.get(url + `?page=${i}`)
 									.then((res) => {return res.data;})
-									.catch((err) => {console.log('Error:', err)})
+									.catch((err) => {
+										logErr('Error:', err);
+										throw err;
+									})
 		for (let newStreamer of data.data){
 			if (db.streamer[newStreamer.user._id] === undefined){
 				db.streamer[newStreamer.user.id] = {
