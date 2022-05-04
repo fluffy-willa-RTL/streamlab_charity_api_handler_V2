@@ -13,19 +13,26 @@ function colorlisten() {
 	colorWell.addEventListener("input", updateFirstColor, false);
 	colorWell.addEventListener("change", updateAllColor, false);
 	colorWell.select();
-  }
+}
 
-  function updateFirstColor(event) {
+function updateFirstColor(event) {
 	colorPreview.style.color = event.target.value;
-  }
+}
 
-  function updateAllColor(event) {
-	  const len = document.getElementById('myList').childElementCount;
-	for (let id = 0; id < len; id++) {
-		const url = `${linkToGenerate[id].src}?color=${event.target.value.substring(1)}`;
+function updateAllColor(event) {
+	let id = 0;
+	for (const item of Object.values(linkToGenerate)){
 		const elements = document.getElementById(`listElement_${id}`);
-		elements.getElementsByTagName('iframe')[0].src = url;
-		elements.getElementsByTagName('a')[0].href = url;
-		elements.getElementsByTagName('button')[0].onclick = function () {pastbin(`${window.location.protocol}//${window.location.hostname}${linkToGenerate[id].src}?color=${event.target.value.substring(1)}`)};
+
+		// Check if `color` qery exit, if true will set() else will append.
+		if (item.src.searchParams.has('color')) {
+			item.src.searchParams.set('color', event.target.value.substring(1))
+		} else {
+			item.src.searchParams.append('color', event.target.value.substring(1))
+		}
+		elements.getElementsByTagName('iframe')[0].src = item.src;
+		elements.getElementsByTagName('a')[0].href = item.src;
+		elements.getElementsByTagName('button')[0].onclick = function () {pastbin(item.src)};
+		id++;
 	}
 }
