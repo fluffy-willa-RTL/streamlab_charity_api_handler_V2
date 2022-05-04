@@ -19,20 +19,19 @@ function updateFirstColor(event) {
 	colorPreview.style.color = event.target.value;
 }
 
-function updateAllColor(event) {
-	let id = 0;
-	for (const item of Object.values(linkToGenerate)){
-		const elements = document.getElementById(`listElement_${id}`);
+function updateSingleElem(elem, newColor) {
+	const url = new URL(elem.getElementsByClassName('assetFrame')[0].src)
+	url.searchParams.delete('color');
+	url.searchParams.append('color', newColor)
 
-		// Check if `color` qery exit, if true will set() else will append.
-		if (item.src.searchParams.has('color')) {
-			item.src.searchParams.set('color', event.target.value.substring(1))
-		} else {
-			item.src.searchParams.append('color', event.target.value.substring(1))
-		}
-		elements.getElementsByTagName('iframe')[0].src = item.src;
-		elements.getElementsByTagName('a')[0].href = item.src;
-		elements.getElementsByTagName('button')[0].onclick = function () {pastbin(item.src)};
-		id++;
+	console.log(url)
+	elem.getElementsByClassName('assetButton')[0].addEventListener('click', () => {pastbin(url)});
+	elem.getElementsByClassName('assetFrame')[0].src = url;
+}
+
+function updateAllColor(event) {
+	const list = document.getElementsByClassName('listElement')
+	for (const elem of list){
+		updateSingleElem(elem, event.target.value.substring(1))
 	}
 }
