@@ -31,7 +31,7 @@ async function start() {
 			else {
 				elem.getElementsByClassName('value')[0].textContent = moneyConverter.format(el.amount / 100)
 			}
-			elem.getElementsByClassName('name')[0].textContent = convertLongText(el.name);
+			elem.getElementsByClassName('name')[0].textContent = convertLongText(el.name, 25);
 		}
 
 		prev = data

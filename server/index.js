@@ -65,7 +65,6 @@ startSocketClient()
 /**/ await sleep(1000)
 /**/ if (await yesno({question: 'Start Recovery mode ?', defaultValue: true})){
 /**/ 	await startRecovery();
-					//TODO TODO TODO Force refresh all clien if recovery mode is enable
 /**/ }
 /**/
 //////////// RECOVERY MODE ////////////
@@ -86,8 +85,8 @@ app.use(express.static(join(__dirname, '4_web', 'public')));
  * FRONT END
  */
 
-app.get('/u/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', "9je5vyhjh8doxj", 'streamerNotFound.html')))})
-app.get('/a/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', "9je5vyhjh8doxj", 'streamerNotFound.html')))})
+app.get('/u/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))})
+app.get('/a/',			(req, res) => {res.sendFile(publicPathFile(join('src', 'menu', 'streamerNotFound.html')))})
 app.get('/favicon.ico',	(req, res) => {res.sendFile(publicPathFile(join('png', 'favicon-televie.png')))})
 
 // Dashboard for user
@@ -127,7 +126,7 @@ app.get('/u/:slug', (req, res) => {
 			return ;
 		}
 	}
-	res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'streamerDashboard.html')))
+	res.sendFile(publicPathFile(join('src', 'menu', 'streamerDashboard.html')))
 })
 
 // Dashboard for technical team
@@ -161,18 +160,22 @@ app.get('/dashboard', (req, res) => {
 /******************************************************************************/
 /*                                 ASSETS                                     */
 /*******************************************************************************
-/a/total/all			=> Total of all streamers						(text)
-/a/donation/last		=> Last donation of all streamers				(text)
-/a/donation/big			=> Biggest donation of all streamers			(text)
-/a/donation/last10		=> Last 10 donations of all streamers			(asset)
-/a/donation/big10		=> Biggest 10 donations of all streamers		(asset)
+/a/total/all				=> Total of all streamers					(text)
+/a/donation/last			=> Last donation of all streamers			(text)
+/a/donation/big				=> Biggest donation of all streamers		(text)
+/a/donation/last10			=> Last 10 donations of all streamers		(asset)
+/a/donation/big10			=> Biggest 10 donations of all streamers	(asset)
 
-/a/:id/total/me			=> Total of streamer id							(text)
-/a/:id/total/bar		=> Donation bar of the Streamer					(asset)
-/a/:id/donation/last	=> Last donation of streamer id					(text)
-/a/:id/donation/big		=> Biggest donation of streamer id				(text)
-/a/:id/donation/last10	=> Last 10 donations of streamer id				(asset)
-/a/:id/donation/big10	=> Biggest 10 donations of streamer id			(asset)
+/a/:id/total/me				=> Total of streamer id						(text)
+/a/:id/total/bar			=> Donation bar of the Streamer				(asset)
+/a/:id/goal/next			=> Next donation goal ammount				(asset)
+/a/:id/goal/before			=> Last donation goal ammount				(asset)
+/a/:id/goal/text			=> Text of the actual donation goal			(asset)
+
+/a/:id/donation/last		=> Last donation of streamer id				(text)
+/a/:id/donation/big			=> Biggest donation of streamer id			(text)
+/a/:id/donation/last10		=> Last 10 donations of streamer id			(asset)
+/a/:id/donation/big10		=> Biggest 10 donations of streamer id		(asset)
 
 *************************            GLOBAL            ************************/
 
@@ -186,6 +189,10 @@ app.get('/a/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('sr
 
 app.get('/a/:id/total/me',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMe.html')))})
 app.get('/a/:id/total/bar',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationBar.html')))})
+app.get('/a/:id/goal/next',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationGoalAfter.html')))})
+app.get('/a/:id/goal/before',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationGoalBefore.html')))})
+app.get('/a/:id/goal/text',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationGoalText.html')))})
+
 app.get('/a/:id/donation/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation', 'donationLast.html')))})
 app.get('/a/:id/donation/big',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))})
 app.get('/a/:id/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast10.html')))})
@@ -269,7 +276,7 @@ if (process.env.PROTOCOL === 'http') {
 		httpsServer.listen(process.env.HTTPS_PORT, () => {
 		
 			// Run WS server only when the web serv is started
-			startSocketServer(httpsServer)
+			startSocketServer(httpsServer);
 			
 			// Init the front buffer
 			update.updateFrontLight();

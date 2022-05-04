@@ -42,9 +42,9 @@ function editGoalForm(old){
 	}
 }
 
-function deleteGoalForm(){
-	// if (!confirm(`Value: ${goalValue}.00 €\nText : ${goalText}\n\nAre you sure ?`)){
-	// 	return false;
-	// }
+function deleteGoalForm(old){
+	if (!confirm(`Value: ${old.value}.00 €\nText : ${old.text}\n\nAre you sure ?`)){
+		return false;
+	}
 	return true;
 }

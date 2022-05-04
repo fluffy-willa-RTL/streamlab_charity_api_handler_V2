@@ -27,7 +27,7 @@ export async function startSocketServer(server){
 	front = new Server(server, {cors: { origin: "*"}})
 
 	// Listen all incoming connection of the 
-	front.on('connect', (data) => {
+	front.on('connect', async (data) => {
 		// Add new client
 		connectedClient++;
 		log(`${color.FgMagenta}[${connectedClient}][connect]:${data.id} ${color.Reset}`);
@@ -82,6 +82,7 @@ export async function startSocketServer(server){
 
 		data.on('addNewGoal', (res) => {
 			log(`${color.FgMagenta}${color.Dim}addNewGoal${color.Reset}`)
+			console.log(db.goals)
 			if (!Object.hasOwn(db.goals, res.id)){
 				db.goals[res.id] = []
 			}
@@ -89,15 +90,42 @@ export async function startSocketServer(server){
 				value: res.value,
 				text: res.text
 			}
-			console.log(`goals.${res.id}`)
-			console.log(Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
+
 			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
+
+			// Write in json file
 			fs.writeFile(streamerGoalFile, JSON.stringify(db.goals), (err) => {
-				if (err) throw err;
-				console.log('');
+				if (err) {
+					logErr(`Fail to write ${streamerGoalFile}`);
+					throw err;
+				};
 			  });
 		});
 		
+
+		// {
+		// 	id: data.id,
+		// 	index: index
+		// }
+		data.on('deleteGoal', (res) => {
+			log(`${color.FgMagenta}${color.Dim}deleteGoal${color.Reset}`)
+			if (!Object.hasOwn(db.goals, res.id)){
+				db.goals[res.id] = []
+			}
+
+			db.goals[res.id].splice(res.index, 1)
+			console.log(db.goals)
+
+			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
+
+			fs.writeFile(streamerGoalFile, JSON.stringify(db.goals), (err) => {
+				if (err) {
+					logErr(`Fail to write ${streamerGoalFile}`);
+					throw err;
+				};
+			  });
+		});
+
 		data.on('goals', (id) => {
 			data.emit(`goals.${id}`, Object.hasOwn(db.goals, id) ? db.goals[id] : {})
 		});

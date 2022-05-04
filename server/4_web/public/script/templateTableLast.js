@@ -12,23 +12,23 @@ async function start() {
 			data[i._id] = i
 		}
 		
-		for (let el of Object.values(data)){			
-			let test = true
+		for (let el of Object.values(data)){
+			let isNew = true
 			if (prev[el._id] === undefined){
-				test = false
+				isNew = false
 				const newElem = (document.getElementById("templateDonation")).content.cloneNode(true);
 				newElem.getElementById(`donation`).id = `donation_${el._id}`;
-				donationList.appendChild(newElem);
+				donationList.insertBefore(newElem, donationList.firstChild);
 			}
 			
 			let elem = document.getElementById(`donation_${el._id}`);
-			if (test){
+			if (isNew){
 				elem.getElementsByClassName('value')[0].textContent = moneyConverter.format(el.amount / 100)
 			}
 			else{
 				animateMoneySingle(el.amount, elem)
 			}
-			elem.getElementsByClassName('name')[0].textContent = convertLongText(el.name);
+			elem.getElementsByClassName('name')[0].textContent = convertLongText(el.name, 20);
 			
 			
 		}

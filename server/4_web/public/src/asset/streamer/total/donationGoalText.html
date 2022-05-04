@@ -5,33 +5,40 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>10 Biggest donations of Streamer</title>
-		<link rel="stylesheet" href="/css/default.css">
-		<link rel="stylesheet" href="/css/donationList.css">
+		<title>Last donation of Streamer</title>
+		<!-- <link rel="stylesheet" href="/css/default.css"> -->
 		<script defer src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
 		<script defer src="/script/socket.js"></script>
 		<link rel="stylesheet" rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-		<script defer src="/script/textUtils.js"></script>
-
+		
 		<script defer>
 			const id = window.location.pathname.split('/')[2]
 			if (!id){
 				document.location = '/u/'
 			}
-			const socketListeningEvent = `donation_biggest.${id}`
+			const socketListeningEvent = `goals.${id}`
+			const whichElemToPick = 'text';
+			const textId = `username`
 		</script>
-
-		<script defer src="/script/templateTableBiggest.js"></script>
-
+		<script defer src="/script/textUtils.js"></script>
+		<script defer src="/script/templateGoals.js"></script>
+		
 	</head>
 	<body>
-		<template id="templateDonation">
-			<div class="donation" id="donation">
-				<div class="name text">name</div>
-				<div class="value text">value</div>
-			</div>
-		</template>
-		<!-- <div id="header" class="text">Biggest Donations</div> -->
-		<div id="donationList"></div>
+		<div id="username" class="displayBig"></div>
 	</body>
 </html>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
+
+.displayBig {
+	font-size: 10vw;
+	margin-right: 2%;
+	color: #0a4a91;
+	           /* color | offset-x | offset-y | blur-radius */
+	text-shadow: rgb(124, 124, 124)      1px       0            10px;
+	font-family: 'Concert One', cursive;
+	text-align: end;
+}
+</style>

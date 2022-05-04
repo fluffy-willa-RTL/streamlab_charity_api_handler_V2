@@ -33,6 +33,7 @@ export function updateFrontHeavy(){
 		}
 	}
 
+	// Global donatoin biggest
 	for (let i in res.don_big){
 		if (res.don_big.at(-i)._id !== db.front.don_big?.at(-i)?._id ?? null){
 			front.emit(`donation_biggest`, res.don_big);

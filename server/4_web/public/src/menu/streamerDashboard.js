@@ -39,6 +39,12 @@ async function start () {
 			}
 			data = res;
 			console.log(res);
+			
+			console.log(`Salut ${data.streamer.display_name}, tu n'es pas censé être là, ouste !`);
+			// Show all component
+			if (linkToGenerate !== null) {
+				return ;
+			}
 			document.getElementById('welcomeMessage').textContent =  `Salut ${data.streamer.display_name}`;
 
 			// Generate the streamer donation link
@@ -57,12 +63,6 @@ async function start () {
 			copyButton.textContent	= 'Click to copy';
 			copyButton.onclick		= function () {pastbin(donationLink)};
 			warnMessage.appendChild(copyButton);
-
-			console.log(`Salut ${data.streamer.display_name}, tu n'es pas censé être là, ouste !`);
-			// Show all component
-			if (linkToGenerate !== null) {
-				return ;
-			}
 			// Get all previews settings
 			linkToGenerate = generateArray(data);
 			// Get the parent list
@@ -103,49 +103,17 @@ async function start () {
 			colorInit()
 
 			if (data.goals !== null){
+				console.log(data.goals)
+				indexGoal = 0
 				for (let [id, elem] of Object.entries(data.goals)){
 					addGoalDiv(id, elem.value, elem.text, socketClient, data.id)
 					indexGoal = parseInt(id) + 1
 				}
 			}
 
-			document.getElementById("addGoalButton").addEventListener("click", () => {addNewGoal(socketClient, data, data.id)});
+			document.getElementById("addGoalButton").addEventListener("click", () => {addNewGoal(socketClient, data)});
 		})
 	})
-}
-
-function addNewGoal(socket, data){
-	const form = addGoalForm()
-	if (Object.hasOwn(form, 'error')){
-		return ;
-	}
-	addGoalDiv(indexGoal, form.value, form.text, socket)
-	socket.emit('addNewGoal', {
-		id: data.id,
-		index: indexGoal,
-		value: form.value,
-		text: form.text,
-	})
-	indexGoal++;
-}
-
-function addGoalDiv(index, value, text, socket, id){
-	const goalList = document.getElementById('goalList')
-	const newElem = (document.getElementById('goalTemplate')).content.cloneNode(true);
-	const divElem = newElem.getElementById('goal')
-	divElem.id = `goal_${index}`;
-	divElem.getElementsByClassName('goalIndex')[0].textContent = index;
-	divElem.getElementsByClassName('goalValue')[0].textContent = value;
-	divElem.getElementsByClassName('goalText')[0].textContent = text;
-	divElem.getElementsByClassName('editGoal')[0].addEventListener('click', () => {editGoal(socket, id, index)})
-	goalList.appendChild(newElem);
-}
-
-function editGoalDiv(index, value, text){
-	const divElem = document.getElementById(`goal_${index}`)
-	divElem.getElementsByClassName('goalIndex')[0].textContent = index;
-	divElem.getElementsByClassName('goalValue')[0].textContent = value;
-	divElem.getElementsByClassName('goalText')[0].textContent = text;
 }
 
 function pastbin (data) {
@@ -155,32 +123,6 @@ function pastbin (data) {
 	catch {
 		alert(`Error!`);
 	}
-}
-
-function editGoal(socket, id, index) {
-	socket.emit('goals', id)
-	socket.on(`goals.${id}`, (res) => {
-		console.log(res[index])
-		const form = editGoalForm(res[index])
-		if (Object.hasOwn(form, 'error')){
-			socket.off(`goals.${id}`);
-			return ;
-		}
-		console.log(form)
-		editGoalDiv(index, form.value, form.text)
-		socket.emit('addNewGoal', {
-			id: data.id,
-			index: index,
-			value: form.value,
-			text: form.text,
-		})
-		socket.off(`goals.${id}`);
-	})
-}
-
-function deleteGoal(){
-	console.log('deleteGoal')
-	deleteGoalForm()
 }
 
 function generateArray(data){
@@ -222,14 +164,26 @@ function generateArray(data){
 			height:	50,
 		},
 		{
+			title:	`TODO nom du dernier plus gros donateur`,
+			src:	`/a/${data.id}/donation/big`,
+			width:	250,
+			height:	50,
+		},
+		{
 			title:	`Derniere donation récoltée la team`,
 			src:	`/a/donation/last`,
 			width:	250,
 			height:	50,
 		},
 		{
-			title:	`Plus grosse donation récoltée la team`,
+			title:	`Plus grosse donation récoltée de la team`,
 			src:	`/a/donation/big`,
+			width:	250,
+			height:	50,
+		},
+		{
+			title:	`Timer de l'évent`,
+			src:	`/a/timer/elapsedCount?time=1651856400000`,
 			width:	250,
 			height:	50,
 		},
