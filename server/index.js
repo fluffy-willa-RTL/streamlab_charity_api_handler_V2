@@ -136,7 +136,7 @@ app.get('/u/:slug', (req, res) => {
 })
 
 // Dashboard for technical team
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard', async (req, res) => {
 	const reject = () => {
 		res.setHeader('www-authenticate', 'Basic')
 		res.sendStatus(401)
@@ -185,38 +185,38 @@ app.get('/dashboard', (req, res) => {
 
 *************************            GLOBAL            ************************/
 
-app.get('/a/total/all',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','total','totalGlobal.html')))})
-app.get('/a/donation/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast.html')))})
-app.get('/a/donation/big',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest.html')))})
-app.get('/a/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast10.html')))})
-app.get('/a/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest10.html')))})
+app.get('/a/total/all',			async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','total','totalGlobal.html')))})
+app.get('/a/donation/last',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast.html')))})
+app.get('/a/donation/big',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest.html')))})
+app.get('/a/donation/last10',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationLast10.html')))})
+app.get('/a/donation/big10',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','donation','donationBiggest10.html')))})
 
 /************************           STREAMER           ************************/
 
-app.get('/a/:id/total/me',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMe.html')))})
-app.get('/a/:id/total/bar',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationBar.html')))})
-app.get('/a/:id/goal/next',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationGoalAfter.html')))})
-app.get('/a/:id/goal/before',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationGoalBefore.html')))})
-app.get('/a/:id/goal/text',			(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationGoalText.html')))})
+app.get('/a/:id/total/me',			async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','totalMe.html')))})
+app.get('/a/:id/total/bar',			async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationBar.html')))})
+app.get('/a/:id/goal/next',			async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationGoalAfter.html')))})
+app.get('/a/:id/goal/before',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationGoalBefore.html')))})
+app.get('/a/:id/goal/text',			async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','total','donationGoalText.html')))})
 
-app.get('/a/:id/donation/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation', 'donationLast.html')))})
-app.get('/a/:id/donation/big',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))})
-app.get('/a/:id/donation/last10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast10.html')))})
-app.get('/a/:id/donation/big10',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest10.html')))})
+app.get('/a/:id/donation/last',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation', 'donationLast.html')))})
+app.get('/a/:id/donation/big',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest.html')))})
+app.get('/a/:id/donation/last10',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationLast10.html')))})
+app.get('/a/:id/donation/big10',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest10.html')))})
 
-app.get('/a/:id/donator/last',		(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donator', 'donationLastDonator.html')))})
+app.get('/a/:id/donator/last',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donator', 'donationLastDonator.html')))})
 
 /************************             TIME             ************************/
 
-app.get('/a/timer/countdown',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','timer','countdown.html')))})
-app.get('/a/timer/elapsedCount',	(req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','timer','elapsedCount.html')))})
+app.get('/a/timer/countdown',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','timer','countdown.html')))})
+app.get('/a/timer/elapsedCount',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','timer','elapsedCount.html')))})
 
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
 
 // Redirect to auth link streamlab
-app.get('/', (req, res) => {res.redirect(connect.get_auth_url());})
+app.get('/', async (req, res) => {res.redirect(connect.get_auth_url());})
 
 // Get the `code` query to acces the user info and generate they link for `/u/:slug`
 app.get('/redirect', async (req, res) => {
