@@ -52,35 +52,35 @@ export async function startSocketServer(server){
 		})
 
 		// update.updateFrontLight();
-		data.on('init', () => {
+		data.on('init', async () => {
 			update.getFront(data);
 		})
 		
-		data.on('disconnect', () => {
+		data.on('disconnect', async () => {
 			connectedClient--;
 			log(`${color.FgMagenta}${color.Dim}[${connectedClient}][disconnect]:${data.id} ${color.Reset}`);
 		})
 
-		data.on('getStreamer', () => {
+		data.on('getStreamer', async () => {
 			data.emit('allStreamer', db.streamer);
 		})
 
 		/*************************  ADMIN DEBUG  **************************** */
 		// Listen for Page Admin to refresh streamer subscribed in streamlab charity team
 		// `nswkvz3po5tpwp`
-		data.on('nswkvz3po5tpwp', () => {
+		data.on('nswkvz3po5tpwp', async () => {
 			log(`${color.FgRed}${color.BgWhite}Refresh all streamer!!!${color.Reset}`)
 			getAllStreamer();
 		});
 		// Force refresh all client page
 		// `ceybt29oezjd7t`
-		data.on('ceybt29oezjd7t', () => {
+		data.on('ceybt29oezjd7t', async () => {
 			log(`${color.FgRed}${color.BgWhite}Refresh all client!!!${color.Reset}`)
 			forceRefreshClient();
 		});
 		/******************************************************************** */
 
-		data.on('addNewGoal', (res) => {
+		data.on('addNewGoal', async (res) => {
 			log(`${color.FgMagenta}${color.Dim}addNewGoal${color.Reset}`)
 			console.log(db.goals)
 			if (!Object.hasOwn(db.goals, res.id)){
@@ -107,7 +107,7 @@ export async function startSocketServer(server){
 		// 	id: data.id,
 		// 	index: index
 		// }
-		data.on('deleteGoal', (res) => {
+		data.on('deleteGoal', async (res) => {
 			log(`${color.FgMagenta}${color.Dim}deleteGoal${color.Reset}`)
 			if (!Object.hasOwn(db.goals, res.id)){
 				db.goals[res.id] = []
@@ -126,7 +126,7 @@ export async function startSocketServer(server){
 			  });
 		});
 
-		data.on('goals', (id) => {
+		data.on('goals', async (id) => {
 			data.emit(`goals.${id}`, Object.hasOwn(db.goals, id) ? db.goals[id] : {})
 		});
 	})
