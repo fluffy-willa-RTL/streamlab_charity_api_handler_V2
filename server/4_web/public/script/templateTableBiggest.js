@@ -3,8 +3,14 @@ let data = null;
 
 async function start() {
 	const socket = await connect();
-	// Listen update for the total amount
-	
+
+	// Get query//TODO
+	const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop),});
+
+	if (params?.color ?? null) {
+		document.getElementById(textId).style.color = `#${params.color}`;
+	}
+
 	socket.on(socketListeningEvent, (res) => {
 		data = {}
 
