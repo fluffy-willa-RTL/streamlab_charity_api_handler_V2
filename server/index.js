@@ -159,7 +159,7 @@ app.get('/dashboard', async (req, res) => {
 		return reject()
 	}
 	log(`${color.FgGreen}Tech team auth${color.Reset}`);
-	res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'dashboard.html')))// TODO create a new page
+	res.sendFile(publicPathFile(join('src', 'menu', '9je5vyhjh8doxj', 'dashboard.html')))
 	return ;
 })
 
@@ -205,6 +205,7 @@ app.get('/a/:id/donation/last10',	async (req, res) => {res.sendFile(publicPathFi
 app.get('/a/:id/donation/big10',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donation','donationBiggest10.html')))})
 
 app.get('/a/:id/donator/last',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donator', 'donationLastDonator.html')))})
+app.get('/a/:id/donator/big',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donator', 'donationLastTopDonator.html')))})
 
 /************************             TIME             ************************/
 
