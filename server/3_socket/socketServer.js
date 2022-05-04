@@ -81,8 +81,7 @@ export async function startSocketServer(server){
 		/******************************************************************** */
 
 		data.on('addNewGoal', async (res) => {
-			log(`${color.FgMagenta}${color.Dim}addNewGoal${color.Reset}`)
-			console.log(db.goals)
+			log(`${color.FgMagenta}addNewGoal${color.Reset}`)
 			if (!Object.hasOwn(db.goals, res.id)){
 				db.goals[res.id] = []
 			}
