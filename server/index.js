@@ -43,6 +43,12 @@ fs.open(streamerGoalFile, 'r', (err, file) => {
 		// If don't exit create it
 		fs.open(streamerGoalFile, 'w', (err, file) => {
 			if (err) throw err;
+			fs.writeFile(streamerGoalFile, JSON.stringify({}), (err) => {
+				if (err) {
+					logErr(`Fail to write ${streamerGoalFile}`);
+					throw err;
+				};
+			});
 			log(`${color.FgYellow}${streamerGoalFile} Created${color.Reset}`);
 		});
 		return ;
