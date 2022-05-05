@@ -1,3 +1,5 @@
+let goals = {};
+
 let actualGoal = {
 	value: 0,
 	text: null,
@@ -20,27 +22,29 @@ async function start() {
 	}
 
 	socket.emit('init')
-	socket.emit('goals', id)
+	// socket.emit('goals', id)
 	
 	socket.on(`total.${id}`, (res) => {
 		total = res;
 		updateDOM()
 	});
 
-	socket.on(socketListeningEvent, (data) => {
-		let i;
-		for (i of Object.keys(data)){
-			if (total < data[i].value * 100){
-				actualGoal = data[i]
-				break;
-			}
-			prevGoal = data[i];
-		}
+	socket.on(`goals.${id}`, (data) => {
+		goals = data;
 		updateDOM()
 	});
 }
 
 function updateDOM(){
+	console.log(goals)
+	for (let i of Object.keys(goals)){
+		if (total < goals[i].value * 100){
+			actualGoal = goals[i]
+			break;
+		}
+		prevGoal = goals[i];
+	}
+
 	let res;
 	switch (whichElemToPick) {
 		case 'after':
