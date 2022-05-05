@@ -51,7 +51,7 @@ body {
 
 iframe {
 	/* width: 100%; */
-	background-color: #fff;
+	background-color: rgb(190, 190, 190);
 	/* aspect-ratio: 9 / 2; */
 	max-width: 900px;
 }
