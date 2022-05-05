@@ -7,7 +7,7 @@ import { recoveryMode } from '../index.js';
 import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js';
 import update			from './updateFront.js';
-import { log, logErr }			from '../0_utils/log.js'
+import { log, logErr, logSocket }			from '../0_utils/log.js'
 
 let is_first = true;
 export let first_id = null;
@@ -27,10 +27,10 @@ export function startSocketClient(){
 	// Check te connection with the streamlab WS
 	streamlabs.on('connect', 		() 		=> {
 		socketClientIsConnected = true;
-		log(`${color.FgCyan}WS.client.[connect]${color.Reset}`)
+		logSocket(`${color.FgCyan}WS.client.[connect]${color.Reset}`)
 	});
-	streamlabs.on('connect_error', 	(err) 	=> {logErr(`${color.FgCyan}WS.client.[connect_error]${color.Reset}`)});
-	streamlabs.on('disconnect', 	() 		=> {log(`${color.FgCyan}WS.client.[disconnect]${color.Reset}`)});
+	streamlabs.on('connect_error', 	(err) 	=> {logErr(`${color.FgRed}${color.BgWhite}WS.client.[connect_error]${color.Reset}`)});
+	streamlabs.on('disconnect', 	() 		=> {logErr(`${color.FgRed}${color.BgWhite}WS.client.[disconnect]${color.Reset}`)});
 
 	// Listen all 'event' from streamlab WS
 	streamlabs.on('event', 	 (data) => {

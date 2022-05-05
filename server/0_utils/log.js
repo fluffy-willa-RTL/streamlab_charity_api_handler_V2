@@ -36,9 +36,36 @@ export function logErr(msg) {
 	logFile.error(`[${dateNow}]: ${msg}`);
 }
 
+export function logGoal(msg) {
+	const dateNow = date24Now();
+	console.log(`[${dateNow}]: ${msg}`);
+	donationGoalFile.log(`[${dateNow}]: ${msg}`);
+}
+
+export function logSocket(msg) {
+	const dateNow = date24Now();
+	console.log(`[${dateNow}]: ${msg}`);
+	socketConnectionFile.log(`[${dateNow}]: ${msg}`);
+}
+
 const logFilePath = join(__dirname, "..", "log", `log_${startTime}.log`);
 const errFilePath = join(__dirname, "..", "log", `err_${startTime}.log`);
+
 export const logFile = new Console({
 	stdout: fs.createWriteStream(logFilePath),
 	stderr: fs.createWriteStream(errFilePath),
+});
+
+const donationGoalFilePath = join(__dirname, "..", "log", `log_donation_goal_${startTime}.log`);
+
+const donationGoalFile = new Console({
+	stdout: fs.createWriteStream(donationGoalFilePath),
+	stderr: fs.createWriteStream(donationGoalFilePath),
+});
+
+const socketConnectionFilePath = join(__dirname, "..", "log", `log_sochet_connection_${startTime}.log`);
+
+const socketConnectionFile = new Console({
+	stdout: fs.createWriteStream(socketConnectionFilePath),
+	stderr: fs.createWriteStream(socketConnectionFilePath),
 });

@@ -7,7 +7,7 @@ import { sleep }		from '../0_utils/sleep.js'
 import color			from '../0_utils/color.js';
 import db				from '../2_dbManagement/database.js'
 import update			from './updateFront.js';
-import { log, logErr }			from '../0_utils/log.js'
+import { log, logErr, logSocket }			from '../0_utils/log.js'
 import { getAllStreamer } from '../2_dbManagement/getAllStreamer.js';
 
 export let front = null
@@ -30,7 +30,7 @@ export async function startSocketServer(server){
 	front.on('connect', async (data) => {
 		// Add new client
 		connectedClient++;
-		log(`${color.FgMagenta}[${connectedClient}][connect]:${data.id} ${color.Reset}`);
+		logSocket(`${color.FgMagenta}[${connectedClient}][connect]:${data.id} ${color.Reset}`);
 		// Client will ask `whoami` to recive all streamer info (slug, name, id, PP)
 		data.on('whoami',(res) => {
 			if (res['slug'] !== undefined){
@@ -85,6 +85,7 @@ export async function startSocketServer(server){
 			if (!Object.hasOwn(db.goals, res.id)){
 				db.goals[res.id] = []
 			}
+			
 			db.goals[res.id][res.index] = {
 				value: res.value,
 				text: res.text
@@ -92,6 +93,8 @@ export async function startSocketServer(server){
 
 			// console.log(db.goals)
 			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
+
+			console.log(db.goals)
 
 			// Write in json file
 			fs.writeFile(streamerGoalFile, JSON.stringify(db.goals, null, 2), (err) => {
@@ -112,11 +115,12 @@ export async function startSocketServer(server){
 			if (!Object.hasOwn(db.goals, res.id)){
 				db.goals[res.id] = []
 			}
-
+			
 			db.goals[res.id].splice(res.index, 1)
-			// console.log(db.goals)
 
 			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
+
+			console.log(db.goals)
 
 			fs.writeFile(streamerGoalFile, JSON.stringify(db.goals, null, 2), (err) => {
 				if (err) {
