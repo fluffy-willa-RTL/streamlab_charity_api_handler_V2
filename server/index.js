@@ -36,7 +36,7 @@ function publicPathFile(path) {
 const streamerGoalFile = join(__dirname, 'streamerGoal.json');
 
 // Check if file exist
-fs.open(streamerGoalFile, 'r', (err, file) => {
+fs.open(streamerGoalFile, 'r', async (err, file) => {
 	if (err) {
 		log(`${color.FgRed}${color.BgWhite}${streamerGoalFile} don't exist !${color.Reset}`);
 
@@ -48,13 +48,31 @@ fs.open(streamerGoalFile, 'r', (err, file) => {
 					logErr(`Fail to write ${streamerGoalFile}`);
 					throw err;
 				};
+				fs.chmod(streamerGoalFile, 0o777, (error) => {
+					if (error) throw err;
+				});
 			});
 			log(`${color.FgYellow}${streamerGoalFile} Created${color.Reset}`);
 		});
 		return ;
 	}
 	log(`${color.FgYellow}${streamerGoalFile} exist.${color.Reset}`);
+	db.goals = await readStreamerDonationGoal();
+	log(JSON.stringify(db.goals, null, 2));
 });
+
+
+// Read the donation goal json
+async function readStreamerDonationGoal() {
+	
+	try {
+		const data = await fs.promises.readFile(streamerGoalFile, 'utf8');
+		return JSON.parse(data);
+	} catch (error) {
+		logErr(`${color.BgWhite}${color.FgRed}${error} Fail to read ${streamerGoalFile} !!${color.Reset}`);
+		return ;
+	}
+}
 
 startSocketClient()
 

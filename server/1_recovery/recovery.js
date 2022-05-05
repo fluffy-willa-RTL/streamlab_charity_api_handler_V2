@@ -89,29 +89,9 @@ export async function startRecovery () {
 		await sleep(3500)
 		data = await get3000(tempId)
 	}
-	
-	db.goals = await streamerDonationGoalBackup();
-	log(JSON.stringify(db.goals, null, 2));
 
 	log(`${color.FgRed}First WS id: ${first_id}${color.Reset}`);
 	log(`${color.FgRed}============== RECOVERY MODE END ==============${color.Reset}`);
-}
-
-// Reade the donation goal json
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const streamerGoalFile = join(__dirname, '..', 'streamerGoal.json');
-
-async function streamerDonationGoalBackup() {
-	
-	try {
-		const data = await fs.promises.readFile(streamerGoalFile, 'utf8');
-		return JSON.parse(data);
-	} catch (error) {
-		logErr(`${color.BgWhite}${color.FgRed}${error} Fail to read ${streamerGoalFile} !!${color.Reset}`);
-		return ;
-	}
 }
 
 // Check if the first donnation we recieved from WS is in the local.db
