@@ -30,7 +30,7 @@ function updateSingleElem(elem, newColor) {
 }
 
 function updateAllColor(event) {
-	const list = document.getElementsByClassName('listElement')
+	const list = document.getElementsByClassName('assetElem')
 	for (const elem of list){
 		updateSingleElem(elem, event.target.value.substring(1))
 	}

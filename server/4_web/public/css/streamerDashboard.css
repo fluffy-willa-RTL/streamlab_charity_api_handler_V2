@@ -1,11 +1,125 @@
-#warn * {
-	color: red;
-}
+/******************************************************************************/
+/***************                    GENERAL                     ***************/
+/******************************************************************************/
 
 * {
 	font-family: 'Roboto', sans-serif;
 	font-size: large;
 	color: #fff;
+}
+
+body {
+	background-color: #36393f;
+}
+
+#warn * {
+	color: red;
+}
+
+.welcome {
+	padding: 15px;
+}
+
+.title {
+	background-color: #6f7581;
+	padding: 20px;
+	font-size: 72px;
+}
+
+
+
+/******************************************************************************/
+/***************                   GOAL LIST                    ***************/
+/******************************************************************************/
+
+.goal {
+	padding: 2px 15px 2px 15px;
+	display: grid;
+	grid-template-columns: 50px auto auto 100px 100px;
+}
+
+.goal:nth-child(odd){
+    background-color: #4f4f5c;
+}
+
+
+
+/******************************************************************************/
+/***************                  ASSET LIST                    ***************/
+/******************************************************************************/
+
+#myList {
+	display: grid;
+	grid-template-columns: auto auto;
+}
+
+#myList .assetElem{
+	display: inline-table;
+	grid-template-columns: auto auto;
+	width: auto;
+}
+
+
+
+/******************************************************************************/
+/***************                ASSET SHOWCASE                  ***************/
+/******************************************************************************/
+
+.assetShowcase {
+	padding: 50px;
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+
+.assetShowcase:nth-child(odd) {
+	background-color: #54575f;
+}
+
+.showcaseImage {
+	padding: 20px;
+	width: 80%;
+	height: auto;
+}
+
+.assetList {
+	display: grid;
+	grid-template-columns: auto;
+}
+
+
+
+/******************************************************************************/
+/***************                    ASSET                       ***************/
+/******************************************************************************/
+
+.assetElem {
+	display: inline-table;
+	grid-template-columns: auto auto;
+	width: auto;
+	width: max-content;
+	min-width: max-content;
+	margin: 10px;
+	padding: 25px;
+	background-color: #535863;
+	border-radius: 10px;
+}
+
+.assetElem iframe {
+	margin-top: 50px;
+	background-color: rgb(190, 190, 190);
+	max-width: 900px;
+}
+
+
+
+/******************************************************************************/
+/***************                    COLOR                       ***************/
+/******************************************************************************/
+
+#colorPreview {
+	color: #fff;
+	text-shadow: #000 1px 0 10px;
+	font-size: 2.5em;
 }
 
 .colorPick {
@@ -22,84 +136,13 @@
 	padding: 0.25em;
 }
 
-.welcome {
-	padding: 15px;
-}
-
-body {
-		background-color: #36393f;
-}
-
-.goalList {
-	border: solid 1px #fff;
-}
-
-.goalTextStyle {
-	margin: 0.1em 2em;
-}
-
-.goal {
-	display: grid;
-	grid-template-columns: 50px auto auto 150px 150px;
-	margin: 0.5em 0;
-	/* border: solid #fff 1px; */
-	/* border-radius: 0.2em; */
-	/* min-width: 600px; */
-	
-}
-
-iframe {
-	/* width: 100%; */
-	background-color: rgb(190, 190, 190);
-	/* aspect-ratio: 9 / 2; */
-	max-width: 900px;
-}
 
 
-.listElement {
-	width: max-content;
-	min-width: max-content;
-	margin: 10px;
-	padding: 25px;
-	background-color: #4a4a55;
-	border-radius: 10px;
-}
+/******************************************************************************/
+/***************                    BUTTON                      ***************/
+/******************************************************************************/
 
-.listElement p {
-	flex: 12;
-	position: absolute;
-	margin-left: 100px;
-}
-
-.listElement iframe {
-	margin-top: 50px;
-}
-
-
-
-
-#myList {
-	display: grid;
-	grid-template-columns: auto auto;
-}
-
-#myList .listElement{
-	display: inline-table;
-	grid-template-columns: auto auto;
-	width: auto;
-}
-
-
-
-
-
-#colorPreview {
-	color: #fff;
-	text-shadow: #000 1px 0 10px;
-	font-size: 2.5em;
-}
-
-button,	.button {
+button {
 	width: fit-content;
 	padding: 0.25em 1em;
 	margin: 0.25em;
@@ -120,31 +163,4 @@ button:active {
 	background-color: #8e3e3e;
 	box-shadow: rgba(0, 0, 0, 0.25) 0 0.1em;
 	transform: translateY(4px);
-}
-
-.assetShowcase {
-	padding: 50px;
-	display: grid;
-	grid-template-columns: 50% 50%;
-}
-
-.showcaseImage {
-	padding: 20px;
-	width: 80%;
-	height: auto;
-}
-
-.assetList {
-	display: grid;
-	grid-template-columns: auto;
-}
-
-.lighter {
-	background-color: #535863;
-}
-
-.title {
-	background-color: #6f7581;
-	padding: 20px;
-	font-size: 72px;
 }

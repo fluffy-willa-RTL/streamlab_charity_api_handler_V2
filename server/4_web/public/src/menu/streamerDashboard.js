@@ -149,9 +149,6 @@ function createNewAssetShowcase(parentId, id, link, showcaseId){
 	const divElem = newElem.getElementById('assetShowcase')
 	
 	divElem.id = `assetShowcase_${id}`;
-	if (showcaseId % 2 === 0){
-		divElem.style = "background-color: #535863";
-	}
 	divElem.getElementsByClassName('showcaseImage')[0].src	= link;
 	divElem.getElementsByClassName('assetList')[0].id	= `assetList_${id}`;
 
@@ -163,9 +160,9 @@ function createNewDivForList(parentId, id, item){
 	if (!goalList)
 		return ;
 	const newElem = document.getElementById('assetTemplate').content.cloneNode(true);
-	const divElem = newElem.getElementById('listElement')
+	const divElem = newElem.getElementById('assetElem')
 	
-	divElem.id = `listElement_${id}`;
+	divElem.id = `assetElem_${id}`;
 	divElem.getElementsByClassName('assetName')[0].textContent		= item.title;
 	divElem.getElementsByClassName('assetName')[0].href				= item.src;
 	divElem.getElementsByClassName('assetSize')[0].textContent		= `width: ${item.width} px, height: ${item.height} px`;
