@@ -90,7 +90,7 @@ export async function startSocketServer(server){
 				text: res.text
 			}
 
-			console.log(db.goals)
+			// console.log(db.goals)
 			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
 
 			// Write in json file
@@ -114,7 +114,7 @@ export async function startSocketServer(server){
 			}
 
 			db.goals[res.id].splice(res.index, 1)
-			console.log(db.goals)
+			// console.log(db.goals)
 
 			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
 
