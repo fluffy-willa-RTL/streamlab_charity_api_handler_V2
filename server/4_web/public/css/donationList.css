@@ -6,11 +6,11 @@
 	justify-content: space-between;
 }
 
-.value {
+.donation .assetTextStyle {
+	font-size: 2.5em;
 	padding: 0px 10px 0px 10px;
 }
 
-.donation .assetTextStyle {
-	font-size: 2.5em;
+.value {
 	padding: 0px 10px 0px 10px;
 }
