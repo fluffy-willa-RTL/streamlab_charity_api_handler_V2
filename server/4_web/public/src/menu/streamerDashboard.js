@@ -236,25 +236,25 @@ function generateMap(data){
 			title:	`10 Derniere donation récoltée ${data.streamer.display_name}`,
 			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/${data.id}/donation/last10`),
 			width:	500,
-			height:	1025,
+			height:	750,
 		},
 		'id/donation/big10': {
 			title:	`10 Plus grosse donation récoltée ${data.streamer.display_name}`,
 			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/${data.id}/donation/big10`),
 			width:	500,
-			height:	1025,
+			height:	750,
 		},
 		'donation/last10': {
 			title:	`10 Derniere donation récoltée la team`,
 			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/donation/last10`),
 			width:	500,
-			height:	1025,
+			height:	750,
 		},
 		'donation/big10': {
 			title:	`10 Plus grosse donation récoltée la team`,
 			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/donation/big10`),
 			width:	500,
-			height:	1025,
+			height:	750,
 		},
 	});
 };
