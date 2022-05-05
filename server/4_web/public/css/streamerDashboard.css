@@ -1,10 +1,10 @@
 #warn * {
 	color: red;
-	display: grid;
 }
 
 * {
 	font-family: 'Roboto', sans-serif;
+	font-size: large;
 	color: #fff;
 }
 
@@ -31,7 +31,6 @@ body {
 }
 
 .goalList {
-	width: fit-content;
 	border: solid 1px #fff;
 }
 
@@ -40,13 +39,12 @@ body {
 }
 
 .goal {
-	width: fit-content;
-	margin: 0.5em 0;
 	display: grid;
-	border: solid #fff 1px;
-	border-radius: 0.2em;
-	grid-template-columns: auto auto auto auto auto;
-	min-width: 600px;
+	grid-template-columns: 50px auto auto 150px 150px;
+	margin: 0.5em 0;
+	/* border: solid #fff 1px; */
+	/* border-radius: 0.2em; */
+	/* min-width: 600px; */
 	
 }
 
@@ -57,19 +55,16 @@ iframe {
 	max-width: 900px;
 }
 
-#myList {
-	display:list-item;
-	grid-template-columns: auto auto;
-}
 
 .listElement {
-	min-width: 40%;
-	display: inline-grid;
-	position: relative;
-	margin-top: 50px;
+	width: max-content;
+	min-width: max-content;
+	margin: 10px;
+	padding: 25px;
+	background-color: #4a4a55;
+	border-radius: 10px;
 }
 
-.listElement a,
 .listElement p {
 	flex: 12;
 	position: absolute;
@@ -79,6 +74,24 @@ iframe {
 .listElement iframe {
 	margin-top: 50px;
 }
+
+
+
+
+#myList {
+	display: grid;
+	grid-template-columns: auto auto;
+}
+
+#myList .listElement{
+	display: inline-table;
+	grid-template-columns: auto auto;
+	width: auto;
+}
+
+
+
+
 
 #colorPreview {
 	color: #fff;
@@ -90,7 +103,6 @@ button,	.button {
 	width: fit-content;
 	padding: 0.25em 1em;
 	margin: 0.25em;
-	font-size: 12px;
 	text-align: center;
 	cursor: pointer;
 	outline: none;
