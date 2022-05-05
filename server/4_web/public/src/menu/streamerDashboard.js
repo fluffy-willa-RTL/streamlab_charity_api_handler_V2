@@ -2,6 +2,8 @@ let linkToGenerate = null;
 let iframeId = [];
 let indexGoal = 0;
 let generateAllDivs;
+let connectionLost = false;
+let connectionAttempt = 0;
 
 async function start () {
 	if (!slug) {
@@ -14,28 +16,37 @@ async function start () {
 		secure: true, // Enable ssl
 	});
 
-	// Increment eatch time a connection attempt.
-	let connectionAttempt = 0;
+	function connectionGuard() {
+		document.getElementById("connectionGuard").style = "display: none;"
+		document.getElementById("connectionWarn").textContent = `La connexion a été perdue tentative de reconnexion en cours #${connectionAttempt}`;
+		connectionLost = true;
+		connectionAttempt++;
+	}
+
 	// Listen if a connection error occur
 	socketClient.on('connect_error', (err) => {
-		connectionAttempt++;
-		document.getElementById('welcomeMessage').textContent =  `La connexion a été perdue tentative de reconnexion en cours #${connectionAttempt}`;
 		console.log(`connect_error`, err);
+		connectionGuard();
 	})
-
+	
 	// Listen if we lost connection
 	socketClient.on('disconnect', () => {
 		console.warn('WS disconnect')
+		connectionGuard();
 	});
 
 	// Forece refresh the tab
 	socketClient.on('forceRefresh', () => {
-		document.location.reload(true)
+		document.location.reload(true);
 	});
 
 	socketClient.on('connect', () => {
-		// Reset conenction attempt counter
-		connectionAttempt = 0;
+
+		// If the connection have been lost refresh the page. //TODO TODO TODO TODO hide all the component
+		if (connectionLost) {
+			document.location.reload(true)
+		}
+
 		// Ask the streamer data
 		socketClient.emit('whoami', {"slug":slug})
 		// Listen for the streamer data
