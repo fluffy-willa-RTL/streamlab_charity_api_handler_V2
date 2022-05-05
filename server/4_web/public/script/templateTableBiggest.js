@@ -8,7 +8,7 @@ async function start() {
 	const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop),});
 
 	if (params?.color ?? null) {
-		document.getElementById(textId).style.color = `#${params.color}`;
+		document.getElementsByClassName('text').style.color = `#${params.color}`;
 	}
 
 	socket.on(socketListeningEvent, (res) => {

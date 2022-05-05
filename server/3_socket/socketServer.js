@@ -90,6 +90,7 @@ export async function startSocketServer(server){
 				text: res.text
 			}
 
+			console.log(db.goals)
 			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
 
 			// Write in json file

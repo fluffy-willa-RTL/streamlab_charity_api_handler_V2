@@ -7,8 +7,12 @@ async function start() {
 	// Get query//TODO
 	const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop),});
 
+	const el = document.getElementsByClassName('text');
+	console.log(el);
+	for (const item of el) {
+		console.log(item);
+	}
 	if (params?.color ?? null) {
-		document.getElementById(textId).style.color = `#${params.color}`;
 	}
 
 	socket.on(socketListeningEvent, (res) => {
