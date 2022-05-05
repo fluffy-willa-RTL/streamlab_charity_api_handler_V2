@@ -54,6 +54,7 @@ async function start () {
 			if (linkToGenerate !== null) {
 				return ;
 			}
+			linkToGenerate = generateMap(data)
 
 			// Generate the streamer donation link
 			// TODO TODO find a way to get the base link from the back with dotenv
@@ -62,12 +63,13 @@ async function start () {
 			document.getElementById("warnButton").addEventListener('click', () => {pastbin(donationLink)});
 			document.getElementById("warnLink").href 		= donationLink;
 			document.getElementById("warnLink").textContent = donationLink;
-
+			console.log(linkToGenerate['qrcode'])
+			createNewDivForList('warn', 0, linkToGenerate['qrcode']);
 			
 			
 			// For each settings generate all component in the parent list
 			
-			linkToGenerate = generateMap(data)
+			
 			generateAllDivs = {
 				'https://media.discordapp.net/attachments/968445978157912084/970680995529494549/fond-top_don_par.png': [
 					linkToGenerate['id/donation/big'],
@@ -144,6 +146,37 @@ function createNewAssetShowcase(parentId, id, link, showcaseId){
 	divElem.getElementsByClassName('assetList')[0].id	= `assetList_${id}`;
 
 	goalList.appendChild(newElem);
+}
+
+function createNewDivForList(parentId, id, item){
+	const goalList = document.getElementById(parentId)
+	if (!goalList)
+		return ;
+	const newElem = document.getElementById('assetTemplate').content.cloneNode(true);
+	const divElem = newElem.getElementById('listElement')
+	
+	divElem.id = `listElement_${id}`;
+	divElem.getElementsByClassName('assetName')[0].textContent		= item.title;
+	divElem.getElementsByClassName('assetName')[0].href				= item.src;
+	divElem.getElementsByClassName('assetSize')[0].textContent		= `width: ${item.width} px, height: ${item.height} px`;
+	divElem.getElementsByClassName('assetFrame')[0].src				= item.src;
+	divElem.getElementsByClassName('assetFrame')[0].width			= item.width;
+	divElem.getElementsByClassName('assetFrame')[0].height			= item.height;
+	if (window.location.protocol === 'https:')
+		divElem.getElementsByClassName('assetButton')[0].addEventListener('click', () => {pastbin(`${item.src}`)})
+	else
+		divElem.getElementsByClassName('assetButton')[0].addEventListener('click', () => {console.warn("connection is on http:");})
+
+	goalList.appendChild(newElem);
+}
+
+function pastbin (data) {
+	try {
+		navigator.clipboard.writeText(data);
+	}
+	catch {
+		alert(`Error!`);
+	}
 }
 
 function generateMap(data){
@@ -258,36 +291,5 @@ function generateMap(data){
 		},
 	});
 };
-
-function createNewDivForList(parentId, id, item){
-	const goalList = document.getElementById(parentId)
-	if (!goalList)
-		return ;
-	const newElem = document.getElementById('assetTemplate').content.cloneNode(true);
-	const divElem = newElem.getElementById('listElement')
-	
-	divElem.id = `listElement_${id}`;
-	divElem.getElementsByClassName('assetName')[0].textContent		= item.title;
-	divElem.getElementsByClassName('assetName')[0].href				= item.src;
-	divElem.getElementsByClassName('assetSize')[0].textContent		= `width: ${item.width} px, height: ${item.height} px`;
-	divElem.getElementsByClassName('assetFrame')[0].src				= item.src;
-	divElem.getElementsByClassName('assetFrame')[0].width			= item.width;
-	divElem.getElementsByClassName('assetFrame')[0].height			= item.height;
-	if (window.location.protocol === 'https:')
-		divElem.getElementsByClassName('assetButton')[0].addEventListener('click', () => {pastbin(`${item.src}`)})
-	else
-		divElem.getElementsByClassName('assetButton')[0].addEventListener('click', () => {console.warn("connection is on http:");})
-
-	goalList.appendChild(newElem);
-}
-
-function pastbin (data) {
-	try {
-		navigator.clipboard.writeText(data);
-	}
-	catch {
-		alert(`Error!`);
-	}
-}
 
 start();

@@ -1,5 +1,6 @@
 #warn * {
 	color: red;
+	display: grid;
 }
 
 * {
@@ -22,7 +23,7 @@
 }
 
 .welcome {
-	margin: 2%;
+	padding: 15px;
 }
 
 body {

@@ -10,12 +10,12 @@ async function connect() {
 	
 	// Listen if we lost connection
 	socket.on('disconnect', () => {
-		console.warn('WS disconnect')
+		// console.warn('WS disconnect')
 	});
 	
 	// Listen if a connection have made with the backend
 	socket.on('connect', () => {
-		console.log(`Connected!`)
+		// console.log(`Connected!`)
 		// send to server a request for information
 		socket.emit('init');
 	});
