@@ -13,6 +13,7 @@ body {
 }
 
 #warn * {
+	padding: 15px;
 	color: red;
 }
 
@@ -72,7 +73,7 @@ body {
 }
 
 .assetShowcase:nth-child(odd) {
-	background-color: #54575f;
+	background-color: #44474c;
 }
 
 .showcaseImage {
