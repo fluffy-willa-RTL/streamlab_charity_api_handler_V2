@@ -21,9 +21,11 @@ async function start() {
 		document.getElementById(textId).style.color = `#${params.color}`;
 	}
 
+	updateDOM()
+
 	socket.emit('init')
-	// socket.emit('goals', id)
-	
+	socket.emit('goals', id)
+
 	socket.on(`total.${id}`, (res) => {
 		total = res;
 		updateDOM()

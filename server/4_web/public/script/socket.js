@@ -15,7 +15,7 @@ async function connect() {
 	
 	// Listen if a connection have made with the backend
 	socket.on('connect', () => {
-		// console.log(`Connected!`)
+		console.log(`Connected!`)
 		// send to server a request for information
 		socket.emit('init');
 	});
