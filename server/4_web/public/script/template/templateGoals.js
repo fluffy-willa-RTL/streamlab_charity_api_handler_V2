@@ -36,7 +36,6 @@ async function start() {
 }
 
 function updateDOM(){
-	console.log(goals)
 	for (let i of Object.keys(goals)){
 		if (total < goals[i].value * 100){
 			actualGoal = goals[i]
