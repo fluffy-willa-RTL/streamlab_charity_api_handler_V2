@@ -23,8 +23,10 @@
 		<script defer src="/src/menu/streamerDashboard.js"></script>
 		<script defer src="/src/menu/streamerDashboardColor.js"></script>
 	</head>
+
 	<body id="body">
 		<div class="title" id="welcomeMessage" style="background-color: #36393f;">Salut xxx</div>
+
 		<div class="title">Warning</div>
 		<div class="welcome">
 			<div id="warn">
@@ -37,15 +39,17 @@
 
 		<div class="title">Vos goals pour l'evenement</div>
 		<div class="welcome">
-			<div class="colorPick">
-				<label for="colorWell">Couleur :</label>
-				<input type="color" value="#ff0000" id="colorWell">
-				<span id="colorPreview">123 456,78 €</span>
-			</div>
+			
 			<button id="addGoalButton">add new goal</button>
 			<div id="goalList"></div>
 		</div>
 
+		<div class="title">Choisissez votre couleur</div>
+		<div class="colorPick">
+			<label for="colorWell">Couleur :</label>
+			<input type="color" value="#ff0000" id="colorWell">
+			<span id="colorPreview">123 456,78 €</span>
+		</div>
 		<div class="title">Exemple</div>
 		<div id="showcaseList"></div>
 

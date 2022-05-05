@@ -63,7 +63,6 @@ async function start () {
 			document.getElementById("warnButton").addEventListener('click', () => {pastbin(donationLink)});
 			document.getElementById("warnLink").href 		= donationLink;
 			document.getElementById("warnLink").textContent = donationLink;
-			console.log(linkToGenerate['qrcode'])
 			createNewDivForList('warn', 0, linkToGenerate['qrcode']);
 			
 			
@@ -262,8 +261,8 @@ function generateMap(data){
 		'qrcode': {
 			title:	`Qrcode de Donation pour le streamer`,
 			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/${data.id}/qrcode`),
-			width:	280,
-			height:	280,
+			width:	272,
+			height:	272,
 		},
 		'id/donation/last10': {
 			title:	`10 Derniere donation récoltée ${data.streamer.display_name}`,
