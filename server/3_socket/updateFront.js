@@ -108,6 +108,7 @@ function getFront(socket){
 	socket.emit(`donation_last`,				db.front.don_last)
 	socket.emit(`donation_biggest`,				db.front.don_big)
 	for (let id of Object.keys(db.front.total_streamer)){
+		socket.emit(`goals.${id}`, 				Object.hasOwn(db.goals, id) ? db.goals[id] : {})
 		socket.emit(`total.${id}`,				db.front.total_streamer[id])
 		socket.emit(`donation_last.${id}`,		db.front.don_streamer_last[id])
 		socket.emit(`donation_biggest.${id}`,	db.front.don_streamer_big[id])
