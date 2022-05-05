@@ -1,14 +1,15 @@
 let prev = {};
 let data = null;
+let color = '#0a4a91'
 
 async function start() {
 	const socket = await connect();
 
-	// Get query//TODO
+	// Get query
 	const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop),});
 
 	if (params?.color ?? null) {
-		document.getElementsByClassName('text').style.color = `#${params.color}`;
+		color = `#${params.color}`
 	}
 
 	socket.on(socketListeningEvent, (res) => {
@@ -38,6 +39,8 @@ async function start() {
 				elem.getElementsByClassName('value')[0].textContent = moneyConverter.format(el.amount / 100)
 			}
 			elem.getElementsByClassName('name')[0].textContent = convertLongText(el.name, 25);
+			elem.getElementsByClassName('name')[0].style.color = color;
+			elem.getElementsByClassName('value')[0].style.color = color;
 		}
 
 		prev = data

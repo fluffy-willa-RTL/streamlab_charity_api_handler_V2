@@ -1,18 +1,15 @@
 let prev = {};
 let data = null;
+let color = '#0a4a91'
 
 async function start() {
 	const socket = await connect();
 
-	// Get query//TODO
+	// Get query
 	const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop),});
 
-	const el = document.getElementsByClassName('text');
-	console.log(el);
-	for (const item of el) {
-		console.log(item);
-	}
 	if (params?.color ?? null) {
+		color = `#${params.color}`
 	}
 
 	socket.on(socketListeningEvent, (res) => {
@@ -33,12 +30,14 @@ async function start() {
 			
 			let elem = document.getElementById(`donation_${el._id}`);
 			if (isNew){
-				elem.getElementsByClassName('value')[0].textContent = moneyConverter.format(el.amount / 100)
+				elem.getElementsByClassName('value')[0].textContent = moneyConverter.format(el.amount / 100);
 			}
 			else{
 				animateMoneySingle(el.amount, elem)
 			}
 			elem.getElementsByClassName('name')[0].textContent = convertLongText(el.name, 20);
+			elem.getElementsByClassName('name')[0].style.color = color;
+			elem.getElementsByClassName('value')[0].style.color = color;
 			
 			
 		}
@@ -50,7 +49,6 @@ async function start() {
 				continue
 			}
 		}
-
 		prev = data
 	});
 }
