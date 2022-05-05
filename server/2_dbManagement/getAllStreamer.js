@@ -19,7 +19,8 @@ export async function getAllStreamer(){
 	for (let i = 1; i < nbPage + 1; i++){
 		const data =  await axios.get(url + `?page=${i}`)
 									.then((res) => {return res.data;})
-									.catch((err) => {console.log('Error:', err)})
+									.catch((err) => {console.log('Error:', err)});
+		
 		for (let newStreamer of data.data){
 			if (db.streamer[newStreamer.user._id] === undefined){
 				db.streamer[newStreamer.user.id] = {
@@ -27,9 +28,10 @@ export async function getAllStreamer(){
 					slug			: slugify(newStreamer?.user?.display_name		?? null),
 					avatarURL		: newStreamer?.user?.avatar?.url				?? null,
 					goal			: newStreamer?.goal?.amount						?? 0,
+					twitch_slug		: newStreamer?.user?.slug						?? null,
 				}
 			}
 		}
 	}
-	logTable(db.streamer, ['display_name', 'slug'])
+	logTable(db.streamer, ['display_name', 'slug', 'twitch_slug'])
 }
