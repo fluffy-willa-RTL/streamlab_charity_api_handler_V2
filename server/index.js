@@ -150,7 +150,31 @@ app.get('/u/:slug', (req, res) => {
 			return ;
 		}
 	}
+
+	const reject = () => {
+		res.setHeader('www-authenticate', 'Basic')
+		res.sendStatus(401)
+	}
+	// Request auth
+	const authorization = req.headers.authorization
+
+	// Check if auth is not empty
+	if(!authorization) {
+		log(`${color.FgYellow}Tech team try to auth${color.Reset}`);
+		return reject()
+	}
+
+	// Decode username and password
+	const [username, password] = Buffer.from(authorization.replace('Basic ', ''), 'base64').toString().split(':')
+
+	// Check the username and password
+	if(! (username === process.env.TCHUSR && password === process.env.TCHPSSWD)) {
+		logErr(`${color.FgRed}${color.BgWhite}Fail Tech team auth !! [${username}][${password}]${color.Reset}`);
+		return reject()
+	}
+	log(`${color.FgGreen}Tech team auth${color.Reset}`);
 	res.sendFile(publicPathFile(join('src', 'menu', 'streamerDashboard.html')))
+	return ;
 })
 
 // Dashboard for technical team
@@ -237,7 +261,11 @@ app.get('/a/:id/qrcode',			async (req, res) => {res.sendFile(publicPathFile(join
 app.get('/a/timer/countdown',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','timer','countdown.html')))})
 app.get('/a/timer/elapsedCount',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','timer','elapsedCount.html')))})
 
+
 /******************************************************************************/
+
+app.get('/multistream',	async (req, res) => {res.sendFile(publicPathFile(join('src', 'menu', 'multistreamDashboard.html')))})
+
 /******************************************************************************/
 /******************************************************************************/
 
