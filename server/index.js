@@ -183,6 +183,11 @@ app.get('/dashboard', async (req, res) => {
 /a/:id/donation/last10		=> Last 10 donations of streamer id			(asset)
 /a/:id/donation/big10		=> Biggest 10 donations of streamer id		(asset)
 
+/a/:id/donator/last			=> Last donator of streamer id				(text)
+/a/:id/donator/big			=> Biggest donator of streamer id			(text)
+
+/a/:id/qrcode				=> Qrcode for donating to the ID streamer	(text)
+
 *************************            GLOBAL            ************************/
 
 app.get('/a/total/all',			async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'screen','total','totalGlobal.html')))})
@@ -206,6 +211,8 @@ app.get('/a/:id/donation/big10',	async (req, res) => {res.sendFile(publicPathFil
 
 app.get('/a/:id/donator/last',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donator', 'donationLastDonator.html')))})
 app.get('/a/:id/donator/big',		async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','donator', 'donationLastTopDonator.html')))})
+
+app.get('/a/:id/qrcode',			async (req, res) => {res.sendFile(publicPathFile(join('src', 'asset', 'streamer','qrcode', 'qrcode.html')))})
 
 /************************             TIME             ************************/
 

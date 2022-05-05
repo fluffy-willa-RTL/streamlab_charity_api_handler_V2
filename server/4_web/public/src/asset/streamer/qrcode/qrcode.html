@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/script/qrcode.min.js"></script>
+	<title>Document</title>
+</head>
+<body>
+	<div id="qrcode"></div>
+</body>
+<script>
+	const id = window.location.pathname.split('/')[2]
+	if (!id){
+		document.location = '/u/'
+	}
+
+	const params = new Proxy(new URLSearchParams(window.location.search), {get: (searchParams, prop) => searchParams.get(prop),});
+	let color = null;
+
+	if (params.color) {
+		color = `#${params.color}`;
+	}
+
+	const qrcode = new QRCode(document.getElementById("qrcode"), {
+		text: `https://streamlabscharity.com/teams/@24h-gaming-televie/24h-gaming?member=${id}`,
+		width: 256,
+		height: 256,
+		colorDark : (color ? color : "#000000"),
+		colorLight : "#ffffff",
+		correctLevel : QRCode.CorrectLevel.L
+	});
+</script>
+</html>
