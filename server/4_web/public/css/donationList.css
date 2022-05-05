@@ -7,27 +7,14 @@ html body {
 	margin: 0px;
 }
 
-/* #header {
-	display: block;
-	background-color: #004f9c;
-	margin: 0px;
-	padding: 20px 5px 20px 5px;
-	font-size: 4em;
-	color: white;
-	font-family: 'Concert One', cursive;
-} */
-
 #donationList {
 	display: block;
-/* 	background-color: #28beff; */
 	margin: 0px;
 	padding: 5px;
 }
 
 .donation {
 	display: flex;
-	/* border: 2px solid #077bad; */
-/* 	background-color: #9ae1ff; */
 	min-height: 4.5em;
 	justify-content: space-between;
 	border-radius: 10px;
@@ -41,8 +28,6 @@ html body {
 
 .value {
 	display: flex;
-	/* border: 2px solid #077bad; */
-/* 	background-color: #ccf0ff; */
 	justify-content: flex-end;
 	min-width: 5em;
 	padding: 0px 10px 0px 10px;
@@ -51,10 +36,8 @@ html body {
 }
 
 .text {
-	/* font-size: 150px; */
 	color: #fff;
-	text-shadow: rgba(0, 0, 0, 0.275)      1px       0            0.1em;
-
+	text-shadow: rgba(0, 0, 0, 0.275) 1px 0 0.1em;
 	align-items: center;
 	font-size: 2.5em;
 	font-family: 'Concert One', cursive;

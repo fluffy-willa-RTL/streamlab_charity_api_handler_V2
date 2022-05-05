@@ -8,7 +8,7 @@
 		<!-- <script defer src="/socket.io/socket.io.js"></script> -->
 		<!-- <script defer src="/script/socket.js"></script> -->
 		<script defer src="/socket.io/socket.io.js"></script>
-		<link rel="stylesheet" href="/css/default.css">
+		<!-- <link rel="stylesheet" href="/css/default.css"> -->
 		<link rel="stylesheet" href="/css/streamerDashboard.css">
 		<script defer>
 			// GLOBAL VARIABLE
@@ -27,11 +27,11 @@
 	<body id="body">
 		<div id="connectionWarn"></div>
 		<div id="connectionGuard">
-			<div class="title" id="welcomeMessage" style="background-color: #36393f;">Salut xxx</div>
+		<div class="title" id="welcomeMessage" style="background-color: #36393f;">Salut xxx</div>
 			
 		<div class="title">Warning</div>
 		<div id="warn">
-			<div>/!\ Attention a bien partager VOTRE lien de donation! /!\</div>
+			<div class="warningMessage">/!\ Attention a bien partager VOTRE lien de donation! /!\</div>
 			<div id="warnLinkAndButton">
 				<button id="warnButton">Click to copy</button>
 				<a id="warnLink" target="_blank"></a>
@@ -48,6 +48,7 @@
 			<input type="color" value="#ff0000" id="colorWell">
 			<span id="colorPreview">123 456,78 €</span>
 		</div>
+		
 		<div class="title">Exemple</div>
 		<div id="showcaseList"></div>
 		
