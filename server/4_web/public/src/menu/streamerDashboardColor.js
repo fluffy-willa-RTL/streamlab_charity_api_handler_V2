@@ -24,8 +24,8 @@ function updateSingleElem(elem, newColor) {
 	url.searchParams.delete('color');
 	url.searchParams.append('color', newColor)
 
-	console.log(url)
 	elem.getElementsByClassName('assetButton')[0].addEventListener('click', () => {pastbin(url)});
+	elem.getElementsByClassName('assetName')[0].href = url;
 	elem.getElementsByClassName('assetFrame')[0].src = url;
 }
 
