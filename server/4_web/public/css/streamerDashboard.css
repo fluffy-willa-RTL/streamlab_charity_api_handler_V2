@@ -129,3 +129,9 @@ button:active {
 .lighter {
 	background-color: #535863;
 }
+
+.title {
+	background-color: #6f7581;
+	padding: 20px;
+	font-size: 72px;
+}
