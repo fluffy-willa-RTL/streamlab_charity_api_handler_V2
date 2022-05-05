@@ -34,7 +34,7 @@ export async function startSocketServer(server){
 		// Client will ask `whoami` to recive all streamer info (slug, name, id, PP)
 		data.on('whoami',(res) => {
 			if (res['slug'] !== undefined){
-				log(`${color.FgMagenta}[whoami] from ${res.slug} ${color.Reset}`);//DEBUG show when client ask whoami
+				log(`${color.FgGreen}[whoami] from ${res.slug} ${color.Reset}`);//DEBUG show when client ask whoami
 				// Try to find the streamer in the team
 				for (const [id, streamer] of Object.entries(db.streamer)){
 					if (streamer.slug === res.slug){
