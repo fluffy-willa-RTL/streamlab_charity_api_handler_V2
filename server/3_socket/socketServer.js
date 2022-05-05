@@ -94,7 +94,7 @@ export async function startSocketServer(server){
 			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
 
 			// Write in json file
-			fs.writeFile(streamerGoalFile, JSON.stringify(db.goals), (err) => {
+			fs.writeFile(streamerGoalFile, JSON.stringify(db.goals, null, 2), (err) => {
 				if (err) {
 					logErr(`Fail to write ${streamerGoalFile}`);
 					throw err;
@@ -118,7 +118,7 @@ export async function startSocketServer(server){
 
 			front.emit(`goals.${res.id}`, Object.hasOwn(db.goals, res.id) ? db.goals[res.id] : {})
 
-			fs.writeFile(streamerGoalFile, JSON.stringify(db.goals), (err) => {
+			fs.writeFile(streamerGoalFile, JSON.stringify(db.goals, null, 2), (err) => {
 				if (err) {
 					logErr(`Fail to write ${streamerGoalFile}`);
 					throw err;
