@@ -85,7 +85,7 @@ async function start () {
 					linkToGenerate['total/all'],
 				],
 				'https://cdn.discordapp.com/attachments/882258638629126166/971493817335300136/unknown.png': [
-					linkToGenerate['donation/last'],
+					linkToGenerate['donation/last10'],
 				],
 				'https://cdn.discordapp.com/attachments/882258638629126166/971520612369571890/unknown.png': [
 					linkToGenerate['id/goal/bar'],
@@ -225,6 +225,12 @@ function generateMap(data){
 			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/timer/elapsedCount?time=1651856400000`),
 			width:	250,
 			height:	50,
+		},
+		'qrcode': {
+			title:	`Qrcode de Donation pour le streamer`,
+			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/${data.id}/qrcode`),
+			width:	280,
+			height:	280,
 		},
 		'id/donation/last10': {
 			title:	`10 Derniere donation récoltée ${data.streamer.display_name}`,

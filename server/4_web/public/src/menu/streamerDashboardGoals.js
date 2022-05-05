@@ -38,7 +38,7 @@ function deleteGoal(socket, id, index){
 		socket.off(`goals.${id}`);
 
 		const form = deleteGoalForm(res[index])
-		if (Object.hasOwn(form, 'error')){
+		if (!form){
 			socket.off(`goals.${id}`);
 			return ;
 		}
@@ -84,7 +84,7 @@ function editGoalDiv(index, value, text){
 	divElem.getElementsByClassName('goalText')[0].textContent = text;
 }
 
-function deleteListDiv(index, value, text){
+function deleteListDiv(){
 	const goalList = document.getElementById('goalList').getElementsByClassName('goal')
 	for (let i = goalList.length - 1; i >= 0; i--){
 		goalList[i].remove()
