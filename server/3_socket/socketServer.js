@@ -58,7 +58,7 @@ export async function startSocketServer(server){
 		
 		data.on('disconnect', async () => {
 			connectedClient--;
-			log(`${color.FgMagenta}${color.Dim}[${connectedClient}][disconnect]:${data.id} ${color.Reset}`);
+			logSocket(`${color.FgMagenta}${color.Dim}[${connectedClient}][disconnect]:${data.id} ${color.Reset}`);
 		})
 
 		data.on('getStreamer', async () => {
