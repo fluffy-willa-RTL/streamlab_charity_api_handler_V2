@@ -1,44 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
 
-html body {
-	height: 100%;
-	width: 100%;
-	padding: 0px;
-	margin: 0px;
-}
-
-#donationList {
-	display: block;
-	margin: 0px;
-	padding: 5px;
-}
-
 .donation {
 	display: flex;
 	min-height: 4.5em;
 	justify-content: space-between;
-	border-radius: 10px;
-	font-family: 'Concert One', cursive;
-}
-
-.name {
-	display: flex;
-	font-family: 'Concert One', cursive;
 }
 
 .value {
-	display: flex;
-	justify-content: flex-end;
-	min-width: 5em;
 	padding: 0px 10px 0px 10px;
-	border-radius: 10px;
-	font-family: 'Concert One', cursive;
 }
 
-.text {
-	color: #fff;
-	text-shadow: rgba(0, 0, 0, 0.275) 1px 0 0.1em;
-	align-items: center;
+.donation .assetTextStyle {
 	font-size: 2.5em;
-	font-family: 'Concert One', cursive;
+	padding: 0px 10px 0px 10px;
 }
