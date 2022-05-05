@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script defer src="/socket.io/socket.io.js"></script>
+	<script defer src="/script/socket.js"></script>
+	<script defer src="/src/menu/multistreamDashboard.js"></script>
+</head>
+<body>
+	<div class="welcome">
+		<h1>Bienvenue sur le dashboard du 24H gaming Télévie.</h1>
+	</div>
+
+	<div id="list"></div>
+	<button onclick="redirectLink()">Done !</button>
+	
+	<template id="streamerSelectorTemplate">
+		<div id="listElement" class="listElement">
+			<input type="checkbox" class="checkbox">
+			<label class="checkboxLabel"></label>
+			<img class="streamerPP">
+		</div>
+	</template>
+</body>
+</html>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+	font-family: 'Roboto', sans-serif;
+	color: #fff;
+}
+
+	body {
+		background-color: #36393f;
+	}
+
+	.warn {
+		color: red;
+	}
+
+	.welcome {
+		padding: 2%;
+	}
+
+
+
+	label {
+			display:block;
+			border:solid 2px red;
+			margin-top:10px;
+			color:red;
+			text-align:center;
+			line-height: 40px;
+		}
+		input[type=checkbox] {
+			display: none;
+		}
+		
+		
+		input:checked + label {
+			border: solid 2px green;
+			color: green;
+		}
+
+button,	.button {
+	width: fit-content;
+	padding: 0.25em 1em;
+	margin: 0.25em;
+	font-size: 3em;
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+	color: #fff;
+	background-color: #04AA6D;
+	border: none;
+	border-radius: 15px;
+	box-shadow: rgba(0, 0, 0, 0.8) 0 2px 0;
+	transition: all 0.075s ease-in-out;
+}
+
+button:hover {background-color: #3e8e41}
+
+button:active {
+	background-color: #8e3e3e;
+	box-shadow: rgba(0, 0, 0, 0.25) 0 0.1em;
+	transform: translateY(4px);
+}
+
+	#list {
+		display: flex;
+		flex-wrap: wrap;
+		grid-template-columns: auto auto auto auto auto auto;
+	}
+
+	img {
+		width: 100px;
+	}
+
+	.nameLink {
+		padding-bottom: 0.5em;
+	}
+	
+	.listElement {
+		display: grid;
+		margin: 0.25em;
+		padding: 0.5em;
+		width: min-content;
+		grid-template-columns: 1 / 1;
+		align-items: center;
+		border: solid 1px #fff ;
+		border-radius: 1em;
+	}
+
+	.listElement a {
+		color: #fff;
+	}
+	
+	.listElement iframe {
+		margin-top: 50px;
+	}
+
+</style>
