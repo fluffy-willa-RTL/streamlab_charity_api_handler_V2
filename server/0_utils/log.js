@@ -13,14 +13,14 @@ function date24Now () {
 	return new Date().toLocaleTimeString("fr-BE", {hour12: false});
 }
 
-export function log(msg) {
+export async function log(msg) {
 	// const dateNow = date.toLocaleTimeString();
 	const dateNow = date24Now();
 	console.log(`[${dateNow}]: ${msg}`);
 	logFile.log(`[${dateNow}]: ${msg}`);
 }
 
-export function logTable(msg, option) {
+export async function logTable(msg, option) {
 	// const dateNow = date.toLocaleTimeString("fr-BE", {hour12: false});
 	const dateNow = date24Now();
 	console.log(`[${dateNow}]`);
@@ -29,20 +29,19 @@ export function logTable(msg, option) {
 	logFile.table(msg, option);
 }
 
-export function logErr(msg) {
+export async function logErr(msg) {
 	// const dateNow = date.toLocaleTimeString("fr-BE", {hour12: false});
 	const dateNow = date24Now();
 	console.log(`[${dateNow}]: ${msg}`);
 	logFile.error(`[${dateNow}]: ${msg}`);
 }
 
-export function logGoal(msg) {
+export async function logGoal(msg) {
 	const dateNow = date24Now();
-	console.log(`[${dateNow}]: ${msg}`);
 	donationGoalFile.log(`[${dateNow}]: ${msg}`);
 }
 
-export function logSocket(msg) {
+export async function logSocket(msg) {
 	const dateNow = date24Now();
 	console.log(`[${dateNow}]: ${msg}`);
 	socketConnectionFile.log(`[${dateNow}]: ${msg}`);
@@ -63,7 +62,7 @@ const donationGoalFile = new Console({
 	stderr: fs.createWriteStream(donationGoalFilePath),
 });
 
-const socketConnectionFilePath = join(__dirname, "..", "log", `log_sochet_connection_${startTime}.log`);
+const socketConnectionFilePath = join(__dirname, "..", "log", `log_socket_connection_${startTime}.log`);
 
 const socketConnectionFile = new Console({
 	stdout: fs.createWriteStream(socketConnectionFilePath),
