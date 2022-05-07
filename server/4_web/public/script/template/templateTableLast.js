@@ -35,7 +35,7 @@ async function start() {
 			else{
 				animateMoneySingle(el.amount, elem)
 			}
-			elem.getElementsByClassName('name')[0].textContent = convertLongText(el.name, 20);
+			elem.getElementsByClassName('name')[0].textContent = convertLongText(el.name, 18);
 			elem.getElementsByClassName('name')[0].style.color = color;
 			elem.getElementsByClassName('value')[0].style.color = color;
 			

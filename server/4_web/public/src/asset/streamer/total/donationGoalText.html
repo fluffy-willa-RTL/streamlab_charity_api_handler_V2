@@ -8,6 +8,7 @@
 		<title>Last donation of Streamer</title>
 		<link rel="stylesheet" href="/css/default.css">
 		<script defer src="/socket.io/socket.io.js"></script>
+		<script defer src="/script/textFit.min.js"></script>
 		<script defer src="/script/socket.js"></script>
 		<link rel="stylesheet" rel="preload" href="/css/animate.min.css"/>
 		
@@ -25,15 +26,15 @@
 		
 	</head>
 	<body>
-		<div id="username" class="assetTextStyle"></div>
+		<div id="username" class="assetTextStyleCustom"></div>
 	</body>
 </html>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
 
-.assetTextStyle {
-	font-size: 8vw;
+.assetTextStyleCustom {
+	padding: 5px;
 	color: #0a4a91;
 	           /* color | offset-x | offset-y | blur-radius */
 	text-shadow: rgb(124, 124, 124)      1px       0            10px;

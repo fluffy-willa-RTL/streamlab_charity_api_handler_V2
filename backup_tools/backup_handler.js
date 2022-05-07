@@ -1,5 +1,4 @@
 import axios from 'axios';
-import expressStatusMonitor from 'express-status-monitor';
 import express from 'express';
 import db from './mongo.js'
 import dotenv from 'dotenv'
@@ -14,7 +13,6 @@ import { Console } from 'console';
 import fs from 'fs'
 
 const app = express()
-app.use(expressStatusMonitor())
 
 app.listen(process.env.BACKUP_PORT, () => {
 	console.log(`[*.*]:${process.env.BACKUP_PORT}`);
@@ -104,9 +102,8 @@ export async function getAllDonations(id){
 		await sleep(2000);
 		id = await get3000Donations(id)
 	}
-	console.log('ended')
+	console.log('No new')
 }
-console.log("start", Date.now())
 
 
 // let db_buff = [];
@@ -118,7 +115,7 @@ console.log("start", Date.now())
 // 	console.log('Backup fetch from mongoDB');
 // 	return res;
 // });
-
+console.log("Start");
 const lastDonation = await db.don.aggregate([
 	{
 	  '$sort': {
@@ -129,7 +126,8 @@ const lastDonation = await db.don.aggregate([
 	}
   ])
   .toArray()
-  .then(res => {return res[0]})
+  .then(res => {return res[0]._id})
+console.log(`Last donation : ${lastDonation}`);
 //   console.log(lastDonation);
 
 // WARN /!\ JSON.stringify will copy all array to the heap,
@@ -139,4 +137,7 @@ const lastDonation = await db.don.aggregate([
 
 // console.log(db_buff?.at(-1)?._id ?? 0)
 // // Continue to populate the db from the last id
-getAllDonations(lastDonation)
+while (true) {
+	getAllDonations(lastDonation);
+	await sleep(8000);
+}

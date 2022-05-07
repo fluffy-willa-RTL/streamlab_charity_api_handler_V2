@@ -15,6 +15,26 @@ export let socketClientIsConnected = null;
 
 export let streamlabs;
 
+
+const match = 		{
+	"407185386314534912" : "391569706399698944",
+	"408998456787603456" : "408998415784087552" ,
+	"409009074945003520" : "358629692280016896",
+	"409014219317579776" : "348104756033622016",
+	"409014757606166528" : "409014738152984576",
+	"409019542984069120" : "409019459894906880",
+	"409048029413380096" : "331529988769714176",
+	"409053099299311616" : "283862512225619968",
+	"409297609132478464" : "393871068827357184",
+	"409376340609994752" : "409376160510775296",
+	"409397246845652992" : "397344152083369984",
+	"409724439501082624" : "409724424426754048",
+	"410104068950855680" : "409085469473771520",
+	"410350582008778752" : "410350564631777280",
+	"410432311956475904" : "410432262694375424",
+}
+
+
 /**
  * Start the socket for both streamlab and front-end connection
  */
@@ -38,8 +58,7 @@ export function startSocketClient(){
 		if (data.type === 'streamlabscharitydonation'){
 			let _id;
 			if (is_first){
-				_id = process.env.STREAMER_ID_TEST//TODO REMOVE debug
-				first_id = _id
+				first_id = data?.message?.[0]?.charityDonationId
 				is_first = false;
 			}
 			else {
@@ -52,10 +71,10 @@ export function startSocketClient(){
 					name		: data?.message?.[0]?.from									?? null,
 					message		: data?.message?.[0]?.message								?? null,
 					amount		: parseInt(parseFloat(data?.message?.[0]?.amount) * 100)	?? 0,
-					date		: Date.parse(data?.message?.[0]?.createdAt)	/ 1000			?? 0,
-					streamer_id	: data?.message?.[0]?.memberId								?? '313417826440450048' //parseInt(Math.random() * (10 ** 16)), //TODO REMOVE TESTING
+					date		: Date.parse(data?.message?.[0]?.createdAt)	/ 1000			?? 0,	
+					streamer_id	: match[data?.message?.[0]?.memberId]						?? ( data?.message?.[0]?.message	?? null)
 				};
-				log(`${color.FgCyan}New donation from ${db.don[_id].name}${color.Reset}`);
+				log(`${color.FgCyan}New donation from ${db.don[_id].name} of ${db.don[_id].amount} to ${db.don[_id].streamer_id} ${color.Reset}`);
 			};
 
 			if (!recoveryMode){

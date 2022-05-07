@@ -81,11 +81,11 @@ async function start () {
 			
 			
 			generateAllDivs = {
-				'https://media.discordapp.net/attachments/968445978157912084/970680995529494549/fond-top_don_par.png': [
-					linkToGenerate['id/donation/big'],
-					linkToGenerate['id/donator/big'],
-					linkToGenerate['total/all'],
+				'https://cdn.discordapp.com/attachments/968445978157912084/970680995152003082/fond-top_dernier_par.png': [
+					linkToGenerate['id/donation/last'],
+					linkToGenerate['id/donator/last'],
 					linkToGenerate['id/total/me'],
+					linkToGenerate['total/all'],
 				],
 				'https://media.discordapp.net/attachments/968445978157912084/970676373838503977/habillage-game.png': [
 					linkToGenerate['id/donation/big'],
@@ -209,8 +209,8 @@ function generateMap(data){
 		'id/goal/text': {
 			title:	`Text of the actual donation goal de ${data.streamer.display_name}`,
 			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/${data.id}/goal/text`),
-			width:	250,
-			height:	50,
+			width:	500,
+			height:	100,
 		},
 		'id/total/me': {
 			title:	`Total récolté par ${data.streamer.display_name}`,
@@ -237,13 +237,13 @@ function generateMap(data){
 			height:	80,
 		},
 		'id/donation/big': {
-			title:	`Pseudo du dernier plus gros donateur`,
+			title:	`Plus grosse donation récoltée par ${data.streamer.display_name}`,
 			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/${data.id}/donation/big`),
 			width:	250,
 			height:	50,
 		},
 		'id/donator/big': {
-			title:	`Pseudo du dernier donateur de ${data.streamer.display_name}`,
+			title:	`Pseudo du plus gros donateur de ${data.streamer.display_name}`,
 			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/${data.id}/donator/big`),
 			width:	400,
 			height:	80,
@@ -262,7 +262,7 @@ function generateMap(data){
 		},
 		'timer': {
 			title:	`Timer de l'évent`,
-			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/timer/elapsedCount?time=1651856400000`),
+			src:	new URL(`${window.location.protocol}//${window.location.hostname}/a/timer/elapsedCount?time=1651855800000`),
 			width:	250,
 			height:	50,
 		},

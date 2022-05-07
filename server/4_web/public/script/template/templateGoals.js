@@ -37,6 +37,19 @@ async function start() {
 	});
 }
 
+
+
+// function resize_to_fit() {
+// 	const output = document.querySelector('#username');
+// 	const outputContainer = document.querySelector('body');
+//   let fontSize = window.getComputedStyle(output).fontSize;
+//   output.style.fontSize = (parseFloat(fontSize) - 1) + 'px';
+  
+//   if(output.clientHeight >= outputContainer.clientHeight){
+//     resize_to_fit();
+//   }
+// }
+
 function updateDOM(){
 	for (let i of Object.keys(goals)){
 		if (total < goals[i].value * 100){
@@ -55,7 +68,15 @@ function updateDOM(){
 			res = moneyConverter.format(prevGoal.value)
 			break;
 		case 'text':
-			res = actualGoal.text
+			res = actualGoal.text;
+			console.log("wip");
+			// textFit(document.querySelector('div'));
+			// fitty('div');
+			fitty('#username', {
+				minSize: 30,
+				maxSize: 60,
+				multiLine: true,
+			});
 			break;
 		default:
 			res = null

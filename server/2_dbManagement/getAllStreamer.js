@@ -29,6 +29,7 @@ export async function getAllStreamer(){
 		for (let newStreamer of data.data){
 			if (db.streamer[newStreamer.user._id] === undefined){
 				db.streamer[newStreamer.user.id] = {
+					idDeSecourd     : newStreamer?.id ?? null,
 					display_name	: newStreamer?.user?.display_name				?? null,
 					slug			: slugify(newStreamer?.user?.display_name		?? null),
 					avatarURL		: newStreamer?.user?.avatar?.url				?? null,
