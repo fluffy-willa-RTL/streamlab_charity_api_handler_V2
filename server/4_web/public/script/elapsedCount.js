@@ -12,17 +12,17 @@
 		document.getElementById("time").textContent = "No starting times!";
 	}
 
-	function Days(distance, neg) {
-		const time = (distance / (1000 * 60 * 60 * 24));
-		let days;
-		if (neg === '-') {
+	// function Days(distance, neg) {
+	// 	const time = (distance / (1000 * 60 * 60 * 24));
+	// 	let days;
+	// 	if (neg === '-') {
 
-			days = Math.ceil(time);
-		} else {
-			days = Math.floor(time);
-		}
-		return (days < 0) ? `${Math.abs(days)}d ` : ''
-	}
+	// 		days = Math.ceil(time);
+	// 	} else {
+	// 		days = Math.floor(time);
+	// 	}
+	// 	return (days < 0) ? `${Math.abs(days)}d ` : ''
+	// }
 
 	function Hours(distance, neg) {
 		const time = (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
@@ -56,11 +56,12 @@
 		const distance = now - startTime;
 		const neg = (distance < 0) ? '-' : '';
 		// Time calculations for days, hours, minutes and seconds
-		let days = Days(distance, neg);
-		const hours = Hours(distance, neg);
+		// let days = Days(distance, neg);
+		const hours = Hours(distance, neg) + 24;//TODO fix when distance > 24
 		const minutes = Minutes(distance, neg);
 		const seconds = Seconds(distance, neg);
 		// Output the result in an element with id="time"
-		document.getElementById("time").textContent = `${neg}${days}${hours}h ${minutes}m  ${seconds}s`;
+		// document.getElementById("time").textContent = `${neg}${days}${hours}h ${minutes}m  ${seconds}s`;
+		document.getElementById("time").textContent = `${hours}h ${minutes}m  ${seconds}s`;
 	}, 1000);
 }
