@@ -14,3 +14,4 @@ errLog.txt
 log.txt
 *.log
 server/streamerGoal.json
+.insomnia
